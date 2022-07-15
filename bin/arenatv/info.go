@@ -94,10 +94,12 @@ func (i *info) showNewCard(ctx app.Context) {
 }
 
 func (i *info) Render() app.UI {
-	titleVisibility := ""
-	if i.Iplaying {
-		titleVisibility = "info-title-show"
-	}
+	titleVisibility := "info-title-show"
+	// if i.Iplaying {
+	// 	titleVisibility = "info-title-show"
+	// }
+
+	// fmt.Println("CALLED Render Info :", i)
 
 	return app.Article().
 		Class("info").

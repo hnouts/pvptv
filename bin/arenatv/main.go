@@ -32,9 +32,14 @@ type githubOptions struct {
 
 func main() {
 	for _, l := range getLiveStreamers() {
-		app.Route("/"+l.Slug, newStream())
+		// app.Route("/"+l.Slug, newStream())
+		app.Route("/"+l.Class+"/"+l.Slug, newStream())
 	}
-	app.Route("/", newStream())
+
+	for _, c := range getAllClasses() {
+		app.Route("/"+c.Slug, newClasses())
+	}
+	app.Route("/", newPage())
 	app.RunWhenOnBrowser()
 
 	ctx, cancel := cli.ContextWithSignals(context.Background(),
@@ -52,31 +57,33 @@ func main() {
 			Default: "/web/logo.png",
 		},
 		Keywords: []string{
-			"lofi",
-			"lo-fi",
-			"music",
-			"lofimusic",
-			"chill",
-			"chilled",
-			"beats",
-			"relax",
-			"study",
-			"sleep",
-			"hiphop",
-			"app",
-			"pwa",
+			"wow",
+			"pvp",
+			"arena",
+			"stream",
+			"2s",
+			"3s",
+			"battleground",
+			"arenas",
+			"world of warcraft",
+			"warcraft",
+			"tbc",
+			"wotlk",
+			"classic",
+			"shadowlands",
+			"dragonflight",
 		},
 		LoadingLabel: "WoW Arena stream gallery",
 		Name:         "Arenatv",
 		Image:        "https://lofimusic.app/web/covers/lofimusic.png",
-		RawHeaders: []string{
-			`<script>
-			var isOnYouTubeIframeAPIReady = false;
-			function onYouTubeIframeAPIReady() {
-				isOnYouTubeIframeAPIReady = true;
-			}
-			</script>`,
-		},
+		// RawHeaders: []string{
+		// 	`<script>
+		// 	var isOnYouTubeIframeAPIReady = false;
+		// 	function onYouTubeIframeAPIReady() {
+		// 		isOnYouTubeIframeAPIReady = true;
+		// 	}
+		// 	</script>`,
+		// },
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
 			"/web/lofimusic.css",

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
-	"time"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/errors"
@@ -100,72 +99,71 @@ func (p *twitchPlayer) OnResize(ctx app.Context) {
 }
 
 func (p *twitchPlayer) loadVideo(ctx app.Context) {
-	if isOnYouTubeIframeAPIReady := app.Window().Get("isOnYouTubeIframeAPIReady").Bool(); !isOnYouTubeIframeAPIReady && app.IsClient {
-		ctx.Async(func() {
-			time.Sleep(time.Millisecond * 1000)
-			ctx.Dispatch(p.loadVideo)
-		})
-		return
-	}
+	fmt.Println("CALLED loadvideo :", ctx)
+
+	// if isOnYouTubeIframeAPIReady := app.Window().Get("isOnYouTubeIframeAPIReady").Bool(); !isOnYouTubeIframeAPIReady && app.IsClient {
+	// 	fmt.Println("CALLED isOnYouTubeIframeAPIReady :", ctx)
+	// 	ctx.Async(func() {
+	// 		time.Sleep(time.Millisecond * 1000)
+	// 		ctx.Dispatch(p.loadVideo)
+	// 	})
+	// 	return
+	// }
 
 	if p.Istream.Slug != p.stream.Slug {
 		p.stream = p.Istream
-		if p.player != nil {
+		if p.player != nil { //todo changed back to !=
 			p.loadVideoByID(ctx, p.stream.twitchID())
 			return
 		}
 	}
 
 	p.initPlayer.Do(func() {
-		onReady := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-			ctx.Dispatch(func(ctx app.Context) {
-				p.setVolume(ctx, p.volume.Value)
-				p.play(ctx)
-			})
-			return nil
-		})
-		p.realeaseOnReady = onReady.Release
+		// onReady := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
+		// 	ctx.Dispatch(func(ctx app.Context) {
+		// 		p.setVolume(ctx, p.volume.Value)
+		// 		p.play(ctx)
+		// 	})
+		// 	return nil
+		// })
+		// p.realeaseOnReady = onReady.Release
 
-		onStateChange := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-			ctx.Dispatch(func(ctx app.Context) {
-				p.onStateChange(ctx, args)
-			})
-			return nil
-		})
-		p.releaseOnStateChange = onStateChange.Release
+		// onStateChange := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
+		// 	ctx.Dispatch(func(ctx app.Context) {
+		// 		p.onStateChange(ctx, args)
+		// 	})
+		// 	return nil
+		// })
+		// p.releaseOnStateChange = onStateChange.Release
 
-		onError := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-			ctx.Dispatch(func(ctx app.Context) {
-				p.onError(ctx, args)
-			})
-			return nil
-		})
-		p.releaseOnError = onError.Release
+		// onError := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
+		// 	ctx.Dispatch(func(ctx app.Context) {
+		// 		p.onError(ctx, args)
+		// 	})
+		// 	return nil
+		// })
+		// p.releaseOnError = onError.Release
 
-		p.player = app.Window().
-			Get("YT").
-			Get("Player").
-			New("youtube-player", map[string]interface{}{
-				"videoId": p.stream.twitchID(),
-				"playerVars": map[string]interface{}{
-					"autoplay":       1,
-					"controls":       0,
-					"modestbranding": 1,
-					"disablekb":      1,
-					"iv_load_policy": 3,
-					"playsinline":    1,
-					"origin":         "localhost:8000",
-				},
-				"events": map[string]interface{}{
-					"onReady":       onReady,
-					"onStateChange": onStateChange,
-					"onError":       onError,
-				},
-			})
+		// p.player = app.Window().
+		// 	Get("YT").
+		// 	Get("Player").
+		// 	New("youtube-player", map[string]interface{}{
+		// 		"channel": p.stream.twitchID(),
+		// 		"parent":  "localhost",
+		// 		"events": map[string]interface{}{
+		// 			"onReady":       onReady,
+		// 			"onStateChange": onStateChange,
+		// 			"onError":       onError,
+		// 		},
+		// 	})
+		fmt.Println("P.PLAYER:")
+		fmt.Printf("%+v\n", p)
+
 	})
 }
 
 func (p *twitchPlayer) onStateChange(ctx app.Context, args []app.Value) {
+	fmt.Println("data:", ctx)
 	switch args[0].Get("data").Int() {
 	case unstarted:
 		p.isPlaying = false
@@ -200,6 +198,7 @@ func (p *twitchPlayer) onStateChange(ctx app.Context, args []app.Value) {
 }
 
 func (p *twitchPlayer) onError(ctx app.Context, args []app.Value) {
+	fmt.Println("data Err:", ctx)
 	code := args[0].Get("data").Int()
 	msg := ""
 
@@ -229,6 +228,8 @@ func (p *twitchPlayer) onError(ctx app.Context, args []app.Value) {
 }
 
 func (p *twitchPlayer) OnUpdate(ctx app.Context) {
+	fmt.Println("CALLED UPDATE :", p.stream.Slug)
+	fmt.Println("+ :", p.Istream.Slug)
 	if p.Istream.Slug != "" && p.stream.Slug != p.Istream.Slug {
 		p.loadVideo(ctx)
 	}
@@ -239,6 +240,8 @@ func (p *twitchPlayer) Render() app.UI {
 	if p.player == nil {
 		volumeDisplay = "disabled"
 	}
+
+	fmt.Println("stream:", p.stream.Slug)
 
 	return app.Div().
 		Class("youtube").
@@ -251,10 +254,22 @@ func (p *twitchPlayer) Render() app.UI {
 						ID("youtube-player").
 						Class("unselectable").
 						Body(
-							app.Script().Src("https://player.twitch.tv/js/embed/v1.js"),
-						),
+							// app.Script().
+							// app.Script().Src("https://player.twitch.tv/js/embed/v1.js"),
+							// app.Script().Src("https://www.youtube.com/iframe_api"),
+							// Async(true),
+							app.If(p.stream.Slug != "",
+								app.IFrame().
+									ID("yt-container").
+									Allow("autoplay").
+									Allow("accelerometer").
+									Allow("encrypted-media").
+									Allow("picture-in-picture").
+									Sandbox("allow-presentation allow-same-origin allow-scripts allow-popups").
+									Src("https://player.twitch.tv/?channel="+p.stream.Slug+"&parent=localhost"),
+							)),
 				),
-			app.If(!p.isPlaying || p.isBuffering || p.err != nil,
+			app.If(p.stream.Slug == "" || p.err != nil,
 				app.Div().
 					Class("youtube-noplay").
 					Class("fill").
@@ -377,6 +392,7 @@ func (p *twitchPlayer) onVolumeChanged(ctx app.Context, e app.Event) {
 }
 
 func (p *twitchPlayer) loadVideoByID(ctx app.Context, id string) {
+	fmt.Println("CALLED loadVideoByID :", ctx)
 	p.player.Call("loadVideoById", id, 0)
 }
 

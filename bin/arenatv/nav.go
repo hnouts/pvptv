@@ -11,6 +11,7 @@ type nav struct {
 	app.Compo
 
 	Iclass         string
+	IcurrentClass  string
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
 
@@ -29,6 +30,11 @@ func (n *nav) Class(v string) *nav {
 		n.Iclass += " "
 	}
 	n.Iclass += v
+	return n
+}
+
+func (n *nav) CurrentClass(v string) *nav {
+	n.IcurrentClass = v
 	return n
 }
 
@@ -72,7 +78,7 @@ func (n *nav) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("Arenatv"),
+								Text(n.IcurrentClass),
 						),
 				),
 			app.Nav().
@@ -95,7 +101,7 @@ func (n *nav) Render() app.UI {
 													Class("glow").
 													Icon(newSVGIcon().RawSVG(playSVG)).
 													Label(lr.Name).
-													Href("/" + lr.Slug).
+													Href("/" + lr.Class + "/" + lr.Slug).
 													Focus(lr.Slug == n.IcurrentStream.Slug)
 											}),
 										),

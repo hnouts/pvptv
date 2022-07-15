@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
+	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 	"golang.org/x/exp/rand"
 )
 
@@ -46,15 +47,32 @@ func (r *stream) OnResize(ctx app.Context) {
 
 func (r *stream) init(ctx app.Context) {
 	rand.Seed(uint64(time.Now().UnixNano()))
-	r.lives = getLiveStreamers()
+	url := strings.Split(ctx.Page().URL().Path, "/")
+	allLives := getLiveStreamers()
+
+	for _, streamer := range allLives {
+		if isCurrentClass(streamer, url[1]) {
+			r.lives = append(r.lives, streamer)
+		}
+	}
+
+	fmt.Printf("%+v\n", r.lives)
+}
+
+func isCurrentClass(streamer liveStream, class string) bool {
+
+	return streamer.Class == class
 }
 
 func (r *stream) load(ctx app.Context) {
-	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/")
+	url := strings.Split(ctx.Page().URL().Path, "/")
+	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
+
 	if slug == "" {
+		println("NO SLUG? PICK RANDOM")
 		r.current = r.randomStreamer()
 		u := *ctx.Page().URL()
-		u.Path = "/" + r.current.Slug
+		u.Path = "/" + r.current.Class + "/" + r.current.Slug
 		ctx.Page().ReplaceURL(&u)
 	} else {
 		for _, lr := range r.lives {
@@ -98,63 +116,53 @@ func (r *stream) Render() app.UI {
 		Class("fill").
 		Body(
 			// newYouTubePlayer().
-			// newTwitchPlayer().
-			// 	Class("stream-player").
-			// 	Class("fill").
-			// 	Stream(r.current).
-			// 	OnPlaybackChange(r.onPlaybackChange),
-			// ui.Shell().
-			// 	Class("stream-shell").
-			// 	Class("fill").
-			// 	PaneWidth(menuWidth).
-			// 	Menu(newNav().
-			// 		LiveStreams(r.lives).
-			// 		CurrentStream(r.current)).
-			// 	HamburgerMenu(newNav().
-			// 		Class("background-overlay").
-			// 		LiveStreams(r.lives).
-			// 		CurrentStream(r.current)).
-			// 	Content(
-			// 		app.Aside().
-			// 			Class("stream-update").
-			// 			Class("app-title").
-			// 			Class("hspace-out").
-			// 			Body(
-			// 				ui.Stack().
-			// 					Class("fill").
-			// 					Right().
-			// 					Middle().
-			// 					Content(
-			// 						app.If(r.isUpdateAvailable,
-			// 							newLink().
-			// 								Class("link-update").
-			// 								Class("glow").
-			// 								Label("Update").
-			// 								Icon(newSVGIcon().RawSVG(downloadSVG)).
-			// 								OnClick(r.onUpdateClick),
-			// 						),
-			// 					),
-			// 			),
-			// 		app.Div().
-			// 			Class("hspace-out").
-			// 			Class("vspace-content").
-			// 			Body(
-			// 				newInfo().
-			// 					Stream(r.current).
-			// 					Playing(r.isPlaying),
-			// 			),
-			// 	),
-			app.Script().
-				Src("https://player.twitch.tv/js/embed/v1.js").
-				Async(true),
-			app.IFrame().
-				ID("yt-container").
-				Allow("autoplay").
-				Allow("accelerometer").
-				Allow("encrypted-media").
-				Allow("picture-in-picture").
-				Sandbox("allow-presentation allow-same-origin allow-scripts allow-popups").
-				Src("https://player.twitch.tv/?channel=hydramist&parent=localhost"),
+			newTwitchPlayer().
+				Class("stream-player").
+				Class("fill").
+				Stream(r.current).
+				OnPlaybackChange(r.onPlaybackChange),
+			ui.Shell().
+				Class("stream-shell").
+				Class("fill").
+				PaneWidth(menuWidth).
+				Menu(newNav().
+					CurrentClass(r.current.Class).
+					LiveStreams(r.lives).
+					CurrentStream(r.current)).
+				HamburgerMenu(newNav().
+					Class("background-overlay").
+					LiveStreams(r.lives).
+					CurrentStream(r.current)).
+				Content(
+					app.Aside().
+						Class("stream-update").
+						Class("app-title").
+						Class("hspace-out").
+						Body(
+							ui.Stack().
+								Class("fill").
+								Right().
+								Middle().
+								Content(
+									app.If(r.isUpdateAvailable,
+										newLink().
+											Class("link-update").
+											Class("glow").
+											Label("Update").
+											Icon(newSVGIcon().RawSVG(downloadSVG)).
+											OnClick(r.onUpdateClick),
+									),
+								),
+						),
+					app.Div().
+						Class("hspace-out").
+						Class("vspace-content").
+						Body(
+							newInfo().
+								Stream(r.current).
+								Playing(r.isPlaying),
+						),
+				),
 		)
 }
 
