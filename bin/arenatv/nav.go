@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -40,11 +41,13 @@ func (n *nav) CurrentClass(v string) *nav {
 
 func (n *nav) LiveStreams(v []liveStream) *nav {
 	n.IliveStreams = v
+	fmt.Printf("%+v\n", v)
 	return n
 }
 
 func (n *nav) CurrentStream(v liveStream) *nav {
 	n.IcurrentStream = v
+	fmt.Printf("%+v\n", v)
 	return n
 }
 

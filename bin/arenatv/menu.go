@@ -72,6 +72,11 @@ func (m *menu) Render() app.UI {
 					Label("Paladin").
 					Href("/paladin").
 					Class(isFocus("/paladin")),
+				ui.Link().
+					Class(linkClass).
+					Label("Rogue").
+					Href("/rogue").
+					Class(isFocus("/rogue")),
 
 				app.Div().Class("separator"),
 

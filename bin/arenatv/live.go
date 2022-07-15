@@ -11,7 +11,6 @@ type liveStream struct {
 	Slug    string
 	Class   string
 	Name    string
-	Owner   string
 	URL     string
 	Cards   []string
 	Links   []socialLink
@@ -33,7 +32,6 @@ func getLiveStreamers() []liveStream {
 			Slug:  "hydramist",
 			Class: "priest",
 			Name:  "Hydramist",
-			Owner: "Hydramist",
 			URL:   "https://www.twitch.tv/hydramist",
 			Cards: []string{},
 			Links: []socialLink{
@@ -63,7 +61,6 @@ func getLiveStreamers() []liveStream {
 			Slug:  "zenlyn",
 			Class: "priest",
 			Name:  "Zenlyn",
-			Owner: "Zenlyn",
 			URL:   "https://www.twitch.tv/zenlyn",
 			Cards: []string{},
 			Links: []socialLink{
@@ -93,7 +90,6 @@ func getLiveStreamers() []liveStream {
 			Slug:  "anboniwow",
 			Class: "priest",
 			Name:  "Anboniwow",
-			Owner: "Anboniwow",
 			URL:   "https://www.twitch.tv/anboniwow",
 			Cards: []string{},
 			Links: []socialLink{
@@ -123,8 +119,36 @@ func getLiveStreamers() []liveStream {
 			Slug:  "accident_",
 			Class: "paladin",
 			Name:  "Accident",
-			Owner: "Accident",
 			URL:   "https://www.twitch.tv/accident_",
+			Cards: []string{},
+			Links: []socialLink{
+				{
+					Slug: "website",
+					URL:  "https://chillhop.com",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://youtu.be/5yx6BWlEVcY",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.com/invite/chillhop",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/chillhopmusic",
+				},
+				{
+					Slug: "facebook",
+					URL:  "https://www.facebook.com/groups/1561371024098016",
+				},
+			},
+		},
+		{
+			Slug:  "mirlolxd",
+			Class: "rogue",
+			Name:  "Mirlol",
+			URL:   "https://www.twitch.tv/mirlolxd",
 			Cards: []string{},
 			Links: []socialLink{
 				{

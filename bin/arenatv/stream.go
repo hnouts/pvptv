@@ -67,9 +67,7 @@ func isCurrentClass(streamer liveStream, class string) bool {
 func (r *stream) load(ctx app.Context) {
 	url := strings.Split(ctx.Page().URL().Path, "/")
 	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
-
-	if slug == "" {
-		println("NO SLUG? PICK RANDOM")
+	if slug == "" || len(url) < 3 {
 		r.current = r.randomStreamer()
 		u := *ctx.Page().URL()
 		u.Path = "/" + r.current.Class + "/" + r.current.Slug
@@ -115,7 +113,6 @@ func (r *stream) Render() app.UI {
 		Class("stream").
 		Class("fill").
 		Body(
-			// newYouTubePlayer().
 			newTwitchPlayer().
 				Class("stream-player").
 				Class("fill").

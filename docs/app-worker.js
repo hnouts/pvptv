@@ -13,7 +13,7 @@ self.addEventListener("install", event => {
           "/manifest.webmanifest",
           "/wasm_exec.js",
           "/web/app.wasm",
-          "/web/lofimusic.css",
+          "/web/arenatv.css",
           "/web/logo.png",
           "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
           

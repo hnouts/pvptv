@@ -37,7 +37,7 @@ func main() {
 	}
 
 	for _, c := range getAllClasses() {
-		app.Route("/"+c.Slug, newClasses())
+		app.Route("/"+c.Slug, newStream())
 	}
 	app.Route("/", newPage())
 	app.RunWhenOnBrowser()
@@ -86,7 +86,7 @@ func main() {
 		// },
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
-			"/web/lofimusic.css",
+			"/web/arenatv.css",
 		},
 
 		ThemeColor: backgroundColor,

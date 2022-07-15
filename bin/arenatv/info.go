@@ -126,7 +126,7 @@ func (i *info) Render() app.UI {
 								l := i.Istream.Links[j]
 								return newInfoLink().
 									Help(fmt.Sprintf("Visit %s's %s.",
-										strings.Title(i.Istream.Owner),
+										strings.Title(i.Istream.Name),
 										strings.Title(l.Slug),
 									)).
 									Href(l.URL).

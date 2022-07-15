@@ -67,87 +67,86 @@ func (p *page) Render() app.UI {
 		).
 		Menu(
 			newMenu().Class("fill"),
-		).
-		Index(
-			app.If(len(p.Iindex) != 0,
-				ui.Scroll().
-					Class("fill").
-					HeaderHeight(headerHeight).
-					Content(
-						app.Nav().
-							Class("index").
-							Body(
-								app.Div().Class("separator"),
-								app.Header().
-									Class("h2").
-									Text("Index"),
-								app.Div().Class("separator"),
-								app.Range(p.Iindex).Slice(func(i int) app.UI {
-									return p.Iindex[i]
-								}),
-								app.Div().Class("separator"),
-							),
-					),
-			),
-		).
-		Content(
-			ui.Scroll().
-				Class("fill").
-				Header(
-					app.Nav().
-						Class("fill").
-						Body(
-							ui.Stack().
-								Class("fill").
-								Right().
-								Middle().
-								Content(
-									app.If(p.updateAvailable,
-										app.Div().
-											Class("link-update").
-											Body(
-												ui.Link().
-													Class("link").
-													Class("heading").
-													Class("fit").
-													Class("unselectable").
-													Icon(downloadSVG),
-											),
-									),
-								),
-						),
-				).
-				HeaderHeight(headerHeight).
-				Content(
-					app.Main().Body(
-						app.Article().Body(
-							app.Header().
-								ID("page-top").
-								Class("page-title").
-								Class("center").
-								Body(
-									ui.Stack().
-										Center().
-										Middle().
-										Content(
-											ui.Icon().
-												Class("icon-left").
-												Class("unselectable").
-												Size(90).
-												Src(p.Iicon),
-											app.H1().Text(p.Ititle),
-										),
-								),
-							app.Div().Class("separator"),
-							app.Range(p.Icontent).Slice(func(i int) app.UI {
-								return p.Icontent[i]
-							}),
-
-							app.Div().Class("separator"),
-						),
-					),
-				),
 		)
+	// Index(
+	// 	app.If(len(p.Iindex) != 0,
+	// 		ui.Scroll().
+	// 			Class("fill").
+	// 			HeaderHeight(headerHeight).
+	// 			Content(
+	// 				app.Nav().
+	// 					Class("index").
+	// 					Body(
+	// 						app.Div().Class("separator"),
+	// 						app.Header().
+	// 							Class("h2").
+	// 							Text("Index"),
+	// 						app.Div().Class("separator"),
+	// 						app.Range(p.Iindex).Slice(func(i int) app.UI {
+	// 							return p.Iindex[i]
+	// 						}),
+	// 						app.Div().Class("separator"),
+	// 					),
+	// 			),
+	// 	),
+	// ).
+	// Content(
+	// 	ui.Scroll().
+	// 		Class("fill").
+	// 		Header(
+	// 			app.Nav().
+	// 				Class("fill").
+	// 				Body(
+	// 					ui.Stack().
+	// 						Class("fill").
+	// 						Right().
+	// 						Middle().
+	// 						Content(
+	// 							app.If(p.updateAvailable,
+	// 								app.Div().
+	// 									Class("link-update").
+	// 									Body(
+	// 										ui.Link().
+	// 											Class("link").
+	// 											Class("heading").
+	// 											Class("fit").
+	// 											Class("unselectable").
+	// 											Icon(downloadSVG),
+	// 									),
+	// 							),
+	// 						),
+	// 				),
+	// 		).
+	// 		HeaderHeight(headerHeight).
+	// 		Content(
+	// 			app.Main().Body(
+	// 				app.Article().Body(
+	// 					app.Header().
+	// 						ID("page-top").
+	// 						Class("page-title").
+	// 						Class("center").
+	// 						Body(
+	// 							ui.Stack().
+	// 								Center().
+	// 								Middle().
+	// 								Content(
+	// 									ui.Icon().
+	// 										Class("icon-left").
+	// 										Class("unselectable").
+	// 										Size(90).
+	// 										Src(p.Iicon),
+	// 									app.H1().Text(p.Ititle),
+	// 								),
+	// 						),
+	// 					app.Div().Class("separator"),
+	// 					app.Range(p.Icontent).Slice(func(i int) app.UI {
+	// 						return p.Icontent[i]
+	// 					}),
+	// 					app.Div().Class("separator"),
+	// 				),
+	// 			),
+	// 		),
+	// )
 }
 
 func scrollTo(ctx app.Context) {

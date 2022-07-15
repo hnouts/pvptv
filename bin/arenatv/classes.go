@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
-	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
 
 type classes struct {
@@ -38,6 +37,11 @@ func getAllClasses() []classes {
 			Name:    "Paladin",
 			Classic: true,
 		},
+		{
+			Slug:    "rogue",
+			Name:    "Rogue",
+			Classic: true,
+		},
 	}
 
 	sort.Slice(classes, func(a, b int) bool {
@@ -49,18 +53,20 @@ func getAllClasses() []classes {
 
 func (c *classes) Render() app.UI {
 	return newPage().
-		Title(c.Name).
-		Content(
-			ui.Shell().
-				Class("stream-shell").
-				Class("fill").
-				PaneWidth(menuWidth).
-				Menu(newNav().
-					LiveStreams(c.lives).
-					CurrentStream(c.current)).
-				HamburgerMenu(newNav().
-					Class("background-overlay").
-					LiveStreams(c.lives).
-					CurrentStream(c.current)),
-		)
+		Title(c.Name)
+	// Content(
+	// 	ui.Shell().
+	// 		Class("stream-shell").
+	// 		Class("fill").
+	// 		PaneWidth(menuWidth).
+	// 		Menu(newNav().
+	// 			CurrentClass(c.current.Class).
+	// 			LiveStreams(c.lives).
+	// 			CurrentStream(c.current)).
+	// 		HamburgerMenu(newNav().
+	// 			Class("background-overlay").
+	// 			CurrentClass(c.current.Class).
+	// 			LiveStreams(c.lives).
+	// 			CurrentStream(c.current)),
+	// )
 }
