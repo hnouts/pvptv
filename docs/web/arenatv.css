@@ -331,10 +331,19 @@ input[type="range"]:hover::-moz-range-thumb {
   height: calc(100% - 108px);
 }
 
+.nav-content-homepage {
+  height: 100%;
+}
+
 .nav-streams {
   height: calc(100% - 120px - 24px - 18px);
   overflow-y: scroll;
 }
+
+.nav-streams-homepage {
+  height: calc(100% - 120px - 24px - 18px);
+}
+
 
 .nav-streams-stack {
   min-height: 100%;

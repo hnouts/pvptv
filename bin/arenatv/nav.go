@@ -81,7 +81,8 @@ func (n *nav) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text(n.IcurrentClass),
+								// Text(n.IcurrentClass),
+								Text("Arenatv"),
 						),
 				),
 			app.Nav().

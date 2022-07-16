@@ -112,7 +112,7 @@ func (p *twitchPlayer) loadVideo(ctx app.Context) {
 
 	if p.Istream.Slug != p.stream.Slug {
 		p.stream = p.Istream
-		if p.player != nil { //todo changed back to !=
+		if p.player != nil {
 			p.loadVideoByID(ctx, p.stream.twitchID())
 			return
 		}

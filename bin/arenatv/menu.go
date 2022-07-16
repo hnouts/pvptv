@@ -33,73 +33,92 @@ func (m *menu) OnAppInstallChange(ctx app.Context) {
 func (m *menu) Render() app.UI {
 	linkClass := "link heading fit unselectable"
 
-	isFocus := func(path string) string {
-		if app.Window().URL().Path == path {
-			return "focus"
-		}
-		return ""
-	}
-
-	return ui.Scroll().
-		Class("menu").
+	return app.Div().
+		Class("nav").
+		Class("fill").
+		Class("unselectable").
 		Class(m.Iclass).
-		HeaderHeight(headerHeight).
-		Header(
+		Body(
 			ui.Stack().
-				Class("fill").
+				Class("app-title").
+				Class("hspace-out").
 				Middle().
 				Content(
-					app.Header().Body(
-						app.A().
-							Class("hApp").
-							Class("focus").
-							Class("glow").
-							Href("/").
-							Text("Arenatv"),
-					),
+					app.Header().
+						Body(
+							app.A().
+								Class("hApp").
+								Class("focus").
+								Class("glow").
+								Href("/").
+								Text("Arenatv"),
+						),
 				),
-		).
-		Content(
-			app.Nav().Body(
-				app.Div().Class("separator"),
-				ui.Link().
-					Class(linkClass).
-					Label("Priest").
-					Href("/priest").
-					Class(isFocus("/priest")),
-				ui.Link().
-					Class(linkClass).
-					Label("Paladin").
-					Href("/paladin").
-					Class(isFocus("/paladin")),
-				ui.Link().
-					Class(linkClass).
-					Label("Rogue").
-					Href("/rogue").
-					Class(isFocus("/rogue")),
+			app.Nav().Class("nav-content").
+				Body(
+					app.Div().
+						Class("nav-streams").
+						Body(
+							ui.Stack().
+								Class("nav-streams-stack").
+								Middle().
+								Content(
+									app.Div().
+										Class("hspace-out").
+										Body(
+											ui.Link().
+												Class(linkClass).
+												Label("Priest").
+												Href("/priest"),
+											ui.Link().
+												Class(linkClass).
+												Label("Paladin").
+												Href("/paladin"),
+											ui.Link().
+												Class(linkClass).
+												Label("Rogue").
+												Href("/rogue"),
+										),
+								),
+						),
+					// app.Div().
+					// 	Class("nav-streams").
+					// 	Body(
+					// 		ui.Link().
+					// 			Class(linkClass).
+					// 			Label("Priest").
+					// 			Href("/priest"),
+					// 		ui.Link().
+					// 			Class(linkClass).
+					// 			Label("Paladin").
+					// 			Href("/paladin"),
+					// 		ui.Link().
+					// 			Class(linkClass).
+					// 			Label("Rogue").
+					// 			Href("/rogue")),
 
-				app.Div().Class("separator"),
+					// app.Div().Class("info-title-separator"),
 
-				ui.Link().
-					Class(linkClass).
-					Icon(twitterSVG).
-					Label("Twitter").
-					Href(twitterURL),
-				ui.Link().
-					Class(linkClass).
-					Icon(githubSVG).
-					Label("GitHub").
-					Href(githubURL),
-
-				app.Div().Class("separator"),
-
-				ui.Link().
-					Class(linkClass).
-					Label("Privacy Policy").
-					Href("/privacy-policy").
-					Class(isFocus("/privacy-policy")),
-
-				app.Div().Class("separator"),
-			),
+					app.Div().
+						Class("nav-support").
+						Class("hspace-out").
+						Body(
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(coffeeSVG)).
+								Label("Buy me a coffee").
+								Href(buyMeACoffeeURL),
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(githubSVG)).
+								Label("GitHub").
+								Href(githubURL),
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(twitterSVG)).
+								Label("Twitter").
+								Href(twitterURL),
+						),
+				),
 		)
 }
