@@ -31,6 +31,13 @@ type githubOptions struct {
 }
 
 func main() {
+	ctx, cancel := cli.ContextWithSignals(context.Background(),
+		os.Interrupt,
+		syscall.SIGTERM,
+	)
+	var twitchToken twitchAuth = <-getTwitchToken()
+	fmt.Printf("%+v\n", twitchToken)
+
 	for _, l := range getLiveStreamers() {
 		// app.Route("/"+l.Slug, newStream())
 		app.Route("/"+l.Class+"/"+l.Slug, newStream())
@@ -42,10 +49,6 @@ func main() {
 	app.Route("/", newPage())
 	app.RunWhenOnBrowser()
 
-	ctx, cancel := cli.ContextWithSignals(context.Background(),
-		os.Interrupt,
-		syscall.SIGTERM,
-	)
 	defer cancel()
 	defer exit()
 
@@ -75,7 +78,7 @@ func main() {
 		},
 		LoadingLabel: "WoW Arena stream gallery",
 		Name:         "Arenatv",
-		Image:        "https://lofimusic.app/web/covers/lofimusic.png",
+		Image:        "/web/logo.png",
 		// RawHeaders: []string{
 		// 	`<script>
 		// 	var isOnYouTubeIframeAPIReady = false;
@@ -86,7 +89,7 @@ func main() {
 		// },
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
-			"/web/arenatv.css",
+			"./web/arenatv.css",
 		},
 
 		ThemeColor: backgroundColor,

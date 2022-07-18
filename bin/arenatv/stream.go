@@ -22,9 +22,16 @@ type stream struct {
 	isPlaying         bool
 	isUpdateAvailable bool
 	randHistory       []liveStream
+	// twitchToken       string
 }
 
 func newStream() *stream {
+	// println("NEW STREAM")
+	// fmt.Printf("%+v\n", tt)
+
+	// var newStream stream
+	// newStream.twitchToken = tt.AccessToken
+	// return &newStream
 	return &stream{}
 }
 
@@ -46,13 +53,16 @@ func (r *stream) OnResize(ctx app.Context) {
 }
 
 func (r *stream) init(ctx app.Context) {
+	println("Print twitch token...")
+	fmt.Printf("%+v\n", r)
 	rand.Seed(uint64(time.Now().UnixNano()))
 	url := strings.Split(ctx.Page().URL().Path, "/")
 	allLives := getLiveStreamers()
 
 	for _, streamer := range allLives {
-		if isCurrentClass(streamer, url[1]) {
-			r.lives = append(r.lives, streamer)
+		if isCurrentClass(streamer, url[1]) { // create new array of lives for current class
+
+			r.lives = append(r.lives, streamer) // enrich lives with viewer count and online status
 		}
 	}
 

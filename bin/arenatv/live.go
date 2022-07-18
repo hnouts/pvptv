@@ -12,6 +12,8 @@ type liveStream struct {
 	Class   string
 	Name    string
 	URL     string
+	Viewers int
+	Online  bool
 	Cards   []string
 	Links   []socialLink
 	AddedAt time.Time
@@ -29,11 +31,13 @@ func (r liveStream) twitchID() string {
 func getLiveStreamers() []liveStream {
 	streams := []liveStream{
 		{
-			Slug:  "hydramist",
-			Class: "priest",
-			Name:  "Hydramist",
-			URL:   "https://www.twitch.tv/hydramist",
-			Cards: []string{},
+			Slug:    "hydramist",
+			Class:   "priest",
+			Name:    "Hydramist",
+			URL:     "https://www.twitch.tv/hydramist",
+			Viewers: 0,
+			Online:  false,
+			Cards:   []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",
@@ -58,11 +62,13 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
-			Slug:  "zenlyn",
-			Class: "priest",
-			Name:  "Zenlyn",
-			URL:   "https://www.twitch.tv/zenlyn",
-			Cards: []string{},
+			Slug:    "zenlyn",
+			Class:   "priest",
+			Name:    "Zenlyn",
+			URL:     "https://www.twitch.tv/zenlyn",
+			Viewers: 0,
+			Online:  false,
+			Cards:   []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",
@@ -87,11 +93,13 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
-			Slug:  "anboniwow",
-			Class: "priest",
-			Name:  "Anboniwow",
-			URL:   "https://www.twitch.tv/anboniwow",
-			Cards: []string{},
+			Slug:    "anboniwow",
+			Class:   "priest",
+			Name:    "Anboniwow",
+			URL:     "https://www.twitch.tv/anboniwow",
+			Viewers: 0,
+			Online:  false,
+			Cards:   []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",
@@ -116,11 +124,13 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
-			Slug:  "accident_",
-			Class: "paladin",
-			Name:  "Accident",
-			URL:   "https://www.twitch.tv/accident_",
-			Cards: []string{},
+			Slug:    "accident_",
+			Class:   "paladin",
+			Name:    "Accident",
+			URL:     "https://www.twitch.tv/accident_",
+			Viewers: 0,
+			Online:  false,
+			Cards:   []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",
@@ -145,11 +155,13 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
-			Slug:  "mirlolxd",
-			Class: "rogue",
-			Name:  "Mirlol",
-			URL:   "https://www.twitch.tv/mirlolxd",
-			Cards: []string{},
+			Slug:    "mirlolxd",
+			Class:   "rogue",
+			Name:    "Mirlol",
+			URL:     "https://www.twitch.tv/mirlolxd",
+			Viewers: 0,
+			Online:  false,
+			Cards:   []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",
