@@ -7,15 +7,15 @@ self.addEventListener("install", event => {
     caches.open(cacheName).
       then(cache => {
         return cache.addAll([
-          "/",
-          "/app.css",
-          "/app.js",
-          "/manifest.webmanifest",
-          "/wasm_exec.js",
-          "/web/app.wasm",
-          "/web/arenatv.css",
+          // "/",
+          // "/app.css",
+          // "/app.js",
+          // "/manifest.webmanifest",
+          // "/wasm_exec.js",
+          // "/web/app.wasm",
+          // "/web/arenatv.css",
           "/web/logo.png",
-          "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
+          // "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
           
         ]);
       }).

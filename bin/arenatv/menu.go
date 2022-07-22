@@ -68,16 +68,52 @@ func (m *menu) Render() app.UI {
 										Body(
 											ui.Link().
 												Class(linkClass).
-												Label("Priest").
-												Href("/priest"),
+												Label("Death Knight").
+												Href("/dk"),
+											ui.Link().
+												Class(linkClass).
+												Label("Demon Hunter").
+												Href("/dh"),
+											ui.Link().
+												Class(linkClass).
+												Label("Druid").
+												Href("/druid"),
+											ui.Link().
+												Class(linkClass).
+												Label("Hunter").
+												Href("/hunter"),
+											ui.Link().
+												Class(linkClass).
+												Label("Mage").
+												Href("/mage"),
+											ui.Link().
+												Class(linkClass).
+												Label("Monk").
+												Href("/monk"),
 											ui.Link().
 												Class(linkClass).
 												Label("Paladin").
 												Href("/paladin"),
 											ui.Link().
 												Class(linkClass).
+												Label("Priest").
+												Href("/priest"),
+											ui.Link().
+												Class(linkClass).
 												Label("Rogue").
 												Href("/rogue"),
+											ui.Link().
+												Class(linkClass).
+												Label("Shaman").
+												Href("/shaman"),
+											ui.Link().
+												Class(linkClass).
+												Label("Warlock").
+												Href("/warlock"),
+											ui.Link().
+												Class(linkClass).
+												Label("Warrior").
+												Href("/warrior"),
 										),
 								),
 						),

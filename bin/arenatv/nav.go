@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -61,6 +62,10 @@ func (n *nav) OnNav(ctx app.Context) {
 	}
 }
 
+func parseTitle(t string) string {
+	return wotlk
+}
+
 func (n *nav) Render() app.UI {
 	return app.Div().
 		Class("nav").
@@ -99,13 +104,37 @@ func (n *nav) Render() app.UI {
 										Body(
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
-												return newLink().
-													ID(lr.Slug).
-													Class("glow").
-													Icon(newSVGIcon().RawSVG(playSVG)).
-													Label(lr.Name).
-													Href("/" + lr.Class + "/" + lr.Slug).
-													Focus(lr.Slug == n.IcurrentStream.Slug)
+												if lr.Online == true {
+													gameVersionIcon := parseTitle(lr.Title)
+													return app.Div().
+														Body(
+															newLink().
+																ID(lr.Slug).
+																Class("glow").
+																Label("🔴 "+lr.Name+" / "+strconv.Itoa(lr.Viewers)).
+																Href("/"+lr.Class+"/"+lr.Slug).
+																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
+																Focus(lr.Slug == n.IcurrentStream.Slug),
+															app.Div().Class("linkDescription").Text(lr.Title),
+														)
+													// return newLink().
+													// 		ID(lr.Slug).
+													// 		Class("glow").
+													// 		// Icon(newSVGIcon().RawSVG(playSVG)).
+													// 		Label("🔴 " + lr.Name + " / " + strconv.Itoa(lr.Viewers)).
+													// 		Href("/" + lr.Class + "/" + lr.Slug).
+													// 		Focus(lr.Slug == n.IcurrentStream.Slug),
+													// 	app.Div().Class("infolinkDescription").Text("TEST")
+
+												} else {
+													return newLink().
+														ID(lr.Slug).
+														Class("offlineLink").
+														// Icon(newSVGIcon().RawSVG(playSVG)).
+														Label(lr.Name).
+														Href("/" + lr.Class + "/" + lr.Slug).
+														Focus(lr.Slug == n.IcurrentStream.Slug)
+												}
 											}),
 										),
 								),

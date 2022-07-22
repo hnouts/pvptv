@@ -28,9 +28,34 @@ func newClasses() *classes {
 func getAllClasses() []classes {
 	classes := []classes{
 		{
-			Slug:    "priest",
-			Name:    "Priest",
+			Slug:    "death_knight",
+			Name:    "Death Knight",
 			Classic: true,
+		},
+		{
+			Slug:    "demon_hunter",
+			Name:    "Demon Hunter",
+			Classic: false,
+		},
+		{
+			Slug:    "druid",
+			Name:    "Druid",
+			Classic: true,
+		},
+		{
+			Slug:    "hunter",
+			Name:    "Hunter",
+			Classic: true,
+		},
+		{
+			Slug:    "mage",
+			Name:    "Mage",
+			Classic: true,
+		},
+		{
+			Slug:    "monk",
+			Name:    "Monk",
+			Classic: false,
 		},
 		{
 			Slug:    "paladin",
@@ -38,8 +63,28 @@ func getAllClasses() []classes {
 			Classic: true,
 		},
 		{
+			Slug:    "priest",
+			Name:    "Priest",
+			Classic: true,
+		},
+		{
 			Slug:    "rogue",
 			Name:    "Rogue",
+			Classic: true,
+		},
+		{
+			Slug:    "shaman",
+			Name:    "Shaman",
+			Classic: true,
+		},
+		{
+			Slug:    "warlock",
+			Name:    "Warlock",
+			Classic: true,
+		},
+		{
+			Slug:    "warrior",
+			Name:    "Warrior",
 			Classic: true,
 		},
 	}

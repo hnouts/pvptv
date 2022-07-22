@@ -226,7 +226,6 @@ func (p *twitchPlayer) onError(ctx app.Context, args []app.Value) {
 }
 
 func (p *twitchPlayer) OnUpdate(ctx app.Context) {
-	fmt.Println("+ :", p.Istream.Slug)
 	if p.Istream.Slug != "" && p.stream.Slug != p.Istream.Slug {
 		p.loadVideo(ctx)
 	}
@@ -237,8 +236,6 @@ func (p *twitchPlayer) Render() app.UI {
 	if p.player == nil {
 		volumeDisplay = "disabled"
 	}
-
-	fmt.Println("stream:", p.stream.Slug)
 
 	return app.Div().
 		Class("youtube").

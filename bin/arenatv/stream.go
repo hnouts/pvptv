@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -22,16 +23,9 @@ type stream struct {
 	isPlaying         bool
 	isUpdateAvailable bool
 	randHistory       []liveStream
-	// twitchToken       string
 }
 
 func newStream() *stream {
-	// println("NEW STREAM")
-	// fmt.Printf("%+v\n", tt)
-
-	// var newStream stream
-	// newStream.twitchToken = tt.AccessToken
-	// return &newStream
 	return &stream{}
 }
 
@@ -54,18 +48,30 @@ func (r *stream) OnResize(ctx app.Context) {
 
 func (r *stream) init(ctx app.Context) {
 	println("Print twitch token...")
-	fmt.Printf("%+v\n", r)
+	var twitchToken twitchAuth = <-getTwitchToken() // UGLY - too many requests for nothing here, TODO change it to cookie or something
+	fmt.Printf("%+v\n", twitchToken)
+
 	rand.Seed(uint64(time.Now().UnixNano()))
 	url := strings.Split(ctx.Page().URL().Path, "/")
 	allLives := getLiveStreamers()
 
 	for _, streamer := range allLives {
 		if isCurrentClass(streamer, url[1]) { // create new array of lives for current class
-
+			var streamerData streamData = <-getStreamData(streamer.Slug, twitchToken.AccessToken)
+			if len(streamerData.Data) == 0 {
+				streamer.Online = false
+			} else {
+				streamer.Viewers = streamerData.Data[0].ViewerCount
+				streamer.Title = streamerData.Data[0].Title
+				streamer.Online = true
+			}
+			fmt.Printf("%+v\n", streamer)
 			r.lives = append(r.lives, streamer) // enrich lives with viewer count and online status
 		}
 	}
-
+	sort.SliceStable(r.lives, func(i, j int) bool {
+		return r.lives[i].Viewers > r.lives[j].Viewers
+	})
 	fmt.Printf("%+v\n", r.lives)
 }
 

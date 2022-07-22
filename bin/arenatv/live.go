@@ -14,6 +14,7 @@ type liveStream struct {
 	URL     string
 	Viewers int
 	Online  bool
+	Title   string
 	Cards   []string
 	Links   []socialLink
 	AddedAt time.Time
@@ -216,9 +217,6 @@ func socialIcon(slug string) string {
 
 	case "twitter":
 		return twitterSVG
-
-	case "spotify":
-		return spotifySVG
 
 	case "discord":
 		return discordSVG

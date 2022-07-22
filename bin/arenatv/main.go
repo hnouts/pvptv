@@ -35,8 +35,7 @@ func main() {
 		os.Interrupt,
 		syscall.SIGTERM,
 	)
-	var twitchToken twitchAuth = <-getTwitchToken()
-	fmt.Printf("%+v\n", twitchToken)
+	getTwitchToken()
 
 	for _, l := range getLiveStreamers() {
 		// app.Route("/"+l.Slug, newStream())
