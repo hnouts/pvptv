@@ -63,7 +63,14 @@ func (n *nav) OnNav(ctx app.Context) {
 }
 
 func parseTitle(t string) string {
-	return wotlk
+	t = strings.ToLower(t)
+	if strings.Contains(t, "wotlk") {
+		return wotlkSVG
+	}
+	if strings.Contains(t, "tbc") {
+		return tbcSVG
+	}
+	return retailSVG
 }
 
 func (n *nav) Render() app.UI {
@@ -111,11 +118,12 @@ func (n *nav) Render() app.UI {
 															newLink().
 																ID(lr.Slug).
 																Class("glow").
-																Label("🔴 "+lr.Name+" / "+strconv.Itoa(lr.Viewers)).
-																Href("/"+lr.Class+"/"+lr.Slug).
+																Label(lr.Name + " 🔴 " + strconv.Itoa(lr.Viewers)). // remove red emoji when svg is ok
+																Href("/" + lr.Class + "/" + lr.Slug).
+																Help(lr.Title).
 																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
-															app.Div().Class("linkDescription").Text(lr.Title),
+															// app.Div().Class("linkDescription").Text(lr.Title),
 														)
 													// return newLink().
 													// 		ID(lr.Slug).

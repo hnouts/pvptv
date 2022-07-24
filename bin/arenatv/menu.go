@@ -31,7 +31,7 @@ func (m *menu) OnAppInstallChange(ctx app.Context) {
 }
 
 func (m *menu) Render() app.UI {
-	linkClass := "link heading fit unselectable"
+	linkClass := "link heading fit unselectable icon-circle"
 
 	return app.Div().
 		Class("nav").
@@ -69,50 +69,62 @@ func (m *menu) Render() app.UI {
 											ui.Link().
 												Class(linkClass).
 												Label("Death Knight").
-												Href("/dk"),
+												Icon(dkSVG).
+												Href("/death_knight"),
 											ui.Link().
 												Class(linkClass).
 												Label("Demon Hunter").
-												Href("/dh"),
+												Icon(dhSVG).
+												Href("/demon_hunter"),
 											ui.Link().
 												Class(linkClass).
 												Label("Druid").
+												Icon(druidSVG).
 												Href("/druid"),
 											ui.Link().
 												Class(linkClass).
 												Label("Hunter").
+												Icon(hunterSVG).
 												Href("/hunter"),
 											ui.Link().
 												Class(linkClass).
 												Label("Mage").
+												Icon(mageSVG).
 												Href("/mage"),
 											ui.Link().
 												Class(linkClass).
 												Label("Monk").
+												Icon(monkSVG).
 												Href("/monk"),
 											ui.Link().
 												Class(linkClass).
 												Label("Paladin").
+												Icon(paladinSVG).
 												Href("/paladin"),
 											ui.Link().
 												Class(linkClass).
 												Label("Priest").
+												Icon(priestSVG).
 												Href("/priest"),
 											ui.Link().
 												Class(linkClass).
 												Label("Rogue").
+												Icon(rogueSVG).
 												Href("/rogue"),
 											ui.Link().
 												Class(linkClass).
 												Label("Shaman").
+												Icon(shamanSVG).
 												Href("/shaman"),
 											ui.Link().
 												Class(linkClass).
 												Label("Warlock").
+												Icon(warlockSVG).
 												Href("/warlock"),
 											ui.Link().
 												Class(linkClass).
 												Label("Warrior").
+												Icon(warriorSVG).
 												Href("/warrior"),
 										),
 								),

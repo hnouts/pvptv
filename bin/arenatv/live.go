@@ -32,13 +32,11 @@ func (r liveStream) twitchID() string {
 func getLiveStreamers() []liveStream {
 	streams := []liveStream{
 		{
-			Slug:    "hydramist",
-			Class:   "priest",
-			Name:    "Hydramist",
-			URL:     "https://www.twitch.tv/hydramist",
-			Viewers: 0,
-			Online:  false,
-			Cards:   []string{},
+			Slug:  "hydramist",
+			Class: "priest",
+			Name:  "Hydramist",
+			URL:   "https://www.twitch.tv/hydramist",
+			Cards: []string{},
 			Links: []socialLink{
 				{
 					Slug: "website",

@@ -22,7 +22,6 @@ type stream struct {
 	current           liveStream
 	isPlaying         bool
 	isUpdateAvailable bool
-	randHistory       []liveStream
 }
 
 func newStream() *stream {
@@ -72,7 +71,7 @@ func (r *stream) init(ctx app.Context) {
 	sort.SliceStable(r.lives, func(i, j int) bool {
 		return r.lives[i].Viewers > r.lives[j].Viewers
 	})
-	fmt.Printf("%+v\n", r.lives)
+	// fmt.Printf("%+v\n", r.lives)
 }
 
 func isCurrentClass(streamer liveStream, class string) bool {
@@ -84,7 +83,7 @@ func (r *stream) load(ctx app.Context) {
 	url := strings.Split(ctx.Page().URL().Path, "/")
 	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
 	if slug == "" || len(url) < 3 {
-		r.current = r.randomStreamer()
+		r.current = r.lives[0]
 		u := *ctx.Page().URL()
 		u.Path = "/" + r.current.Class + "/" + r.current.Slug
 		ctx.Page().ReplaceURL(&u)
@@ -107,21 +106,6 @@ func (r *stream) load(ctx app.Context) {
 
 func (r *stream) OnAppUpdate(ctx app.Context) {
 	r.isUpdateAvailable = ctx.AppUpdateAvailable()
-}
-
-func (r *stream) randomStreamer() liveStream {
-	if len(r.randHistory) == 0 {
-		r.randHistory = make([]liveStream, len(r.lives))
-		copy(r.randHistory, r.lives)
-	}
-
-	idx := rand.Intn(len(r.randHistory))
-	stream := r.randHistory[idx]
-
-	copy(r.randHistory[idx:], r.randHistory[idx+1:])
-	r.randHistory = r.randHistory[:len(r.randHistory)-1]
-
-	return stream
 }
 
 func (r *stream) Render() app.UI {
@@ -167,14 +151,16 @@ func (r *stream) Render() app.UI {
 									),
 								),
 						),
-					app.Div().
-						Class("hspace-out").
-						Class("vspace-content").
-						Body(
-							newInfo().
-								Stream(r.current).
-								Playing(r.isPlaying),
-						),
+					app.If(!r.current.Online,
+						app.Div().
+							Class("hspace-out").
+							Class("vspace-content").
+							Body(
+								newInfo().
+									Stream(r.current).
+									Playing(r.isPlaying),
+							),
+					),
 				),
 		)
 }

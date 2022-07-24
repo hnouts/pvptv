@@ -188,6 +188,10 @@ a {
   user-select: none;
 }
 
+.icon-circle svg {
+  border-radius: 50%;
+}
+
 .no-overflow {
   overflow: hidden;
 }
@@ -380,13 +384,6 @@ input[type="range"]:hover::-moz-range-thumb {
   display: none;
 }
 
-.link:hover + .linkDescription,
-.linkDescription:hover {
-  display: initial;
-  animation: fade-in 0.5s;
-  margin-left: 1rem;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -415,6 +412,13 @@ input[type="range"]:hover::-moz-range-thumb {
 
 .link-update .link-icon {
   margin-right: 3px;
+}
+
+
+.link .link-icon .link-icon:hover .linkDescription,
+.linkDescription:hover {
+  display: initial;
+  animation: fade-in 0.5s;
 }
 
 /* -----------------------------------------------------------------------------
