@@ -30,7 +30,9 @@ func (p *homePage) initPage(ctx app.Context) {
 
 func (p *homePage) Render() app.UI {
 	return newPage().
-		Index().
+		Index(
+			newIndexLink().Title("What is go-app?"),
+		).
 		Content(
 			ui.Flow().
 				StretchItems().

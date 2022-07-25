@@ -51,7 +51,7 @@ func main() {
 	for _, c := range getAllClasses() {
 		app.Route("/"+c.Slug, newStream())
 	}
-	app.Route("/", newPage())
+	app.Route("/", newHomePage())
 	app.RunWhenOnBrowser()
 
 	defer cancel()

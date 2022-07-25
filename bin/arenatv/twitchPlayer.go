@@ -308,12 +308,6 @@ func (p *twitchPlayer) Render() app.UI {
 							Disabled(p.player == nil || p.isBuffering).
 							OnClick(p.onPlayClicked),
 					),
-					newControl().
-						Class("control-main").
-						Icon(newSVGIcon().
-							Size(controlMainIconSize).
-							RawSVG(shuffleSVG)).
-						OnClick(p.onShuffleClicked),
 					app.If(p.volume.Value > 60,
 						newControl().Icon(newSVGIcon().
 							Size(controlIconSize).

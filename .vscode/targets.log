@@ -10,7 +10,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 make.exe: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Fri Jul 15 12:47:53 2022
+# Make data base, printed on Mon Jul 25 21:59:46 2022
 
 # Variables
 
@@ -19,17 +19,18 @@ make.exe: *** No rule to make target `all'.  Stop.
 # automatic
 ?F = $(notdir $?)
 # makefile
- 
 MAKEFLAGS = Rrqp
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
+ 
 @D = $(patsubst %/,%,$(dir $@))
 # environment
 HOMEDRIVE = C:
 # automatic
 @F = $(notdir $@)
 # automatic
+ 
 ^D = $(patsubst %/,%,$(dir $^))
 # makefile
 CURDIR := /e/Coding/arenatv
@@ -47,13 +48,21 @@ FP_NO_HOST_CHECK = NO
 ONEDRIVE = C:\Users\Selkal\OneDrive
 # environment
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+ 
 # makefile (from `makefile', line 1)
 MAKEFILE_LIST :=  makefile
 # environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
+# environment
+ 
 TMP = /tmp
+ 
 # environment
+ 
 QT_SCALE_FACTOR_ROUNDING_POLICY = RoundPreferFloor
+ 
 # environment
+ 
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 PROGRAMW6432 = C:\Program Files
@@ -84,7 +93,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_15784_TUTHQRIUXNPCBCEE
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_10380_KFRZMCLRSWWGEFHB
 # environment
 COMPUTERNAME = SELKAL-PC
 # environment
@@ -125,8 +134,11 @@ MAKECMDGOALS := all
 MAKE_VERSION := 3.81
 # makefile
 .DEFAULT_GOAL := build
+ 
 # environment
+ 
 PROGRAMFILES(X86) = C:\Program Files (x86)
+ 
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -200,11 +212,20 @@ PROCESSOR_LEVEL = 6
 # environment
 TERM = cygwin
 # environment
-VSCODE_PID = 15784
+ 
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
+ 
 # environment
+ 
+VSCODE_PID = 10380
+ 
+# environment
+ 
 USERDOMAIN_ROAMINGPROFILE = Selkal-PC
+ 
 # variable set hash-table stats:
-# Load=94/1024=9%, Rehash=0, Collisions=10/116=9%
+ 
+# Load=96/1024=9%, Rehash=0, Collisions=10/118=8%
 
 # Pattern-specific Variable Values
 
@@ -226,7 +247,6 @@ USERDOMAIN_ROAMINGPROFILE = Selkal-PC
 all:
 #  Command-line target.
 #  Implicit rule search has been done.
- 
 #  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
@@ -237,7 +257,6 @@ all:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 # Not a target:
 makefile:
@@ -293,6 +312,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Jul 15 12:47:53 2022
+# Finished Make data base on Mon Jul 25 21:59:46 2022
 
  
