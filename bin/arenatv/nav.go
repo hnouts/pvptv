@@ -119,7 +119,7 @@ func (n *nav) Render() app.UI {
 																ID(lr.Slug).
 																Class("glow").
 																Label(lr.Name + " 🔴 " + strconv.Itoa(lr.Viewers)). // remove red emoji when svg is ok
-																Href("/" + lr.Class + "/" + lr.Slug).
+																Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																Help(lr.Title).
 																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
@@ -140,7 +140,7 @@ func (n *nav) Render() app.UI {
 														Class("offlineLink").
 														// Icon(newSVGIcon().RawSVG(playSVG)).
 														Label(lr.Name).
-														Href("/" + lr.Class + "/" + lr.Slug).
+														Href("/" + n.IcurrentClass + "/" + lr.Slug).
 														Focus(lr.Slug == n.IcurrentStream.Slug)
 												}
 											}),

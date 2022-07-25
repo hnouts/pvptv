@@ -20,6 +20,7 @@ type stream struct {
 
 	lives             []liveStream
 	current           liveStream
+	classInUrl        string
 	isPlaying         bool
 	isUpdateAvailable bool
 }
@@ -75,17 +76,22 @@ func (r *stream) init(ctx app.Context) {
 }
 
 func isCurrentClass(streamer liveStream, class string) bool {
-
-	return streamer.Class == class
+	for _, b := range streamer.ClassList {
+		if b == class {
+			return true
+		}
+	}
+	return false
 }
 
 func (r *stream) load(ctx app.Context) {
 	url := strings.Split(ctx.Page().URL().Path, "/")
+	r.classInUrl = url[1]
 	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
 	if slug == "" || len(url) < 3 {
 		r.current = r.lives[0]
 		u := *ctx.Page().URL()
-		u.Path = "/" + r.current.Class + "/" + r.current.Slug
+		u.Path = "/" + url[1] + "/" + r.current.Slug
 		ctx.Page().ReplaceURL(&u)
 	} else {
 		for _, lr := range r.lives {
@@ -123,7 +129,7 @@ func (r *stream) Render() app.UI {
 				Class("fill").
 				PaneWidth(menuWidth).
 				Menu(newNav().
-					CurrentClass(r.current.Class).
+					CurrentClass(r.classInUrl).
 					LiveStreams(r.lives).
 					CurrentStream(r.current)).
 				HamburgerMenu(newNav().

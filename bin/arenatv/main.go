@@ -39,7 +39,13 @@ func main() {
 
 	for _, l := range getLiveStreamers() {
 		// app.Route("/"+l.Slug, newStream())
-		app.Route("/"+l.Class+"/"+l.Slug, newStream())
+		if len(l.ClassList) > 1 {
+			for c := range l.ClassList {
+				app.Route("/"+l.ClassList[c]+"/"+l.Slug, newStream())
+			}
+		} else {
+			app.Route("/"+l.ClassList[0]+"/"+l.Slug, newStream())
+		}
 	}
 
 	for _, c := range getAllClasses() {
