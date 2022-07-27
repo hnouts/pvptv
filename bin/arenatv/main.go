@@ -35,7 +35,6 @@ func main() {
 		os.Interrupt,
 		syscall.SIGTERM,
 	)
-	getTwitchToken()
 
 	for _, l := range getLiveStreamers() {
 		// app.Route("/"+l.Slug, newStream())

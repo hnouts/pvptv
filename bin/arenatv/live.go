@@ -30,6 +30,29 @@ func (r liveStream) twitchID() string {
 	return path.Base(r.URL)
 }
 
+func getLiveStreamersForAClass(class string) []liveStream {
+	defer timer()()
+	streams := getLiveStreamers()
+	println(class)
+	var filteredStreams []liveStream
+
+	for _, streamer := range streams {
+		if isCurrentClass(streamer, class) { // create new array of lives for current class
+			filteredStreams = append(filteredStreams, streamer) // enrich lives with viewer count and online status
+		}
+	}
+	return filteredStreams
+}
+
+func isCurrentClass(streamer liveStream, class string) bool {
+	for _, b := range streamer.ClassList {
+		if b == class {
+			return true
+		}
+	}
+	return false
+}
+
 func getLiveStreamers() []liveStream {
 	streams := []liveStream{
 		{

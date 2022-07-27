@@ -76,11 +76,60 @@ func getTwitchToken() <-chan twitchAuth {
 	return tt
 }
 
+func getMultipleStreamsData(streams []liveStream, token string) <-chan streamData {
+	request := ""
+	for _, streamer := range streams {
+		request += "user_login=" + streamer.Slug + "&"
+	}
+
+	url := "https://api.twitch.tv/helix/streams?" + request
+	method := "GET"
+	payload := strings.NewReader("")
+	client := &http.Client{}
+	println("Called getStreamData...")
+
+	sd := make(chan streamData)
+
+	go func() {
+		req, err := http.NewRequest(method, url, payload)
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+		req.Header.Add("Client-Id", "3f7ouqiwbe2x7mpqsl3qvipx4kjkxm")
+		req.Header.Add("Authorization", "Bearer "+token)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		res, err := client.Do(req)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		defer res.Body.Close()
+
+		b, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		var streamdata streamData
+
+		err = json.Unmarshal(b, &streamdata)
+		if err != nil {
+			panic(err)
+		}
+
+		sd <- streamData(streamdata)
+	}()
+	return sd
+}
+
 func getStreamData(user_name string, token string) <-chan streamData {
 	url := "https://api.twitch.tv/helix/streams?user_login=" + user_name
 	method := "GET"
 	payload := strings.NewReader("")
 	client := &http.Client{}
+	println("Called getStreamData...")
 
 	sd := make(chan streamData)
 

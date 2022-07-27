@@ -31,12 +31,15 @@ func (p *homePage) initPage(ctx app.Context) {
 func (p *homePage) Render() app.UI {
 	return newPage().
 		Index(
-			newIndexLink().Title("What is go-app?"),
+			newIndexLink().Title("What is arenatv?"),
+			newIndexLink().Title("Twitch Purple screen of death"),
 		).
 		Content(
 			ui.Flow().
 				StretchItems().
 				Spacing(84).
-				Content(),
+				Content(
+					app.Div().Text("homepage"),
+				),
 		)
 }

@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-	"time"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
-	"golang.org/x/exp/rand"
 )
 
 const (
@@ -47,41 +45,35 @@ func (r *stream) OnResize(ctx app.Context) {
 }
 
 func (r *stream) init(ctx app.Context) {
-	println("Print twitch token...")
-	var twitchToken twitchAuth = <-getTwitchToken() // UGLY - too many requests for nothing here, TODO change it to cookie or something
-	fmt.Printf("%+v\n", twitchToken)
-
-	rand.Seed(uint64(time.Now().UnixNano()))
+	defer timer()()
+	var twitchToken twitchAuth = <-getTwitchToken()
 	url := strings.Split(ctx.Page().URL().Path, "/")
-	allLives := getLiveStreamers()
+	currentPageLives := getLiveStreamersForAClass(url[1])
+	var livesData streamData = <-getMultipleStreamsData(currentPageLives, twitchToken.AccessToken)
 
-	for _, streamer := range allLives {
-		if isCurrentClass(streamer, url[1]) { // create new array of lives for current class
-			var streamerData streamData = <-getStreamData(streamer.Slug, twitchToken.AccessToken)
-			if len(streamerData.Data) == 0 {
-				streamer.Online = false
-			} else {
-				streamer.Viewers = streamerData.Data[0].ViewerCount
-				streamer.Title = streamerData.Data[0].Title
-				streamer.Online = true
+	if len(livesData.Data) == 0 {
+		for _, s := range currentPageLives {
+			s.Online = false
+			r.lives = append(r.lives, s)
+		}
+	} else {
+		for _, cpl := range currentPageLives {
+			for _, ld := range livesData.Data {
+				if cpl.Slug == ld.UserLogin {
+					cpl.Online = true
+					cpl.Title = ld.Title
+					cpl.Viewers = ld.ViewerCount
+				}
 			}
-			fmt.Printf("%+v\n", streamer)
-			r.lives = append(r.lives, streamer) // enrich lives with viewer count and online status
+			r.lives = append(r.lives, cpl)
 		}
 	}
+
 	sort.SliceStable(r.lives, func(i, j int) bool {
 		return r.lives[i].Viewers > r.lives[j].Viewers
 	})
+	// println("----------FINAL LIVESTREAM-----------------")
 	// fmt.Printf("%+v\n", r.lives)
-}
-
-func isCurrentClass(streamer liveStream, class string) bool {
-	for _, b := range streamer.ClassList {
-		if b == class {
-			return true
-		}
-	}
-	return false
 }
 
 func (r *stream) load(ctx app.Context) {
