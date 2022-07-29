@@ -96,6 +96,21 @@ func (n *nav) Render() app.UI {
 								Text("Arenatv"),
 						),
 				),
+			app.Div().
+				Class("nav-support").
+				Class("hspace-out").
+				Body(
+					ui.Stack().
+						Center().
+						Middle().
+						Content(
+							ui.Icon().
+								Class("icon-circle").
+								Class("unselectable").
+								Size(80).
+								Src(mageSVG),
+						),
+				),
 			app.Nav().
 				Class("nav-content").
 				Body(

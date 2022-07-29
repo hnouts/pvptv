@@ -82,9 +82,9 @@ func (r *stream) load(ctx app.Context) {
 	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
 	if slug == "" || len(url) < 3 {
 		r.current = r.lives[0]
-		u := *ctx.Page().URL()
-		u.Path = "/" + url[1] + "/" + r.current.Slug
-		ctx.Page().ReplaceURL(&u)
+		// u := *ctx.Page().URL()
+		// u.Path = "/" + url[1] + "/" + r.current.Slug
+		// ctx.Page().ReplaceURL(&u)
 	} else {
 		for _, lr := range r.lives {
 			if slug == lr.Slug {
@@ -99,7 +99,6 @@ func (r *stream) load(ctx app.Context) {
 
 	ctx.Page().SetTitle(fmt.Sprintf("%s Stream", r.current.Name))
 	// ctx.Page().SetDescription(fmt.Sprintf("Listen to Lo-fi music stream %s on the Lofimusic open-source player: an installable Progressive Web app (PWA) written in Go (Golang).", r.current.Name))
-	// ctx.Page().SetImage("https://lofimusic.app/web/covers/" + slug + ".png")
 }
 
 func (r *stream) OnAppUpdate(ctx app.Context) {
