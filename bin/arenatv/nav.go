@@ -15,8 +15,8 @@ type nav struct {
 	IcurrentClass  string
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
-
-	isFirstLoad bool
+	classSvg       string
+	isFirstLoad    bool
 }
 
 func newNav() *nav {
@@ -53,6 +53,9 @@ func (n *nav) CurrentStream(v liveStream) *nav {
 
 func (n *nav) OnMount(ctx app.Context) {
 	n.isFirstLoad = true
+	url := strings.Split(ctx.Page().URL().Path, "/")
+	n.classSvg = parseSvg(url[1])
+	println("class svg is : ", n.classSvg)
 }
 
 func (n *nav) OnNav(ctx app.Context) {
@@ -69,6 +72,46 @@ func parseTitle(t string) string {
 	}
 	if strings.Contains(t, "tbc") {
 		return tbcSVG
+	}
+	return retailSVG
+}
+
+func parseSvg(s string) string {
+	if s == "death_knight" {
+		return dkSVG
+	}
+	if s == "demon_hunter" {
+		return dhSVG
+	}
+	if s == "druid" {
+		return druidSVG
+	}
+	if s == "hunter" {
+		return hunterSVG
+	}
+	if s == "mage" {
+		return mageSVG
+	}
+	if s == "monk" {
+		return monkSVG
+	}
+	if s == "paladin" {
+		return paladinSVG
+	}
+	if s == "priest" {
+		return priestSVG
+	}
+	if s == "rogue" {
+		return rogueSVG
+	}
+	if s == "shaman" {
+		return shamanSVG
+	}
+	if s == "warlock" {
+		return warlockSVG
+	}
+	if s == "warrior" {
+		return warriorSVG
 	}
 	return retailSVG
 }
@@ -107,8 +150,8 @@ func (n *nav) Render() app.UI {
 							ui.Icon().
 								Class("icon-circle").
 								Class("unselectable").
-								Size(80).
-								Src(mageSVG),
+								Size(65).
+								Src(n.classSvg),
 						),
 				),
 			app.Nav().
