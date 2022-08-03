@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"sync"
 
@@ -43,9 +44,8 @@ type twitchPlayer struct {
 	volume      volume
 	err         error
 
-	realeaseOnReady      func()
-	releaseOnStateChange func()
-	releaseOnError       func()
+	realeaseOnReady func()
+	releaseOnError  func()
 }
 
 func newTwitchPlayer() *twitchPlayer {
@@ -86,9 +86,6 @@ func (p *twitchPlayer) OnDismount() {
 	if p.realeaseOnReady != nil {
 		p.realeaseOnReady()
 	}
-	if p.releaseOnStateChange != nil {
-		p.releaseOnStateChange()
-	}
 	if p.releaseOnError != nil {
 		p.releaseOnError()
 	}
@@ -100,100 +97,80 @@ func (p *twitchPlayer) OnResize(ctx app.Context) {
 
 func (p *twitchPlayer) loadVideo(ctx app.Context) {
 
-	// if isOnYouTubeIframeAPIReady := app.Window().Get("isOnYouTubeIframeAPIReady").Bool(); !isOnYouTubeIframeAPIReady && app.IsClient {
-	// 	fmt.Println("CALLED isOnYouTubeIframeAPIReady :", ctx)
-	// 	ctx.Async(func() {
-	// 		time.Sleep(time.Millisecond * 1000)
-	// 		ctx.Dispatch(p.loadVideo)
-	// 	})
-	// 	return
-	// }
-
 	if p.Istream.Slug != p.stream.Slug {
 		p.stream = p.Istream
 		if p.player != nil {
-			p.loadVideoByID(ctx, p.stream.twitchID())
+			p.loadChannel(ctx, p.stream.twitchSlug())
 			return
 		}
 	}
 
 	p.initPlayer.Do(func() {
-		// onReady := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-		// 	ctx.Dispatch(func(ctx app.Context) {
-		// 		p.setVolume(ctx, p.volume.Value)
-		// 		p.play(ctx)
-		// 	})
-		// 	return nil
-		// })
-		// p.realeaseOnReady = onReady.Release
+		READY := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
+			ctx.Dispatch(func(ctx app.Context) {
+				p.setVolume(ctx, p.volume.Value)
+				p.play(ctx)
+			})
+			return nil
+		})
+		p.realeaseOnReady = READY.Release
 
-		// onStateChange := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-		// 	ctx.Dispatch(func(ctx app.Context) {
-		// 		p.onStateChange(ctx, args)
-		// 	})
-		// 	return nil
-		// })
-		// p.releaseOnStateChange = onStateChange.Release
+		ERROR := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
+			ctx.Dispatch(func(ctx app.Context) {
+				p.onError(ctx, args)
+			})
+			return nil
+		})
+		p.releaseOnError = ERROR.Release
 
-		// onError := app.FuncOf(func(this app.Value, args []app.Value) interface{} {
-		// 	ctx.Dispatch(func(ctx app.Context) {
-		// 		p.onError(ctx, args)
-		// 	})
-		// 	return nil
-		// })
-		// p.releaseOnError = onError.Release
+		p.player = app.Window().
+			Get("Twitch").
+			Get("Player").
+			New("twitch-player", map[string]interface{}{
+				"channel": p.stream.twitchSlug(),
+				"parent":  "localhost",
+			})
 
-		// p.player = app.Window().
-		// 	Get("YT").
-		// 	Get("Player").
-		// 	New("youtube-player", map[string]interface{}{
-		// 		"channel": p.stream.twitchID(),
-		// 		"parent":  "localhost",
-		// 		"events": map[string]interface{}{
-		// 			"onReady":       onReady,
-		// 			"onStateChange": onStateChange,
-		// 			"onError":       onError,
-		// 		},
-		// 	})
-		// fmt.Println("P.PLAYER:")
-		// fmt.Printf("%+v\n", p)
-
+		p.player.Call("addEventListener", "ready", READY)
+		p.player.Call("addEventListener", "error", ERROR)
+		// p.isBuffering = false
+		// p.isPlaying = true
 	})
 }
 
-func (p *twitchPlayer) onStateChange(ctx app.Context, args []app.Value) {
-	switch args[0].Get("data").Int() {
-	case unstarted:
-		p.isPlaying = false
-		p.isBuffering = false
+// func (p *twitchPlayer) onStateChange(ctx app.Context, args []app.Value) {
+// 	switch args[0].Get("data").Int() {
+// 	case unstarted:
+// 		p.isPlaying = false
+// 		p.isBuffering = false
 
-	case ended:
-		p.isPlaying = false
-		p.isBuffering = false
-		if p.err == nil {
-			p.play(ctx)
-		}
+// 	case ended:
+// 		p.isPlaying = false
+// 		p.isBuffering = false
+// 		if p.err == nil {
+// 			p.play(ctx)
+// 		}
 
-	case playing:
-		p.isPlaying = true
-		p.isBuffering = false
-		p.err = nil
+// 	case playing:
+// 		p.isPlaying = true
+// 		p.isBuffering = false
+// 		p.err = nil
 
-	case paused:
-		p.isPlaying = false
-		p.isBuffering = false
+// 	case paused:
+// 		p.isPlaying = false
+// 		p.isBuffering = false
 
-	case buffering:
-		p.isBuffering = true
-		p.err = nil
-	}
+// 	case buffering:
+// 		p.isBuffering = true
+// 		p.err = nil
+// 	}
 
-	if p.IonPlaybackChange != nil {
-		ctx.Emit(func() {
-			p.IonPlaybackChange(ctx, p.isPlaying)
-		})
-	}
-}
+// 	if p.IonPlaybackChange != nil {
+// 		ctx.Emit(func() {
+// 			p.IonPlaybackChange(ctx, p.isPlaying)
+// 		})
+// 	}
+// }
 
 func (p *twitchPlayer) onError(ctx app.Context, args []app.Value) {
 	fmt.Println("data Err:", ctx)
@@ -245,25 +222,12 @@ func (p *twitchPlayer) Render() app.UI {
 				Class("youtube-video").
 				Body(
 					app.Div().
-						ID("youtube-player").
+						ID("twitch-player").
 						Class("unselectable").
 						Body(
-							// app.Script().
-							// app.Script().Src("https://player.twitch.tv/js/embed/v1.js"),
-							// app.Script().Src("https://www.youtube.com/iframe_api"),
-							// Async(true),
-							app.If(p.stream.Slug != "",
-								app.IFrame().
-									ID("yt-container").
-									Allow("autoplay").
-									Allow("accelerometer").
-									Allow("encrypted-media").
-									Allow("picture-in-picture").
-									Sandbox("allow-presentation allow-same-origin allow-scripts allow-popups").
-									Src("https://player.twitch.tv/?channel="+p.stream.Slug+"&parent=localhost"),
-							)),
+							app.Script().Src("https://player.twitch.tv/js/embed/v1.js")),
 				),
-			app.If(p.stream.Slug == "" || p.err != nil,
+			app.If(!p.isPlaying || p.isBuffering || p.err != nil,
 				app.Div().
 					Class("youtube-noplay").
 					Class("fill").
@@ -362,10 +326,6 @@ func (p *twitchPlayer) onBackClicked(ctx app.Context, e app.Event) {
 	app.Window().Get("history").Call("back")
 }
 
-func (p *twitchPlayer) onShuffleClicked(ctx app.Context, e app.Event) {
-	ctx.Navigate("/")
-}
-
 func (p *twitchPlayer) onSoundClicked(ctx app.Context, e app.Event) {
 	if p.volume.Value == 0 {
 		p.setVolume(ctx, p.volume.LastHearableValue)
@@ -379,25 +339,32 @@ func (p *twitchPlayer) onVolumeChanged(ctx app.Context, e app.Event) {
 	p.setVolume(ctx, volume)
 }
 
-func (p *twitchPlayer) loadVideoByID(ctx app.Context, id string) {
-	p.player.Call("loadVideoById", id, 0)
+func (p *twitchPlayer) loadChannel(ctx app.Context, id string) {
+	p.player.Call("setChannel", id)
 }
 
 func (p *twitchPlayer) play(ctx app.Context) {
-	p.player.Call("playVideo")
+	println("Starting streaming...")
+	p.player.Call("play")
+	p.isPlaying = true
+	p.isBuffering = false
+
 }
 
 func (p *twitchPlayer) pause(ctx app.Context) {
-	p.player.Call("pauseVideo")
+	p.player.Call("pause")
+	p.isPlaying = false
 }
 
 func (p *twitchPlayer) setVolume(ctx app.Context, v int) {
+	var floatVol float64 = float64(v)
 	if v == 0 {
-		p.player.Call("mute")
+		p.player.Call("setMuted", true)
 	} else {
 		p.volume.LastHearableValue = v
-		p.player.Call("unMute")
-		p.player.Call("setVolume", v)
+		p.player.Call("setMuted", false)
+		floatVol = floatVol / 100.0
+		p.player.Call("setVolume", math.Floor(floatVol*100)/100)
 	}
 
 	p.volume.Value = v

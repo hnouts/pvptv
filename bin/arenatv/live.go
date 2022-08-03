@@ -1,7 +1,6 @@
 package main
 
 import (
-	"path"
 	"sort"
 	"strings"
 	"time"
@@ -26,8 +25,8 @@ type socialLink struct {
 	URL  string
 }
 
-func (r liveStream) twitchID() string {
-	return path.Base(r.URL)
+func (r liveStream) twitchSlug() string {
+	return r.Slug
 }
 
 func getLiveStreamersForAClass(class string) []liveStream {

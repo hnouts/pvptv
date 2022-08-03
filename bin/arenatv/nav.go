@@ -55,7 +55,6 @@ func (n *nav) OnMount(ctx app.Context) {
 	n.isFirstLoad = true
 	url := strings.Split(ctx.Page().URL().Path, "/")
 	n.classSvg = parseSvg(url[1])
-	println("class svg is : ", n.classSvg)
 }
 
 func (n *nav) OnNav(ctx app.Context) {

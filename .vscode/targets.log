@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug  1 17:10:44 2022
+# Make data base, printed on Wed Aug  3 14:11:48 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/bin/code
 # environment
-JOURNAL_STREAM = 9:53374
+JOURNAL_STREAM = 9:58607
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'makefile', line 1)
@@ -71,9 +71,9 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1854
+MANAGERPID = 2046
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-911bbb6f-4c9b-487d-86ee-3fac26b8ff9d.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8e8077c0-3f53-42f3-9b4b-9c42693357f5.sock
 # environment
 VSCODE_CWD = /home/hnouts/Projects/arenatv
 # environment
@@ -81,13 +81,13 @@ GOPROXY = https://proxy.golang.org,direct
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/hnouts/.yarn/bin:/home/hnouts/.config/yarn/global/node_modules/.bin:/home/hnouts/bin:/usr/local/bin:/home/hnouts/.rbenv/bin:/home/hnouts/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin
+PATH = /usr/local/go/bin:/home/hnouts/.yarn/bin:/home/hnouts/.config/yarn/global/node_modules/.bin:/home/hnouts/bin:/usr/local/bin:/home/hnouts/.rbenv/bin:/home/hnouts/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/hnouts-ThinkPad-T580:@/tmp/.ICE-unix/2083,unix/hnouts-ThinkPad-T580:/tmp/.ICE-unix/2083
+SESSION_MANAGER = local/hnouts-ThinkPad-T580:@/tmp/.ICE-unix/2283,unix/hnouts-ThinkPad-T580:/tmp/.ICE-unix/2283
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -99,7 +99,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 0ea44fdb44e54a3299a99082f99f4154
+INVOCATION_ID = f9fe84d074084212830df7fddf45fa26
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -121,7 +121,7 @@ PWD = /home/hnouts/Projects/arenatv
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2045
+SSH_AGENT_PID = 2245
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -209,11 +209,11 @@ LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/f9e5671c_31a6_47aa_9441_27017696d457
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/08a1e475_bb49_4306_9e9c_c498817a0b81
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.1946
+GNOME_TERMINAL_SERVICE = :1.111
 # default
 SUFFIXES := 
 # environment
@@ -233,7 +233,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 52676
+VSCODE_PID = 42534
 # variable set hash-table stats:
 # Load=111/1024=11%, Rehash=0, Collisions=15/136=11%
 
@@ -287,7 +287,6 @@ run: build
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 6):
 	@cd docs && ./arenatv
- 
 
 clean:
 #  Implicit rule search has not been done.
@@ -305,12 +304,13 @@ clean:
 
 # No general ('VPATH' variable) search path.
 
+ 
 # strcache buffers: 1 (0) / strings = 18 / storage = 131 B / avg = 7 B
 # current buf: size = 8162 B / used = 131 B / count = 18 / avg = 7 B
 
 # strcache performance: lookups = 26 / hit rate = 30%
 # hash-table stats:
 # Load=18/8192=0%, Rehash=0, Collisions=1/26=4%
-# Finished Make data base on Mon Aug  1 17:10:44 2022
+# Finished Make data base on Wed Aug  3 14:11:48 2022
 
  
