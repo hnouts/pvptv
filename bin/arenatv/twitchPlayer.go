@@ -227,7 +227,7 @@ func (p *twitchPlayer) Render() app.UI {
 						Body(
 							app.Script().Src("https://player.twitch.tv/js/embed/v1.js")),
 				),
-			app.If(!p.isPlaying || p.isBuffering || p.err != nil,
+			app.If(p.isBuffering || p.err != nil,
 				app.Div().
 					Class("youtube-noplay").
 					Class("fill").

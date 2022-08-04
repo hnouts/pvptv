@@ -337,7 +337,7 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .nav-content {
-  height: calc(100% - 108px);
+  height: calc(100% - 223px);
 }
 
 .nav-content-homepage {

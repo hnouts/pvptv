@@ -54,6 +54,16 @@ func (m *menu) Render() app.UI {
 								Text("Arenatv"),
 						),
 				),
+			ui.Stack().
+				Center().
+				Middle().
+				Content(
+					ui.Icon().
+						Class("icon-circle").
+						Class("unselectable").
+						Size(110).
+						Src("/web/logo.png"),
+				),
 			app.Nav().Class("nav-content").
 				Body(
 					app.Div().

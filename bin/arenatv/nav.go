@@ -138,20 +138,30 @@ func (n *nav) Render() app.UI {
 								Text("Arenatv"),
 						),
 				),
-			app.Div().
-				Class("nav-support").
-				Class("hspace-out").
-				Body(
-					ui.Stack().
-						Center().
-						Middle().
-						Content(
-							ui.Icon().
-								Class("icon-circle").
-								Class("unselectable").
-								Size(65).
-								Src(n.classSvg),
-						),
+			// app.Div().
+			// 	Class("nav-support").
+			// 	Class("hspace-out").
+			// 	Body(
+			// 		ui.Stack().
+			// 			Center().
+			// 			Middle().
+			// 			Content(
+			// 				ui.Icon().
+			// 					Class("icon-circle").
+			// 					Class("unselectable").
+			// 					Size(70).
+			// 					Src(n.classSvg),
+			// 			),
+			// 	),
+			ui.Stack().
+				Center().
+				Middle().
+				Content(
+					ui.Icon().
+						Class("icon-circle").
+						Class("unselectable").
+						Size(75).
+						Src(n.classSvg),
 				),
 			app.Nav().
 				Class("nav-content").
