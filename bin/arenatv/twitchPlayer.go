@@ -223,7 +223,7 @@ func (p *twitchPlayer) Render() app.UI {
 				Body(
 					app.Div().
 						ID("twitch-player").
-						Class("unselectable").
+						// Class("unselectable").
 						Body(
 							app.Script().Src("https://player.twitch.tv/js/embed/v1.js")),
 				),

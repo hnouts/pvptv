@@ -125,6 +125,7 @@ func (r *stream) Render() app.UI {
 					CurrentStream(r.current)).
 				HamburgerMenu(newNav().
 					Class("background-overlay").
+					CurrentClass(r.classInUrl).
 					LiveStreams(r.lives).
 					CurrentStream(r.current)).
 				Content(

@@ -31,12 +31,12 @@ func (m *menu) OnAppInstallChange(ctx app.Context) {
 }
 
 func (m *menu) Render() app.UI {
-	linkClass := "link heading fit unselectable icon-circle"
+	linkClass := "link heading fit icon-circle"
 
 	return app.Div().
 		Class("nav").
 		Class("fill").
-		Class("unselectable").
+		// Class("unselectable").
 		Class(m.Iclass).
 		Body(
 			ui.Stack().
@@ -59,8 +59,8 @@ func (m *menu) Render() app.UI {
 				Middle().
 				Content(
 					ui.Icon().
-						Class("icon-circle").
-						Class("unselectable").
+						// Class("icon-circle").
+						// Class("unselectable").
 						Size(110).
 						Src("/web/logo.png"),
 				),
@@ -139,24 +139,6 @@ func (m *menu) Render() app.UI {
 										),
 								),
 						),
-					// app.Div().
-					// 	Class("nav-streams").
-					// 	Body(
-					// 		ui.Link().
-					// 			Class(linkClass).
-					// 			Label("Priest").
-					// 			Href("/priest"),
-					// 		ui.Link().
-					// 			Class(linkClass).
-					// 			Label("Paladin").
-					// 			Href("/paladin"),
-					// 		ui.Link().
-					// 			Class(linkClass).
-					// 			Label("Rogue").
-					// 			Href("/rogue")),
-
-					// app.Div().Class("info-title-separator"),
-
 					app.Div().
 						Class("nav-support").
 						Class("hspace-out").

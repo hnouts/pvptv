@@ -110,7 +110,7 @@ func (p *page) Render() app.UI {
 													Class("link").
 													Class("heading").
 													Class("fit").
-													Class("unselectable").
+													// Class("unselectable").
 													Icon(downloadSVG),
 											),
 									),
@@ -132,7 +132,7 @@ func (p *page) Render() app.UI {
 										Content(
 											ui.Icon().
 												Class("icon-left").
-												Class("unselectable").
+												// Class("unselectable").
 												Size(90).
 												Src(p.Iicon),
 											app.H1().Text(p.Ititle),

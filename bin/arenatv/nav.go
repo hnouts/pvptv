@@ -119,7 +119,7 @@ func (n *nav) Render() app.UI {
 	return app.Div().
 		Class("nav").
 		Class("fill").
-		Class("unselectable").
+		// Class("unselectable").
 		Class(n.Iclass).
 		Body(
 			ui.Stack().
@@ -138,29 +138,14 @@ func (n *nav) Render() app.UI {
 								Text("Arenatv"),
 						),
 				),
-			// app.Div().
-			// 	Class("nav-support").
-			// 	Class("hspace-out").
-			// 	Body(
-			// 		ui.Stack().
-			// 			Center().
-			// 			Middle().
-			// 			Content(
-			// 				ui.Icon().
-			// 					Class("icon-circle").
-			// 					Class("unselectable").
-			// 					Size(70).
-			// 					Src(n.classSvg),
-			// 			),
-			// 	),
 			ui.Stack().
 				Center().
 				Middle().
 				Content(
 					ui.Icon().
 						Class("icon-circle").
-						Class("unselectable").
-						Size(75).
+						// Class("unselectable").
+						Size(110).
 						Src(n.classSvg),
 				),
 			app.Nav().
@@ -185,22 +170,12 @@ func (n *nav) Render() app.UI {
 															newLink().
 																ID(lr.Slug).
 																Class("glow").
-																Label(lr.Name + " 🔴 " + strconv.Itoa(lr.Viewers)). // remove red emoji when svg is ok
+																Label(lr.Name + " 🔴 " + strconv.Itoa(lr.Viewers)).
 																Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																Help(lr.Title).
 																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
-															// app.Div().Class("linkDescription").Text(lr.Title),
 														)
-													// return newLink().
-													// 		ID(lr.Slug).
-													// 		Class("glow").
-													// 		// Icon(newSVGIcon().RawSVG(playSVG)).
-													// 		Label("🔴 " + lr.Name + " / " + strconv.Itoa(lr.Viewers)).
-													// 		Href("/" + lr.Class + "/" + lr.Slug).
-													// 		Focus(lr.Slug == n.IcurrentStream.Slug),
-													// 	app.Div().Class("infolinkDescription").Text("TEST")
-
 												} else {
 													return newLink().
 														ID(lr.Slug).
