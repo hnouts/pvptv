@@ -8,7 +8,6 @@ import (
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/errors"
-	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
 
 const (
@@ -127,8 +126,9 @@ func (p *twitchPlayer) loadVideo(ctx app.Context) {
 			Get("Twitch").
 			Get("Player").
 			New("twitch-player", map[string]interface{}{
-				"channel": p.stream.twitchSlug(),
-				"parent":  "localhost",
+				"channel":         p.stream.twitchSlug(),
+				"parent":          "localhost",
+				"allowfullscreen": true,
 			})
 
 		p.player.Call("addEventListener", "ready", READY)
@@ -209,10 +209,10 @@ func (p *twitchPlayer) OnUpdate(ctx app.Context) {
 }
 
 func (p *twitchPlayer) Render() app.UI {
-	volumeDisplay := ""
-	if p.player == nil {
-		volumeDisplay = "disabled"
-	}
+	// volumeDisplay := ""
+	// if p.player == nil {
+	// 	volumeDisplay = "disabled"
+	// }
 
 	return app.Div().
 		Class("youtube").
@@ -243,74 +243,74 @@ func (p *twitchPlayer) Render() app.UI {
 							Err(p.err),
 					),
 			),
-			ui.Stack().
-				Class("youtube-controls").
-				Class("hspace-out").
-				Class("vspace-top").
-				Class("vspace-bottom").
-				Center().
-				Middle().
-				Content(
-					app.Div().Class("youtube-left-space"),
-					newControl().
-						Class("youtube-back").
-						Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(backwardSVG)).
-						Disabled(!p.canBack).
-						OnClick(p.onBackClicked),
-					app.If(p.isPlaying || p.isBuffering,
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(pauseSVG)).
-							Disabled(p.player == nil).
-							OnClick(p.onPauseClicked),
-					).Else(
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(playSVG)).
-							Disabled(p.player == nil || p.isBuffering).
-							OnClick(p.onPlayClicked),
-					),
-					app.If(p.volume.Value > 60,
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(soundHighSVG)).
-							Disabled(p.player == nil).
-							OnClick(p.onSoundClicked),
-					).ElseIf(p.volume.Value > 20,
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(soundMediumSVG)).
-							Disabled(p.player == nil).
-							OnClick(p.onSoundClicked),
-					).ElseIf(p.volume.Value > 0,
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(soundLowSVG)).
-							Disabled(p.player == nil).
-							OnClick(p.onSoundClicked),
-					).Else(
-						newControl().Icon(newSVGIcon().
-							Size(controlIconSize).
-							RawSVG(soundMutedSVG)).
-							Disabled(p.player == nil).
-							OnClick(p.onSoundClicked),
-					),
-					app.Div().
-						Class("youtube-volume").
-						Class(volumeDisplay).
-						Body(
-							app.Input().
-								ID("youtube-volume").
-								Type("range").
-								Min("0").
-								Max("100").
-								Value(p.volume.Value).
-								OnChange(p.onVolumeChanged).
-								OnInput(p.onVolumeChanged),
-						),
-				),
+			// ui.Stack().
+			// 	Class("youtube-controls").
+			// 	Class("hspace-out").
+			// 	Class("vspace-top").
+			// 	Class("vspace-bottom").
+			// 	Center().
+			// 	Middle().
+			// 	Content(
+			// 		app.Div().Class("youtube-left-space"),
+			// 		newControl().
+			// 			Class("youtube-back").
+			// 			Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(backwardSVG)).
+			// 			Disabled(!p.canBack).
+			// 			OnClick(p.onBackClicked),
+			// 		app.If(p.isPlaying || p.isBuffering,
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(pauseSVG)).
+			// 				Disabled(p.player == nil).
+			// 				OnClick(p.onPauseClicked),
+			// 		).Else(
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(playSVG)).
+			// 				Disabled(p.player == nil || p.isBuffering).
+			// 				OnClick(p.onPlayClicked),
+			// 		),
+			// 		app.If(p.volume.Value > 60,
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(soundHighSVG)).
+			// 				Disabled(p.player == nil).
+			// 				OnClick(p.onSoundClicked),
+			// 		).ElseIf(p.volume.Value > 20,
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(soundMediumSVG)).
+			// 				Disabled(p.player == nil).
+			// 				OnClick(p.onSoundClicked),
+			// 		).ElseIf(p.volume.Value > 0,
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(soundLowSVG)).
+			// 				Disabled(p.player == nil).
+			// 				OnClick(p.onSoundClicked),
+			// 		).Else(
+			// 			newControl().Icon(newSVGIcon().
+			// 				Size(controlIconSize).
+			// 				RawSVG(soundMutedSVG)).
+			// 				Disabled(p.player == nil).
+			// 				OnClick(p.onSoundClicked),
+			// 		),
+			// 		app.Div().
+			// 			Class("youtube-volume").
+			// 			Class(volumeDisplay).
+			// 			Body(
+			// 				app.Input().
+			// 					ID("youtube-volume").
+			// 					Type("range").
+			// 					Min("0").
+			// 					Max("100").
+			// 					Value(p.volume.Value).
+			// 					OnChange(p.onVolumeChanged).
+			// 					OnInput(p.onVolumeChanged),
+			// 			),
+			// 	),
 		)
 }
 

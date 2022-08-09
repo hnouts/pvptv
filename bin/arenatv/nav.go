@@ -130,12 +130,21 @@ func (n *nav) Render() app.UI {
 					app.Header().
 						Body(
 							app.A().
+								Class("view-desktop").
 								Class("hApp").
 								Class("focus").
 								Class("glow").
 								Href("/").
-								// Text(n.IcurrentClass),
 								Text("Arenatv"),
+							app.If(len(n.IcurrentClass) != 0,
+								app.A().
+									Class("view-mobile").
+									Class("hApp").
+									Class("focus").
+									Class("glow").
+									Href("/").
+									Text("↩ "+n.IcurrentClass),
+							),
 						),
 				),
 			ui.Stack().
@@ -143,7 +152,7 @@ func (n *nav) Render() app.UI {
 				Middle().
 				Content(
 					ui.Icon().
-						Class("icon-circle").
+						Class("icon-circle-desktop").
 						// Class("unselectable").
 						Size(110).
 						Src(n.classSvg),

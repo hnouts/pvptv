@@ -83,19 +83,10 @@ func main() {
 		LoadingLabel: "WoW Arena stream gallery",
 		Name:         "Arenatv",
 		Image:        "/web/logo.png",
-		// RawHeaders: []string{
-		// 	`<script>
-		// 	var isOnYouTubeIframeAPIReady = false;
-		// 	function onYouTubeIframeAPIReady() {
-		// 		isOnYouTubeIframeAPIReady = true;
-		// 	}
-		// 	</script>`,
-		// },
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
 			"./web/arenatv.css",
 		},
-
 		ThemeColor: backgroundColor,
 		Title:      "Arenatv",
 	}

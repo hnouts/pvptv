@@ -53,14 +53,17 @@ func (m *menu) Render() app.UI {
 								Href("/").
 								Text("Arenatv"),
 						),
+					// ui.Icon().
+					// 	Class("icon-circle-mobile").
+					// 	Size(110).
+					// 	Src("/web/logo.png"),
 				),
 			ui.Stack().
 				Center().
 				Middle().
 				Content(
 					ui.Icon().
-						// Class("icon-circle").
-						// Class("unselectable").
+						Class("icon-circle-desktop").
 						Size(110).
 						Src("/web/logo.png"),
 				),
