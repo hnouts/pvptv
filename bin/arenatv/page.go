@@ -119,8 +119,8 @@ func (p *page) Render() app.UI {
 				).
 				HeaderHeight(headerHeight).
 				Content(
-					app.Main().Body(
-						app.Article().Body(
+					app.Main().Class("fullheight").Body(
+						app.Article().Class("fullheight").Body(
 							app.Header().
 								ID("page-top").
 								Class("page-title").
@@ -140,7 +140,9 @@ func (p *page) Render() app.UI {
 								),
 							app.Div().Class("separator"),
 							app.Range(p.Icontent).Slice(func(i int) app.UI {
-								return p.Icontent[i]
+								return app.Div().Class("fullheight").Body(
+									p.Icontent[i],
+								)
 							}),
 							app.Div().Class("separator"),
 						),

@@ -24,6 +24,10 @@ body {
   text-size-adjust: 100%;
 }
 
+.fullheight {
+  height: 100%;
+}
+
 a {
   color: currentColor;
   text-decoration: none;

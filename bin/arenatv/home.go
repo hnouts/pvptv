@@ -23,8 +23,8 @@ func (p *homePage) OnNav(ctx app.Context) {
 }
 
 func (p *homePage) initPage(ctx app.Context) {
-	ctx.Page().SetTitle("test")
-	ctx.Page().SetDescription("test")
+	ctx.Page().SetTitle("Arenatv.io")
+	ctx.Page().SetDescription("best website on azeroth")
 	analytics.Page("home", nil)
 }
 
@@ -35,11 +35,19 @@ func (p *homePage) Render() app.UI {
 			newIndexLink().Title("Twitch Purple screen of death"),
 		).
 		Content(
-			ui.Flow().
-				StretchItems().
-				Spacing(84).
+			ui.Flow().Class("fullheight").
+				// StretchItems().
+				// Spacing(84).
 				Content(
-					app.Div().Text("homepage"),
+					ui.Stack().Class("fullheight").
+						Center().
+						Bottom().
+						Content(
+							ui.Icon().Class("fullheight").
+								// Class("unselectable").
+								Size(400).
+								Src("/web/thrall_dude_paysage.png"),
+						),
 				),
 		)
 }
