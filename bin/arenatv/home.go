@@ -35,19 +35,75 @@ func (p *homePage) Render() app.UI {
 			newIndexLink().Title("Twitch Purple screen of death"),
 		).
 		Content(
-			ui.Flow().Class("fullheight").
-				// StretchItems().
-				// Spacing(84).
+			ui.Flow().
+				StretchItems().
+				Spacing(84).
 				Content(
-					ui.Stack().Class("fullheight").
-						Center().
-						Bottom().
-						Content(
-							ui.Icon().Class("fullheight").
-								// Class("unselectable").
-								Size(400).
-								Src("/web/thrall_dude_paysage.png"),
-						),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
+					app.Div().Body(
+						app.H1().
+							Class("title").
+							Text("Build a GUI with Go"),
+						app.P().
+							Class("text").
+							Text("Just because Go and this package are really awesome!"),
+					),
 				),
 		)
 }

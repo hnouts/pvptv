@@ -65,7 +65,7 @@ func (m *menu) Render() app.UI {
 					ui.Icon().
 						Class("icon-circle-desktop").
 						Size(110).
-						Src("/web/logo.png"),
+						Src(""),
 				),
 			app.Nav().Class("nav-content").
 				Body(

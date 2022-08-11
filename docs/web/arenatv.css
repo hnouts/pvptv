@@ -28,6 +28,17 @@ body {
   height: 100%;
 }
 
+.cover_thrall {
+    width: 250px;
+    height: 100px;
+}
+
+.sticky-pic {
+  position: absolute;
+  right: 0px;
+  bottom: -140px;
+}
+
 a {
   color: currentColor;
   text-decoration: none;

@@ -119,8 +119,8 @@ func (p *page) Render() app.UI {
 				).
 				HeaderHeight(headerHeight).
 				Content(
-					app.Main().Class("fullheight").Body(
-						app.Article().Class("fullheight").Body(
+					app.Main().Body(
+						app.Article().Body(
 							app.Header().
 								ID("page-top").
 								Class("page-title").
@@ -140,13 +140,43 @@ func (p *page) Render() app.UI {
 								),
 							app.Div().Class("separator"),
 							app.Range(p.Icontent).Slice(func(i int) app.UI {
-								return app.Div().Class("fullheight").Body(
+								return app.Div().Body(
 									p.Icontent[i],
 								)
 							}),
-							app.Div().Class("separator"),
+							// app.Aside().Body(
+							// 	ui.Stack().
+							// 		Center().
+							// 		Bottom().
+							// 		Content(
+							// 			app.Img().
+							// 				Class("cover_thrall").
+							// 				Alt("chill").
+							// 				Src("/web/thrall_dude_paysage.png"),
+							// 		),
+							// ),
 						),
 					),
+				),
+		).
+		Ads(
+			ui.Flyer().
+				Class("fill").
+				HeaderHeight(headerHeight).
+				Banner(
+					app.Aside().
+						Class("fill").
+						Body(
+							ui.AdsenseDisplay().
+								Class("fill").
+								Class("no-scroll").
+								Client(adsenseClient).
+								Slot(adsenseSlot),
+						),
+				).
+				PremiumHeight(200).
+				Premium(
+					newGithubSponsor().Class("fill"),
 				),
 		)
 }
