@@ -135,7 +135,7 @@ func (n *nav) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("Arenatv"),
+								Text("Pvptv.io"),
 							app.If(len(n.IcurrentClass) != 0,
 								app.A().
 									Class("view-mobile").

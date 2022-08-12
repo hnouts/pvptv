@@ -23,7 +23,7 @@ func (p *homePage) OnNav(ctx app.Context) {
 }
 
 func (p *homePage) initPage(ctx app.Context) {
-	ctx.Page().SetTitle("Arenatv.io")
+	ctx.Page().SetTitle("PvPtv.io")
 	ctx.Page().SetDescription("best website on azeroth")
 	analytics.Page("home", nil)
 }
@@ -31,7 +31,7 @@ func (p *homePage) initPage(ctx app.Context) {
 func (p *homePage) Render() app.UI {
 	return newPage().
 		Index(
-			newIndexLink().Title("What is arenatv?"),
+			newIndexLink().Title("What is pvptv?"),
 			newIndexLink().Title("Twitch Purple screen of death"),
 		).
 		Content(

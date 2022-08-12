@@ -17,9 +17,9 @@ import (
 const (
 	backgroundColor = "#000000"
 
-	buyMeACoffeeURL = "https://www.buymeacoffee.com/maxence"
-	githubURL       = "https://github.com/maxence-charriere/lofimusic"
-	twitterURL      = "https://twitter.com/jonhymaxoo"
+	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
+	githubURL       = "https://github.com/selkal"
+	twitterURL      = "https://twitter.com/hnouts_dev"
 )
 
 type options struct {
@@ -81,14 +81,14 @@ func main() {
 			"dragonflight",
 		},
 		LoadingLabel: "WoW Arena stream gallery",
-		Name:         "Arenatv",
+		Name:         "Pvptv",
 		Image:        "/web/logo.png",
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
 			"./web/arenatv.css",
 		},
 		ThemeColor: backgroundColor,
-		Title:      "Arenatv",
+		Title:      "Pvptv",
 	}
 	opts := options{Port: 8000}
 	runLocal(ctx, &h, opts)

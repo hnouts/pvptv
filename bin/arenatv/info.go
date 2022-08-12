@@ -52,45 +52,9 @@ func (i *info) Playing(v bool) *info {
 }
 
 func (i *info) OnMount(ctx app.Context) {
-	i.currentCard = -1
-
-	ticker := time.NewTicker(cardHiddenDuration)
-	ctx.Async(func() {
-		for {
-			select {
-			case <-ctx.Done():
-				return
-
-			case <-ticker.C:
-				ctx.Dispatch(func(ctx app.Context) {
-					if i.isCardVisible {
-						ticker.Reset(cardHiddenDuration)
-						i.isCardVisible = false
-					} else {
-						ticker.Reset(cardVisibleDuration)
-						i.isCardVisible = true
-						i.showNewCard(ctx)
-					}
-				})
-			}
-		}
-	})
 }
 
 func (i *info) OnUpdate(ctx app.Context) {
-}
-
-func (i *info) showNewCard(ctx app.Context) {
-	count := len(i.Istream.Cards)
-	if count == 0 {
-		i.currentCard = -1
-		return
-	}
-
-	i.currentCard++
-	if i.currentCard >= count {
-		i.currentCard = 0
-	}
 }
 
 func (i *info) Render() app.UI {
@@ -116,7 +80,9 @@ func (i *info) Render() app.UI {
 						Class("h1").
 						Class("glow").
 						Text(i.Istream.Name),
-					app.Div().Class("info-title-separator"),
+					app.If(len(i.Istream.Name) > 0,
+						app.Div().Class("info-title-separator"),
+					),
 					ui.Stack().
 						Class("info-links").
 						Center().
@@ -136,18 +102,5 @@ func (i *info) Render() app.UI {
 							}),
 						),
 				),
-			app.Range(i.Istream.Cards).Slice(func(j int) app.UI {
-				cardVisibility := ""
-				if j == i.currentCard && i.Iplaying && i.isCardVisible {
-					cardVisibility = "info-card-show"
-				}
-
-				return app.P().
-					Class("info-card").
-					Class("glow").
-					Class("focus").
-					Class(cardVisibility).
-					Text(i.Istream.Cards[j])
-			}),
 		)
 }

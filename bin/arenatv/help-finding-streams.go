@@ -27,7 +27,7 @@ func (s *githubSponsor) Render() app.UI {
 		Middle().
 		Content(
 			app.Aside().
-				Class("magnify").
+				Class("support").
 				Class("text-center").
 				// Body(
 				// 	ui.Flow().
@@ -48,7 +48,7 @@ func (s *githubSponsor) Render() app.UI {
 					// ui.Stack().
 					// 	Content(
 					ui.Stack().
-						Class("sticky-pic").
+						Class("sticky-pic-thrall").
 						Middle().
 						Bottom().
 						Content(
@@ -57,6 +57,16 @@ func (s *githubSponsor) Render() app.UI {
 								Size(320).
 								Src("/web/thrall_dude_paysage.png"),
 						),
+					ui.Stack().
+						Class("sticky-pic-quest").
+						Middle().
+						Bottom().
+						Content(
+							ui.Icon().
+								// Class("cover_thrall").
+								Size(50).
+								Src("/web/quest-icon.jpg"),
+						),
 					// ),
 					app.A().
 						Class("default").
@@ -64,11 +74,10 @@ func (s *githubSponsor) Render() app.UI {
 						Body(
 							app.Header().
 								Class("h3").
-								Class("default").
-								Text("Help me find streamers"),
+								Text("Streamers wanted"),
 							app.P().
 								Class("subtext").
-								Text("Add a pvp streamer you like here."),
+								Text("Share a pvp streamer you like here."),
 						),
 				),
 		)

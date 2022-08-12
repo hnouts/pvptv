@@ -51,7 +51,7 @@ func (m *menu) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("Arenatv"),
+								Text("Pvptv.io"),
 						),
 					// ui.Icon().
 					// 	Class("icon-circle-mobile").

@@ -78,10 +78,6 @@ func (p *page) Render() app.UI {
 							Class("index").
 							Body(
 								app.Div().Class("separator"),
-								app.Header().
-									Class("h2").
-									Text("Index"),
-								app.Div().Class("separator"),
 								app.Range(p.Iindex).Slice(func(i int) app.UI {
 									return p.Iindex[i]
 								}),
@@ -167,11 +163,11 @@ func (p *page) Render() app.UI {
 					app.Aside().
 						Class("fill").
 						Body(
-							ui.AdsenseDisplay().
-								Class("fill").
-								Class("no-scroll").
-								Client(adsenseClient).
-								Slot(adsenseSlot),
+						// ui.AdsenseDisplay().
+						// 	Class("fill").
+						// 	Class("no-scroll").
+						// 	Client(adsenseClient).
+						// 	Slot(adsenseSlot),
 						),
 				).
 				PremiumHeight(200).

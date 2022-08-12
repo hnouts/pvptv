@@ -33,11 +33,71 @@ body {
     height: 100px;
 }
 
-.sticky-pic {
+.sticky-pic-thrall {
   position: absolute;
   right: 0px;
-  bottom: -140px;
+  bottom: -135px;
+  padding-top: 100px;
+  z-index: 100;
 }
+
+.sticky-pic-quest {
+  position: absolute;
+  bottom: 210px;
+  left: 42.5%;
+  visibility: visible;
+  opacity: 1;
+  transition: transform 400ms ease-in-out, opacity 800ms ease-in-out;
+  transform: translate(0, 0);
+}
+
+.default {
+  cursor: pointer;
+  position: absolute;
+  right: -300px;
+  bottom: 200px;
+  z-index: 100;
+  transform: translate(0, 0);
+  /* transition: transform 850ms */
+}
+
+.support {
+  padding-top: 100px;
+}
+
+.support:hover > .sticky-pic-quest {
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 400ms ease-in-out, visibility 0s 400ms, opacity 400ms ease-in-out;
+  transform: translate(-100px, 0);
+}
+
+.support:hover > .default {
+  transform: translate(-361px, 0);
+  transition: transform 850ms;
+}
+
+.default:hover {
+  transform: translate(-361px, 0);
+  /* transition: transform 0ms !important; */
+}
+
+.default:hover > .subtext {
+  text-decoration: underline;
+}
+
+.default:active {
+  transform: scale(0.95);
+}
+
+.subtext {
+  margin-top: 0.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
 
 a {
   color: currentColor;
@@ -392,7 +452,7 @@ input[type="range"]:hover::-moz-range-thumb {
 ------------------------------------------------------------------------------*/
 .nav {
   position: relative;
-  z-index: 15;
+  z-index: 200;
 }
 
 .nav-content {
@@ -655,6 +715,7 @@ input[type="range"]:hover::-moz-range-thumb {
 ------------------------------------------------------------------------------*/
 .info {
   position: relative;
+  z-index: 100;
 }
 
 .info-title {
@@ -664,6 +725,9 @@ input[type="range"]:hover::-moz-range-thumb {
   transform: translateX(500px);
   opacity: 0;
 }
+
+/* .info-title:hover {
+} */
 
 .info-title-hide {
   transform: translateX(500px);
