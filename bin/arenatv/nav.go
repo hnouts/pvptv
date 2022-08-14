@@ -137,25 +137,61 @@ func (n *nav) Render() app.UI {
 								Href("/").
 								Text("Pvptv.io"),
 							app.If(len(n.IcurrentClass) != 0,
-								app.A().
-									Class("view-mobile").
-									Class("hApp").
-									Class("focus").
-									Class("glow").
-									Href("/").
-									Text("↩ "+n.IcurrentClass),
+								app.If(n.IcurrentClass == "demon_hunter",
+									app.A().
+										Class("view-mobile").
+										Class("hApp").
+										Class("focus").
+										Class("glow").
+										Href("/").
+										Text("↩ D. HUNTER"),
+								),
+								app.If(n.IcurrentClass == "death_knight",
+									app.A().
+										Class("view-mobile").
+										Class("hApp").
+										Class("focus").
+										Class("glow").
+										Href("/").
+										Text("↩ D. KNIGHT"),
+								),
+								app.If(n.IcurrentClass != "death_knight" && n.IcurrentClass != "demon_hunter",
+									app.A().
+										Class("view-mobile").
+										Class("hApp").
+										Class("focus").
+										Class("glow").
+										Href("/").
+										Text("↩ "+n.IcurrentClass),
+								),
 							),
 						),
 				),
 			ui.Stack().
-				Center().
+				Left().
 				Middle().
 				Content(
-					ui.Icon().
-						Class("icon-circle-desktop").
-						// Class("unselectable").
-						Size(110).
-						Src(n.classSvg),
+					app.Div().Body(
+						app.Header().
+							Class("icon-circle-desktop").
+							Class("hApp h3").
+							Class("hspace-out").
+							// Class("focus").
+							Body(
+								app.If(n.IcurrentClass == "demon_hunter",
+									app.H3().
+										Text("Demon Hunter"),
+								),
+								app.If(n.IcurrentClass == "death_knight",
+									app.H3().
+										Text("Death Knight"),
+								),
+								app.If(n.IcurrentClass != "death_knight" && n.IcurrentClass != "demon_hunter",
+									app.H3().
+										Text(n.IcurrentClass),
+								),
+							),
+					),
 				),
 			app.Nav().
 				Class("nav-content").
@@ -202,6 +238,11 @@ func (n *nav) Render() app.UI {
 						Class("nav-support").
 						Class("hspace-out").
 						Body(
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(downloadSVG)).
+								Label("Install").
+								Href("/"),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).

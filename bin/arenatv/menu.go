@@ -58,15 +58,6 @@ func (m *menu) Render() app.UI {
 					// 	Size(110).
 					// 	Src("/web/logo.png"),
 				),
-			ui.Stack().
-				Center().
-				Middle().
-				Content(
-					ui.Icon().
-						Class("icon-circle-desktop").
-						Size(110).
-						Src(""),
-				),
 			app.Nav().Class("nav-content").
 				Body(
 					app.Div().
@@ -143,9 +134,14 @@ func (m *menu) Render() app.UI {
 								),
 						),
 					app.Div().
-						Class("nav-support").
+						Class("nav-support-home").
 						Class("hspace-out").
 						Body(
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(downloadSVG)).
+								Label("Install").
+								Href("/"),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
