@@ -197,7 +197,7 @@ func (n *nav) Render() app.UI {
 				Class("nav-content").
 				Body(
 					app.Div().
-						Class("nav-streams").
+						Class("nav-streams-class-selected").
 						Body(
 							ui.Stack().
 								Class("nav-streams-stack").
@@ -238,11 +238,6 @@ func (n *nav) Render() app.UI {
 						Class("nav-support").
 						Class("hspace-out").
 						Body(
-							newLink().
-								Class("glow").
-								Icon(newSVGIcon().RawSVG(downloadSVG)).
-								Label("Install").
-								Href("/"),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).

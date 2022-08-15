@@ -44,7 +44,7 @@ func (l *indexLink) Render() app.UI {
 	}
 
 	return app.A().
-		Class("index-link").
+		Class("index-link heading").
 		Class(l.Iclass).
 		Class(fragmentFocus(fragment)).
 		Href(href).

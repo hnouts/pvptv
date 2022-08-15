@@ -70,7 +70,7 @@ func (s *githubSponsor) Render() app.UI {
 					// ),
 					app.A().
 						Class("default").
-						Href("localhost").
+						Href("https://forms.gle/y5wj532gvtgwWkca6").
 						Body(
 							app.Header().
 								Class("h3").

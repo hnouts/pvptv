@@ -511,6 +511,25 @@ func getLiveStreamers() []liveStream {
 				},
 			},
 		},
+		{
+			Slug:      "zabius",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			Name: "Zabius",
+			URL:  "https://www.twitch.tv/zabius",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/FelixFahauer1",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCZSfktks-roK7sdh6DmdgMQ",
+				},
+			},
+		},
 		//ROGUE
 		{
 			Slug:      "NAIIKAII",
@@ -843,6 +862,25 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "discord",
 					URL:  "https://discord.gg/Mau5mWQ",
+				},
+			},
+		},
+		{
+			Slug:      "dakkroth",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			Name: "Dakkroth",
+			URL:  "https://www.twitch.tv/dakkroth",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Dakkrothwow",
+				},
+				{
+					Slug: "facebook",
+					URL:  "https://www.facebook.com/Dakkroth",
 				},
 			},
 		},

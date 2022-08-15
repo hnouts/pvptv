@@ -140,17 +140,6 @@ func (p *page) Render() app.UI {
 									p.Icontent[i],
 								)
 							}),
-							// app.Aside().Body(
-							// 	ui.Stack().
-							// 		Center().
-							// 		Bottom().
-							// 		Content(
-							// 			app.Img().
-							// 				Class("cover_thrall").
-							// 				Alt("chill").
-							// 				Src("/web/thrall_dude_paysage.png"),
-							// 		),
-							// ),
 						),
 					),
 				),

@@ -53,10 +53,16 @@ func (m *menu) Render() app.UI {
 								Href("/").
 								Text("Pvptv.io"),
 						),
-					// ui.Icon().
-					// 	Class("icon-circle-mobile").
-					// 	Size(110).
-					// 	Src("/web/logo.png"),
+				),
+
+			app.Div().
+				Class("hspace-out").
+				Body(
+					newLink().
+						Class("glow").
+						Icon(newSVGIcon().RawSVG(downloadSVG)).
+						Label("Install").
+						Href("/"),
 				),
 			app.Nav().Class("nav-content").
 				Body(
@@ -137,11 +143,6 @@ func (m *menu) Render() app.UI {
 						Class("nav-support-home").
 						Class("hspace-out").
 						Body(
-							newLink().
-								Class("glow").
-								Icon(newSVGIcon().RawSVG(downloadSVG)).
-								Label("Install").
-								Href("/"),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
