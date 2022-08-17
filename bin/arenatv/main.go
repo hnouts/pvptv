@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"syscall"
@@ -85,16 +84,31 @@ func main() {
 		Image:        "/web/logo.png",
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
-			"./web/arenatv.css",
+			"/web/arenatv.css",
 		},
 		ThemeColor: backgroundColor,
 		Title:      "Pvptv",
 	}
 	opts := options{Port: 8000}
-	runLocal(ctx, &h, opts)
+	cli.Register("local").
+		Help(`Launches a server that serves the documentation app in a local environment.`).
+		Options(&opts)
 
-	if err := http.ListenAndServe(":8000", nil); err != nil {
-		log.Fatal(err)
+	githubOpts := githubOptions{}
+	cli.Register("github").
+		Help(`Generates the required resources to run Lofimusic app on GitHub Pages.`).
+		Options(&githubOpts)
+	cli.Load()
+	// if err := http.ListenAndServe(":8000", nil); err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	switch cli.Load() {
+	case "local":
+		runLocal(ctx, &h, opts)
+
+	case "github":
+		generateGitHubPages(ctx, &h, githubOpts)
 	}
 }
 

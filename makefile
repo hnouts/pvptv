@@ -3,7 +3,12 @@ build:
 	@go build -o docs/arenatv ./bin/arenatv
 
 run: build
-	@cd docs && ./arenatv
+	@cd docs && ./arenatv local
+
+build-github: build
+	@cd docs && ./arenatv github
+
+github: build-github clean 
 
 clean:
 	@go clean ./...
