@@ -1,6 +1,6 @@
 {
-    "short_name": "ArenaTv",
-    "name": "ArenaTv",
+    "short_name": "Pvptv.io",
+    "name": "Pvptv.io",
     "description": "WoW arena stream gallery",
     "icons": [
       {
@@ -9,7 +9,7 @@
         "sizes": "192x192"
       },
       {
-        "src": "",
+        "src": "/web/logo.png",
         "type": "image/png",
         "sizes": "512x512"
       }

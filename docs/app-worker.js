@@ -10,7 +10,7 @@ self.addEventListener("install", event => {
           // "/",
           // "/app.css",
           // "/app.js",
-          // "/manifest.webmanifest",
+          "/manifest.webmanifest",
           // "/wasm_exec.js",
           // "/web/app.wasm",
           // "/web/arenatv.css",

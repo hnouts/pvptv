@@ -50,6 +50,8 @@ func main() {
 		app.Route("/"+c.Slug, newStream())
 	}
 	app.Route("/", newHomePage())
+	app.Handle(installApp, handleAppInstall)
+	app.Handle(updateApp, handleAppUpdate)
 	app.RunWhenOnBrowser()
 
 	defer cancel()
@@ -113,7 +115,7 @@ func main() {
 }
 
 func runLocal(ctx context.Context, h http.Handler, opts options) {
-	app.Logf("%s", logs.New("starting arenatv app server").
+	app.Logf("%s", logs.New("starting pvptv app server").
 		Tag("port", opts.Port),
 	)
 

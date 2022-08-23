@@ -10,7 +10,8 @@ type menu struct {
 
 	Iclass string
 
-	appInstallable bool
+	appInstallable  bool
+	updateAvailable bool
 }
 
 func newMenu() *menu {
@@ -58,11 +59,20 @@ func (m *menu) Render() app.UI {
 			app.Div().
 				Class("hspace-out").
 				Body(
-					newLink().
-						Class("glow").
-						Icon(newSVGIcon().RawSVG(downloadSVG)).
-						Label("Install").
-						Href("/"),
+					app.If(m.appInstallable,
+						ui.Link().
+							Class(linkClass).
+							Icon(downloadSVG).
+							Label("Install").
+							OnClick(m.installApp),
+					),
+					app.If(m.updateAvailable,
+						ui.Link().
+							Class(linkClass).
+							Icon(downloadSVG).
+							Label("Update").
+							OnClick(m.updateApp),
+					),
 				),
 			app.Nav().Class("nav-content").
 				Body(
@@ -161,4 +171,11 @@ func (m *menu) Render() app.UI {
 						),
 				),
 		)
+}
+
+func (m *menu) installApp(ctx app.Context, e app.Event) {
+	ctx.NewAction(installApp)
+}
+func (m *menu) updateApp(ctx app.Context, e app.Event) {
+	ctx.NewAction(updateApp)
 }

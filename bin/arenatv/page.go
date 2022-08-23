@@ -98,18 +98,20 @@ func (p *page) Render() app.UI {
 								Right().
 								Middle().
 								Content(
-									app.If(p.updateAvailable,
-										app.Div().
-											Class("link-update").
-											Body(
-												ui.Link().
-													Class("link").
-													Class("heading").
-													Class("fit").
-													// Class("unselectable").
-													Icon(downloadSVG),
-											),
-									),
+								// app.If(p.updateAvailable,
+								// 	app.Div().
+								// 		Class("link-update").
+								// 		Body(
+								// 			ui.Link().
+								// 				Class("link").
+								// 				Class("heading").
+								// 				Class("fit").
+								// 				// Class("unselectable").
+								// 				Icon(downloadSVG).
+								// 				Label("Update").
+								// 				OnClick(p.updateApp),
+								// 		),
+								// ),
 								),
 						),
 				).
