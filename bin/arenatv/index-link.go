@@ -58,5 +58,6 @@ func titleToFragment(v string) string {
 	v = strings.ReplaceAll(v, " ", "-")
 	v = strings.ReplaceAll(v, ".", "-")
 	v = strings.ReplaceAll(v, "?", "")
+	v = strings.ReplaceAll(v, "!", "")
 	return v
 }

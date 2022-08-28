@@ -127,6 +127,31 @@ func getLiveStreamers() []liveStream {
 		},
 		//DRUID
 		{
+			Slug:      "luuxia",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+				"paladin",
+				"priest",
+			},
+			Name: "Luuxia",
+			URL:  "https://www.twitch.tv/luuxia",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/JLuuxiA",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/xtKy3pk",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/luuxiaoff/?hl=fr",
+				},
+			},
+		},
+		{
 			Slug:      "snupy",
 			MainClass: "druid",
 			ClassList: []string{
@@ -600,6 +625,37 @@ func getLiveStreamers() []liveStream {
 		},
 		//PALADIN
 		{
+			Slug:      "savix",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			Name: "Savix",
+			URL:  "https://www.twitch.tv/savix",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/SavixIrL",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCIRe2YighqgPmSDjSb3Fpiw?view_as=subscriber",
+				},
+				{
+					Slug: "reddit",
+					URL:  "https://www.reddit.com/r/Savix/",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/savix",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/savixirl/",
+				},
+			},
+		},
+		{
 			Slug:      "accident_",
 			MainClass: "paladin",
 			ClassList: []string{
@@ -677,6 +733,31 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//ROGUE
+		{
+			Slug:      "traxelol",
+			MainClass: "rogue",
+			ClassList: []string{
+				"rogue",
+			},
+			Name:  "Traxelol",
+			URL:   "https://www.twitch.tv/traxelol",
+			Links: []socialLink{},
+		},
+		{
+			Slug:      "inquisx",
+			MainClass: "rogue",
+			ClassList: []string{
+				"rogue",
+			},
+			Name: "Inquisx",
+			URL:  "https://www.twitch.tv/inquisx",
+			Links: []socialLink{
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/kushkaboss",
+				},
+			},
+		},
 		{
 			Slug:      "NAIIKAII",
 			MainClass: "rogue",
@@ -861,6 +942,16 @@ func getLiveStreamers() []liveStream {
 		},
 		//SHAMAN
 		{
+			Slug:      "warbla",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			Name:  "Warbla",
+			URL:   "https://www.twitch.tv/warbla",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "drainerx",
 			MainClass: "shaman",
 			ClassList: []string{
@@ -983,6 +1074,81 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//WARLOCK
+		{
+			Slug:      "bualock",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			Name: "Bualock",
+			URL:  "https://www.twitch.tv/bualock",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/BuaLockOW",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/c/bualock/videos",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/sxhwe3b",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://instagram.com/BuaLockOW",
+				},
+			},
+		},
+		{
+			Slug:      "jazggz",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			Name: "Jazggz",
+			URL:  "https://www.twitch.tv/jazggz",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/jazggz",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCXWELAuYNuRk53qgIWPTFaA",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/ZfNg2n44WK",
+				},
+			},
+		},
+		{
+			Slug:      "anniefuchsia",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+				"paladin",
+				"priest",
+			},
+			Name: "Anniefuchsia",
+			URL:  "https://www.twitch.tv/anniefuchsia",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/anniefuchsia",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/anniefuchsia?sub_confirmation=1",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/anniefuchsia/",
+				},
+			},
+		},
 		{
 			Slug:      "maldiva",
 			MainClass: "warlock",
@@ -1178,6 +1344,33 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "instagram",
 					URL:  "https://www.instagram.com/bajheerawow/",
+				},
+			},
+		},
+		{
+			Slug:      "dekel",
+			MainClass: "warrior",
+			ClassList: []string{
+				"warrior",
+			},
+			Name: "Dekel",
+			URL:  "https://www.twitch.tv/dekel",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/dekeldeclan",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCMEwlq2-4FzgzeGllkRHJSA?view_as=subscriber",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/jPb9tr9",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://instagram.com/dekeldeclan",
 				},
 			},
 		},

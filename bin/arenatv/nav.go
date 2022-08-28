@@ -168,7 +168,7 @@ func (n *nav) Render() app.UI {
 						),
 				),
 			ui.Stack().
-				Left().
+				Center().
 				Middle().
 				Content(
 					app.Div().Body(

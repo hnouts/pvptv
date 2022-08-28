@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/maxence-charriere/go-app/v9/pkg/analytics"
+	// "github.com/maxence-charriere/go-app/v9/pkg/analytics"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
@@ -25,14 +25,14 @@ func (p *homePage) OnNav(ctx app.Context) {
 func (p *homePage) initPage(ctx app.Context) {
 	ctx.Page().SetTitle("PvPtv.io")
 	ctx.Page().SetDescription("best website on azeroth")
-	analytics.Page("home", nil)
+	// analytics.Page("home", nil)
 }
 
 func (p *homePage) Render() app.UI {
 	return newPage().
 		Index(
-			newIndexLink().Title("Welcome to Pvptv.io!"),
-			newIndexLink().Title("Why is my twitch screen purple?"),
+			newIndexLink().Title("Welcome to Pvptv.io!").Href("#welcome-to-pvptv"),
+			newIndexLink().Title("Why is my twitch screen purple?").Href("#why-is-my-twitch-screen-purple"),
 			newIndexLink().Title("Special thanks"),
 		).
 		Content(
@@ -40,7 +40,7 @@ func (p *homePage) Render() app.UI {
 				StretchItems().
 				Spacing(84).
 				Content(
-					app.Div().Body(
+					app.Div().ID("welcome-to-pvptv").Body(
 						app.H1().
 							Class("title").
 							Text("Welcome to Pvptv.io!"),
@@ -61,7 +61,7 @@ func (p *homePage) Render() app.UI {
 						app.P().Class("text").
 							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on Pvptv.io, there will always be a gladiator streaming! (hopefully)"),
 					),
-					app.Div().Body(
+					app.Div().ID("why-is-my-twitch-screen-purple").Body(
 						app.H1().
 							Class("title").
 							Text("Why is my twitch screen purple?"),
@@ -69,7 +69,7 @@ func (p *homePage) Render() app.UI {
 							Class("text").
 							Text("Twitch's purple screen error might occurs when you're watching live streams from another website than twitch.com. It is often triggers by your ad-blockers and can be avoided if you disable your adblocker on Pvptv.io. Do not worry! Pvptv.io has zero ad!"),
 					),
-					app.Div().Body(
+					app.Div().ID("special-thanks").Body(
 						app.H1().
 							Class("title").
 							Text("Special thanks"),
