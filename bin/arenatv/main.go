@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 	"syscall"
-
+	"log"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/cli"
 	"github.com/maxence-charriere/go-app/v9/pkg/errors"
@@ -91,27 +91,29 @@ func main() {
 		ThemeColor: backgroundColor,
 		Title:      "Pvptv",
 	}
-	opts := options{Port: 8000}
-	cli.Register("local").
-		Help(`Launches a server that serves the documentation app in a local environment.`).
-		Options(&opts)
+	opts := options{Port: 8080}
+	runLocal(ctx, &h, opts)
 
-	githubOpts := githubOptions{}
-	cli.Register("github").
-		Help(`Generates the required resources to run Lofimusic app on GitHub Pages.`).
-		Options(&githubOpts)
-	cli.Load()
-	// if err := http.ListenAndServe(":8000", nil); err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	switch cli.Load() {
-	case "local":
-		runLocal(ctx, &h, opts)
-
-	case "github":
-		generateGitHubPages(ctx, &h, githubOpts)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
 	}
+	// cli.Register("local").
+	// 	Help(`Launches a server that serves the documentation app in a local environment.`).
+	// 	Options(&opts)
+
+	// githubOpts := githubOptions{}
+	// cli.Register("github").
+	// 	Help(`Generates the required resources to run Lofimusic app on GitHub Pages.`).
+	// 	Options(&githubOpts)
+	// cli.Load()
+
+	// switch cli.Load() {
+	// case "local":
+	// 	runLocal(ctx, &h, opts)
+
+	// case "github":
+	// 	generateGitHubPages(ctx, &h, githubOpts)
+	// }
 }
 
 func runLocal(ctx context.Context, h http.Handler, opts options) {
