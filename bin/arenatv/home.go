@@ -75,7 +75,7 @@ func (p *homePage) Render() app.UI {
 							Text("Special thanks"),
 						app.P().
 							Class("text").
-							Text("Pvptv.io is built with to the amazing golang framework go-app-dev! You can contact the author on twitter or visit the frameworks documentation"),
+							Text("Pvptv.io is built with the amazing golang framework go-app-dev! You can contact the author on twitter or visit the frameworks documentation"),
 						app.A().Class().Href("https://twitter.com/jonhymaxoo").Text("Maxence Twitter"),
 						app.Br(),
 						app.A().Class().Href("https://go-app.dev/").Text("Go-App-Dev Documentation"),
