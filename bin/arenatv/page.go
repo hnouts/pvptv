@@ -121,7 +121,7 @@ func (p *page) Render() app.UI {
 						app.Article().Body(
 							app.Header().
 								ID("page-top").
-								Class("page-title").
+								Class("page-title header-page").
 								Class("center").
 								Body(
 									ui.Stack().
@@ -131,7 +131,7 @@ func (p *page) Render() app.UI {
 											ui.Icon().
 												Class("icon-left").
 												// Class("unselectable").
-												Size(90).
+												Size(100).
 												Src(p.Iicon),
 											app.H1().Text(p.Ititle),
 										),
@@ -142,6 +142,7 @@ func (p *page) Render() app.UI {
 									p.Icontent[i],
 								)
 							}),
+							app.Div().Class("separator"),
 						),
 					),
 				),

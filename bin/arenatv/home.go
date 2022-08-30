@@ -30,8 +30,10 @@ func (p *homePage) initPage(ctx app.Context) {
 
 func (p *homePage) Render() app.UI {
 	return newPage().
+		Title("pvptv.io").
+		Icon("/web/logo.png").
 		Index(
-			newIndexLink().Title("Welcome to Pvptv.io!").Href("#welcome-to-pvptv"),
+			newIndexLink().Title("Welcome!").Href("#welcome-to-pvptv"),
 			newIndexLink().Title("Why is my twitch screen purple?").Href("#why-is-my-twitch-screen-purple"),
 			newIndexLink().Title("Special thanks"),
 		).
@@ -41,9 +43,9 @@ func (p *homePage) Render() app.UI {
 				Spacing(84).
 				Content(
 					app.Div().ID("welcome-to-pvptv").Body(
-						app.H1().
+						app.H2().
 							Class("title").
-							Text("Welcome to Pvptv.io!"),
+							Text("Welcome!"),
 						app.P().
 							Class("text").
 							Text("Pvptv.io is an app that was created in order to help the world of warcraft pvp community find the best arena streamers at any moment. It provides a list of the best known wow arena's streamers for each class, and casts their stream directly from twitch.com."),
@@ -62,7 +64,7 @@ func (p *homePage) Render() app.UI {
 							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on Pvptv.io, there will always be a gladiator streaming! (hopefully)"),
 					),
 					app.Div().ID("why-is-my-twitch-screen-purple").Body(
-						app.H1().
+						app.H2().
 							Class("title").
 							Text("Why is my twitch screen purple?"),
 						app.P().
@@ -70,7 +72,7 @@ func (p *homePage) Render() app.UI {
 							Text("Twitch's purple screen error might occurs when you're watching live streams from another website than twitch.com. It is often triggers by your ad-blockers and can be avoided if you disable your adblocker on Pvptv.io. Do not worry! Pvptv.io has zero ad!"),
 					),
 					app.Div().ID("special-thanks").Body(
-						app.H1().
+						app.H2().
 							Class("title").
 							Text("Special thanks"),
 						app.P().

@@ -243,11 +243,11 @@ func (n *nav) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
 								Label("Buy me a coffee").
 								Href(buyMeACoffeeURL),
-							newLink().
-								Class("glow").
-								Icon(newSVGIcon().RawSVG(githubSVG)).
-								Label("GitHub").
-								Href(githubURL),
+							// newLink().
+							// 	Class("glow").
+							// 	Icon(newSVGIcon().RawSVG(githubSVG)).
+							// 	Label("GitHub").
+							// 	Href(githubURL),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(twitterSVG)).

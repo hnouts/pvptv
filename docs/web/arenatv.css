@@ -144,6 +144,63 @@ a {
   color: white;
   font-weight: 400;
 }
+.app-title,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.heading,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.app-title {
+  font-size: 30px;
+  letter-spacing: 6px;
+  color: white;
+}
+
+.h1,
+h1 {
+  font-size: 26px;
+  letter-spacing: 4px;
+  color: white;
+}
+
+h2,
+.h2 {
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: white;
+}
+
+.header-separator,
+h1,
+h2,
+.h2 {
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+h3,
+.h3 {
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+}
 
 .hApp {
   font-size: 32px;
@@ -438,6 +495,33 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 /* -----------------------------------------------------------------------------
+// Page
+------------------------------------------------------------------------------*/
+.page-title {
+  max-width: 540px;
+}
+
+.separator:first-of-type,
+.reference .Documentation-overviewHeader {
+  margin-top: 42px;
+}
+
+.separator:last-of-type {
+  margin-top: 18px;
+}
+
+.separator,
+.markdown h2,
+.markdown h3,
+.reference h2 {
+  margin-top: 84px;
+}
+
+.markdown h2:first-of-type {
+  margin-top: 0;
+}
+
+/* -----------------------------------------------------------------------------
 // Stream
 ------------------------------------------------------------------------------*/
 .stream {
@@ -503,6 +587,10 @@ input[type="range"]:hover::-moz-range-thumb {
   display: none;
 }
 
+.header-page {
+  display: none;
+}
+
 @media (max-width: 1042px) {
   .nav-content {
     height: calc(100% - 200px) !important;
@@ -518,6 +606,9 @@ input[type="range"]:hover::-moz-range-thumb {
   }
   .view-desktop {
     display: none !important;
+  }
+  .header-page {
+    display: block !important;
   }
 }
 

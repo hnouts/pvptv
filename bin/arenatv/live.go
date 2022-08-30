@@ -125,6 +125,25 @@ func getLiveStreamers() []liveStream {
 				},
 			},
 		},
+		{
+			Slug:      "bobydk1",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			Name: "Bobydk1",
+			URL:  "https://www.twitch.tv/bobydk1",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/bobydk1",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/FMmxmzZkQe",
+				},
+			},
+		},
 		//DRUID
 		{
 			Slug:      "luuxia",
@@ -175,6 +194,31 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "reddit",
 					URL:  "https://www.reddit.com/r/Snupy/",
+				},
+			},
+		},
+		{
+			Slug:      "pszjager",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+				"priest",
+				"monk",
+			},
+			Name: "Pszjager",
+			URL:  "https://www.twitch.tv/pszjager",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/pszjager",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCL-IFyMkjFeMU9Aiee1f8DQ",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/hxDy7FU",
 				},
 			},
 		},
@@ -289,6 +333,25 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "discord",
 					URL:  "https://discord.gg/6Rdaz8K",
+				},
+			},
+		},
+		{
+			Slug:      "freezion",
+			MainClass: "hunter",
+			ClassList: []string{
+				"hunter",
+			},
+			Name: "Freezion",
+			URL:  "https://www.twitch.tv/freezion",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/watch?v=gdGHz0GVXH8",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/gtuMn3f",
 				},
 			},
 		},
@@ -666,6 +729,16 @@ func getLiveStreamers() []liveStream {
 			Links: []socialLink{},
 		},
 		{
+			Slug:      "bushy25",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			Name:  "Bushy25",
+			URL:   "https://www.twitch.tv/bushy25",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "tintinlives",
 			MainClass: "paladin",
 			ClassList: []string{
@@ -742,6 +815,25 @@ func getLiveStreamers() []liveStream {
 			Name:  "Traxelol",
 			URL:   "https://www.twitch.tv/traxelol",
 			Links: []socialLink{},
+		},
+		{
+			Slug:      "chickchau",
+			MainClass: "rogue",
+			ClassList: []string{
+				"rogue",
+			},
+			Name: "Chickchau",
+			URL:  "https://www.twitch.tv/chickchau",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/jX7rfQHUZX",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/chick_chau/",
+				},
+			},
 		},
 		{
 			Slug:      "inquisx",
@@ -1196,6 +1288,25 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
+			Slug:      "germinouu066",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			Name: "Germi",
+			URL:  "https://www.twitch.tv/germinouu066",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Germinou06",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/RHDBxsN",
+				},
+			},
+		},
+		{
 			Slug:      "gelubabatv",
 			MainClass: "warlock",
 			ClassList: []string{
@@ -1266,6 +1377,29 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "twitter",
 					URL:  "https://twitter.com/Zhreytv",
+				},
+			},
+		},
+		{
+			Slug:      "tay_warr",
+			MainClass: "warrior",
+			ClassList: []string{
+				"warrior",
+			},
+			Name: "Tay",
+			URL:  "https://www.twitch.tv/tay_warr",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Tay39826924",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UC0aMJOAQZ1oAQSUBH6kA-Fg/videos",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/thgrty1/",
 				},
 			},
 		},
