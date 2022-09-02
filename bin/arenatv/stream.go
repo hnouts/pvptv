@@ -129,26 +129,26 @@ func (r *stream) Render() app.UI {
 					LiveStreams(r.lives).
 					CurrentStream(r.current)).
 				Content(
-					app.Aside().
-						Class("stream-update").
-						Class("app-title").
-						Class("hspace-out").
-						Body(
-							ui.Stack().
-								Class("fill").
-								Right().
-								Middle().
-								Content(
-									app.If(r.isUpdateAvailable,
-										newLink().
-											Class("link-update").
-											Class("glow").
-											Label("Update").
-											Icon(newSVGIcon().RawSVG(downloadSVG)).
-											OnClick(r.onUpdateClick),
-									),
-								),
-						),
+					// app.Aside().
+					// 	Class("stream-update").
+					// 	Class("app-title").
+					// 	Class("hspace-out").
+					// 	Body(
+					// 		ui.Stack().
+					// 			Class("fill").
+					// 			Right().
+					// 			Middle().
+					// 			Content(
+					// 				app.If(r.isUpdateAvailable,
+					// 					newLink().
+					// 						Class("link-update").
+					// 						Class("glow").
+					// 						Label("Update").
+					// 						Icon(newSVGIcon().RawSVG(downloadSVG)).
+					// 						OnClick(r.onUpdateClick),
+					// 				),
+					// 			),
+					// 	),
 					app.If(!r.current.Online,
 						app.Div().
 							Class("hspace-out").
@@ -167,6 +167,6 @@ func (r *stream) onPlaybackChange(ctx app.Context, isPlaying bool) {
 	r.isPlaying = isPlaying
 }
 
-func (r *stream) onUpdateClick(ctx app.Context) {
-	ctx.Reload()
-}
+// func (r *stream) onUpdateClick(ctx app.Context) {
+// 	ctx.Reload()
+// }

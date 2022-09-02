@@ -25,10 +25,15 @@ func (m *menu) Class(v string) *menu {
 
 func (m *menu) OnNav(ctx app.Context) {
 	m.appInstallable = ctx.IsAppInstallable()
+	m.updateAvailable = ctx.AppUpdateAvailable()
 }
 
 func (m *menu) OnAppInstallChange(ctx app.Context) {
 	m.appInstallable = ctx.IsAppInstallable()
+}
+
+func (m *menu) OnAppUpdate(ctx app.Context) {
+	m.updateAvailable = ctx.AppUpdateAvailable()
 }
 
 func (m *menu) Render() app.UI {
