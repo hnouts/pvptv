@@ -106,6 +106,16 @@ func getLiveStreamers() []liveStream {
 		},
 		//DK
 		{
+			Slug:      "exyth1",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			Name:  "Exyth",
+			URL:   "https://www.twitch.tv/exyth1",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "notmes",
 			MainClass: "death_knight",
 			ClassList: []string{
@@ -167,6 +177,33 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "instagram",
 					URL:  "https://www.instagram.com/luuxiaoff/?hl=fr",
+				},
+			},
+		},
+		{
+			Slug:      "sodapoppin",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+			},
+			Name: "Sodapoppin",
+			URL:  "https://www.twitch.tv/sodapoppin",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Sodapoppintv/",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/c/sodapoppin",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/sodapoppin",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/sodapoppintv/",
 				},
 			},
 		},
@@ -313,6 +350,33 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//HUNTER
+		{
+			Slug:      "kasuxoxo",
+			MainClass: "hunter",
+			ClassList: []string{
+				"hunter",
+			},
+			Name: "Kasuxoxo",
+			URL:  "https://www.twitch.tv/kasuxoxo",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/kasuxoxoz",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCu5LyP1luajA3c8EZ6kgI7g?view_as=subscriber",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/kasuhoho/",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/5W3YWV7Hbn",
+				},
+			},
+		},
 		{
 			Slug:      "bicmexwow",
 			MainClass: "hunter",
@@ -749,6 +813,30 @@ func getLiveStreamers() []liveStream {
 			Links: []socialLink{},
 		},
 		{
+			Slug:      "snowmixy",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+				"priest",
+			},
+			Name: "Snowmixy",
+			URL:  "https://www.twitch.tv/snowmixy",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Snowmixy",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/user/Snowmixy",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/snowmixy/",
+				},
+			},
+		},
+		{
 			Slug:      "vanguardstv",
 			MainClass: "paladin",
 			ClassList: []string{
@@ -1042,6 +1130,29 @@ func getLiveStreamers() []liveStream {
 			Name:  "Warbla",
 			URL:   "https://www.twitch.tv/warbla",
 			Links: []socialLink{},
+		},
+		{
+			Slug:      "thesterge",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			Name: "Thesterge",
+			URL:  "https://www.twitch.tv/thesterge",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/stergey",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/user/thesolrac5",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/carloscorreagg/",
+				},
+			},
 		},
 		{
 			Slug:      "drainerx",

@@ -174,20 +174,20 @@ func (n *nav) Render() app.UI {
 					app.Div().Body(
 						app.Header().
 							Class("icon-circle-desktop").
-							Class("hApp h3").
+							Class("hApp h2 h2-nav").
 							Class("hspace-out").
 							// Class("focus").
 							Body(
 								app.If(n.IcurrentClass == "demon_hunter",
-									app.H3().
+									app.H2().
 										Text("Demon Hunter"),
 								),
 								app.If(n.IcurrentClass == "death_knight",
-									app.H3().
+									app.H2().
 										Text("Death Knight"),
 								),
 								app.If(n.IcurrentClass != "death_knight" && n.IcurrentClass != "demon_hunter",
-									app.H3().
+									app.H2().
 										Text(n.IcurrentClass),
 								),
 							),
