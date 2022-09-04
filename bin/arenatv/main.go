@@ -83,7 +83,7 @@ func main() {
 			"shadowlands",
 			"dragonflight",
 		},
-		LoadingLabel: "WoW Arena stream gallery",
+		LoadingLabel: "WoW arena stream gallery",
 		Name:         "Pvptv",
 		Image:        "/web/logo.png",
 		RawHeaders: []string{

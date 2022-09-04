@@ -64,7 +64,7 @@ func (m *menu) Render() app.UI {
 			app.Div().
 				Class("hspace-out").
 				Body(
-					app.If(m.appInstallable,
+					app.If(m.appInstallable && !m.updateAvailable,
 						ui.Link().
 							Class(linkClass).
 							Icon(downloadSVG).
@@ -72,11 +72,15 @@ func (m *menu) Render() app.UI {
 							OnClick(m.installApp),
 					),
 					app.If(m.updateAvailable,
-						ui.Link().
-							Class(linkClass).
-							Icon(downloadSVG).
-							Label("Update").
-							OnClick(m.updateApp),
+						app.Div().
+							Class("link-update").
+							Body(
+							ui.Link().
+								Class(linkClass).
+								Icon(websiteSVG).
+								Label("Update").
+								OnClick(m.updateApp),
+							),
 					),
 				),
 			app.Nav().Class("nav-content").

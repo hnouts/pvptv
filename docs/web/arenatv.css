@@ -29,7 +29,14 @@ body {
 }
 
 .welcome-example {
-  width: 305px;
+  width: 100%;
+}
+.welcome-example-bis {
+  width: 100%;
+}
+
+.twitch-pod {
+  width: 100%;
 }
 
 .sticky-pic-thrall {
@@ -525,6 +532,11 @@ input[type="range"]:hover::-moz-range-thumb {
 
 .markdown h2:first-of-type {
   margin-top: 0;
+}
+
+.questions {
+  display: grid;
+  grid-auto-flow: column;
 }
 
 /* -----------------------------------------------------------------------------

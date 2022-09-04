@@ -24,7 +24,7 @@ func (p *homePage) OnNav(ctx app.Context) {
 
 func (p *homePage) initPage(ctx app.Context) {
 	ctx.Page().SetTitle("PvPtv.io")
-	ctx.Page().SetDescription("best website on azeroth")
+	ctx.Page().SetDescription("all wow pvp streamer in one place")
 	// analytics.Page("home", nil)
 }
 
@@ -52,14 +52,16 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.P().Class("text").
 							Text("The motivation behind this web application was to finally have an easy solution to the eternal question posted on pvp communities:"),
-						app.Img().
+						app.Div().Class("questions").Body(
+							app.Img().
 							Class("welcome-example").
 							Alt("eternal-question-1").
 							Src("/web/lfstream1.png"),
 						app.Img().
 							Class("welcome-example").
 							Alt("eternal-question-2").
-							Src("/web/lfstream2.png"),
+							Src("/web/lfstream1.png"),
+						),
 						app.P().Class("text").
 							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on Pvptv.io, there will always be a gladiator streaming! (hopefully)"),
 					),
@@ -67,9 +69,15 @@ func (p *homePage) Render() app.UI {
 						app.H2().
 							Class("title").
 							Text("Why is my twitch screen purple?"),
+						app.Div().Class().Body(
+							app.Img().
+							Class("twitch-pod").
+							Alt("twitch-purple-screen").
+							Src("/web/twitch-purple-screen.png"),
+						),
 						app.P().
 							Class("text").
-							Text("Twitch's purple screen error might occurs when you're watching live streams from another website than twitch.com. It is often triggers by your ad-blockers and can be avoided if you disable your adblocker on Pvptv.io. Do not worry! Pvptv.io has zero ad!"),
+							Text("Twitch's purple screen error might occurs when you're watching live streams from another website than twitch.com. It can be triggered by your ad-blockers and can be avoided if you disable it on Pvptv.io. Do not worry! Pvptv.io has zero ad!"),
 					),
 					app.Div().ID("special-thanks").Body(
 						app.H2().
