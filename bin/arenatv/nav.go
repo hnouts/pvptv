@@ -15,7 +15,7 @@ type nav struct {
 	IcurrentClass  string
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
-	classSvg       string
+	// classSvg       string
 	isFirstLoad    bool
 }
 
@@ -53,8 +53,8 @@ func (n *nav) CurrentStream(v liveStream) *nav {
 
 func (n *nav) OnMount(ctx app.Context) {
 	n.isFirstLoad = true
-	url := strings.Split(ctx.Page().URL().Path, "/")
-	n.classSvg = parseSvg(url[1])
+	// url := strings.Split(ctx.Page().URL().Path, "/")
+	// n.classSvg = parseSvg(url[1])
 }
 
 func (n *nav) OnNav(ctx app.Context) {
@@ -210,27 +210,38 @@ func (n *nav) Render() app.UI {
 												lr := n.IliveStreams[i]
 												if lr.Online == true {
 													gameVersionIcon := parseTitle(lr.Title)
-													return app.Div().
+													return app.Div().Class("stream-label-style").
 														Body(
 															newLink().
 																ID(lr.Slug).
-																Class("glow").
-																Label(lr.Name + " 🔴 " + strconv.Itoa(lr.Viewers)).
+																Class("glow space-label").
+																Label(lr.Name ).
 																Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																Help(lr.Title).
 																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
+															newLink().
+																ID(lr.Slug).
+																Class("glow unresponsive").
+																Label("🔴 " + strconv.Itoa(lr.Viewers)).
+																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
+																// Help(lr.Title).
+																Focus(lr.Slug == n.IcurrentStream.Slug),
+
 														)
 												} else {
-													return newLink().
+													return app.Div().Class("stream-offline").
+													Body(
+														newLink().
 														ID(lr.Slug).
 														Class("offlineLink").
 														// Icon(newSVGIcon().RawSVG(playSVG)).
 														Label(lr.Name).
 														Href("/" + n.IcurrentClass + "/" + lr.Slug).
-														Focus(lr.Slug == n.IcurrentStream.Slug)
+														Focus(lr.Slug == n.IcurrentStream.Slug),
+													)
 												}
-											}),
+											}),											
 										),
 								),
 						),

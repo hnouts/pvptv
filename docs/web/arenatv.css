@@ -321,6 +321,10 @@ h3,
   text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
 }
 
+.stream-offline {
+  margin-left: 2.5rem;
+}
+
 .offlineLink {
   text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
   color: #999999 !important;
@@ -757,6 +761,28 @@ input[type="range"]:hover::-moz-range-thumb {
 .linkDescription:hover {
   display: initial;
   animation: fade-in 0.5s;
+}
+
+.unresponsive {
+  pointer-events: none;
+}
+
+.space-label {
+  margin-right: 1rem;
+}
+
+.stream-label-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 1042px) {
+  .stream-label-style {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 
 /* -----------------------------------------------------------------------------
