@@ -9,8 +9,6 @@ run: build
 # build-github: build
 # 	@cd docs && ./arenatv github
 
-github: build-github clean 
-
 clean:
 	@go clean ./...
 	@-rm docs/arenatv
