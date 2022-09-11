@@ -149,6 +149,21 @@ func getLiveStreamers() []liveStream {
 		},
 		//DK
 		{
+			Slug:      "losiro",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			Name: "Losiro",
+			URL:  "https://www.twitch.tv/losiro",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/losirowow",
+				},
+			},
+		},
+		{
 			Slug:      "skippeetv",
 			MainClass: "death_knight",
 			ClassList: []string{
