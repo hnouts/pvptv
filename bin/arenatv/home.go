@@ -52,15 +52,25 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.P().Class("text").
 							Text("The motivation behind this web application was to finally have an easy solution to the eternal question posted on pvp communities:"),
-						app.Div().Class("questions").Body(
+						app.Div().Class("").Body(
 							app.Img().
-							Class("welcome-example").
-							Alt("eternal-question-1").
-							Src("/web/lfstream1.png"),
-						app.Img().
-							Class("welcome-example").
-							Alt("eternal-question-2").
-							Src("/web/lfstream1.png"),
+								Class("welcome-example").
+								Alt("eternal-question-1").
+								Src("/web/streams-question.png"),
+							app.Img().
+								Class("welcome-example").
+								Alt("eternal-question-1").
+								Src("/web/streams-question2.png"),
+						),
+						app.Div().Class("").Body(
+							app.Img().
+								Class("welcome-example").
+								Alt("eternal-question-2").
+								Src("/web/streams-question3.png"),
+							app.Img().
+								Class("welcome-example").
+								Alt("eternal-question-2").
+								Src("/web/streams-question4.png"),
 						),
 						app.P().Class("text").
 							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on Pvptv.io, there will always be a gladiator streaming! (hopefully)"),
@@ -71,9 +81,9 @@ func (p *homePage) Render() app.UI {
 							Text("Why is my twitch screen purple?"),
 						app.Div().Class().Body(
 							app.Img().
-							Class("twitch-pod").
-							Alt("twitch-purple-screen").
-							Src("/web/twitch-purple-screen.png"),
+								Class("twitch-pod").
+								Alt("twitch-purple-screen").
+								Src("/web/twitch-purple-screen.png"),
 						),
 						app.P().
 							Class("text").
@@ -89,6 +99,13 @@ func (p *homePage) Render() app.UI {
 						app.A().Class().Href("https://twitter.com/jonhymaxoo").Text("Maxence Twitter"),
 						app.Br(),
 						app.A().Class().Href("https://go-app.dev/").Text("Go-App-Dev Documentation"),
+						app.Br(),
+						app.P().
+							Class("text").
+							Text("Thanks also to reddit user Dmachine_Blizz and his very rich list of arena streamers that was a very useful source to me and an inspiration to this project."),
+						app.A().Class().Href("https://twitter.com/Dmachine_").Text("DMachine Twitter"),
+						app.Br(),
+						app.A().Class().Href("https://www.reddit.com/r/worldofpvp/comments/e9uukx/list_of_wow_pvp_streamers_organized_by_classspec/").Text("Reddit list of streamers"),
 					),
 				),
 		)

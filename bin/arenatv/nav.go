@@ -16,7 +16,7 @@ type nav struct {
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
 	// classSvg       string
-	isFirstLoad    bool
+	isFirstLoad bool
 }
 
 func newNav() *nav {
@@ -214,34 +214,33 @@ func (n *nav) Render() app.UI {
 														Body(
 															newLink().
 																ID(lr.Slug).
-																Class("glow space-label").
-																Label(lr.Name ).
-																Href("/" + n.IcurrentClass + "/" + lr.Slug).
+																Class("glow").
+																Label(lr.Name).
+																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).
 																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 															newLink().
 																ID(lr.Slug).
 																Class("glow unresponsive").
-																Label("🔴 " + strconv.Itoa(lr.Viewers)).
+																Label("🔴 "+strconv.Itoa(lr.Viewers)).
 																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																// Help(lr.Title).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
-
 														)
 												} else {
 													return app.Div().Class("stream-offline").
-													Body(
-														newLink().
-														ID(lr.Slug).
-														Class("offlineLink").
-														// Icon(newSVGIcon().RawSVG(playSVG)).
-														Label(lr.Name).
-														Href("/" + n.IcurrentClass + "/" + lr.Slug).
-														Focus(lr.Slug == n.IcurrentStream.Slug),
-													)
+														Body(
+															newLink().
+																ID(lr.Slug).
+																Class("offlineLink").
+																// Icon(newSVGIcon().RawSVG(playSVG)).
+																Label(lr.Name).
+																Href("/" + n.IcurrentClass + "/" + lr.Slug).
+																Focus(lr.Slug == n.IcurrentStream.Slug),
+														)
 												}
-											}),											
+											}),
 										),
 								),
 						),
