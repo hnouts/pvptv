@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"syscall"
-	"log"
+
 	"github.com/maxence-charriere/go-app/v9/pkg/analytics"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/cli"
@@ -19,7 +20,7 @@ const (
 
 	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
 	githubURL       = "https://github.com/selkal"
-	twitterURL      = "https://twitter.com/hnouts_dev"
+	twitterURL      = "https://twitter.com/selkal_dev"
 )
 
 type options struct {

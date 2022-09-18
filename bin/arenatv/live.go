@@ -229,6 +229,21 @@ func getLiveStreamers() []liveStream {
 		},
 		//DRUID
 		{
+			Slug:      "asgarathpvp",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+			},
+			Name: "Asgarath",
+			URL:  "https://www.twitch.tv/asgarathpvp",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Asgarathpvp",
+				},
+			},
+		},
+		{
 			Slug:      "claak",
 			MainClass: "druid",
 			ClassList: []string{
@@ -1075,6 +1090,40 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		{
+			Slug:      "aphobiagaming",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+			},
+			Name: "Aphobia",
+			URL:  "https://www.twitch.tv/aphobiagaming",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/user/eddphobia",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/eddphobia91/",
+				},
+			},
+		},
+		{
+			Slug:      "stahpsp",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+			},
+			Name: "Stahpsp",
+			URL:  "https://www.twitch.tv/stahpsp",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/stahpsp",
+				},
+			},
+		},
+		{
 			Slug:      "krawnzlol",
 			MainClass: "priest",
 			ClassList: []string{
@@ -1270,6 +1319,29 @@ func getLiveStreamers() []liveStream {
 			Name:  "abxtv",
 			URL:   "https://www.twitch.tv/abxtv",
 			Links: []socialLink{},
+		},
+		{
+			Slug:      "crusader3455",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			Name: "Crusader",
+			URL:  "https://www.twitch.tv/crusader3455",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/itsmikeowens",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/itsmikeowens/",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCzoNEIaIy1Q-VrrU1P-5vpw",
+				},
+			},
 		},
 		{
 			Slug:      "borngood",
