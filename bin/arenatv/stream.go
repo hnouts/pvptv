@@ -63,6 +63,7 @@ func (r *stream) init(ctx app.Context) {
 					cpl.Online = true
 					cpl.Title = ld.Title
 					cpl.Viewers = ld.ViewerCount
+					cpl.GameName = ld.GameName
 				}
 			}
 			r.lives = append(r.lives, cpl)
@@ -71,6 +72,10 @@ func (r *stream) init(ctx app.Context) {
 
 	sort.SliceStable(r.lives, func(i, j int) bool {
 		return r.lives[i].Viewers > r.lives[j].Viewers
+	})
+
+	sort.SliceStable(r.lives, func(i, j int) bool {
+		return strings.Compare(r.lives[i].GameName, r.lives[j].GameName) > 0
 	})
 	// println("----------FINAL LIVESTREAM-----------------")
 	// fmt.Printf("%+v\n", r.lives)

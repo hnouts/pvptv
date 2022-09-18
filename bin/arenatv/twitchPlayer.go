@@ -133,44 +133,8 @@ func (p *twitchPlayer) loadVideo(ctx app.Context) {
 
 		p.player.Call("addEventListener", "ready", READY)
 		p.player.Call("addEventListener", "error", ERROR)
-		// p.isBuffering = false
-		// p.isPlaying = true
 	})
 }
-
-// func (p *twitchPlayer) onStateChange(ctx app.Context, args []app.Value) {
-// 	switch args[0].Get("data").Int() {
-// 	case unstarted:
-// 		p.isPlaying = false
-// 		p.isBuffering = false
-
-// 	case ended:
-// 		p.isPlaying = false
-// 		p.isBuffering = false
-// 		if p.err == nil {
-// 			p.play(ctx)
-// 		}
-
-// 	case playing:
-// 		p.isPlaying = true
-// 		p.isBuffering = false
-// 		p.err = nil
-
-// 	case paused:
-// 		p.isPlaying = false
-// 		p.isBuffering = false
-
-// 	case buffering:
-// 		p.isBuffering = true
-// 		p.err = nil
-// 	}
-
-// 	if p.IonPlaybackChange != nil {
-// 		ctx.Emit(func() {
-// 			p.IonPlaybackChange(ctx, p.isPlaying)
-// 		})
-// 	}
-// }
 
 func (p *twitchPlayer) onError(ctx app.Context, args []app.Value) {
 	fmt.Println("data Err:", ctx)
@@ -209,11 +173,6 @@ func (p *twitchPlayer) OnUpdate(ctx app.Context) {
 }
 
 func (p *twitchPlayer) Render() app.UI {
-	// volumeDisplay := ""
-	// if p.player == nil {
-	// 	volumeDisplay = "disabled"
-	// }
-
 	return app.Div().
 		Class("youtube").
 		Class(p.Iclass).
@@ -223,7 +182,6 @@ func (p *twitchPlayer) Render() app.UI {
 				Body(
 					app.Div().
 						ID("twitch-player").
-						// Class("unselectable").
 						Body(
 							app.Script().Src("https://player.twitch.tv/js/embed/v1.js")),
 				),
@@ -243,74 +201,6 @@ func (p *twitchPlayer) Render() app.UI {
 							Err(p.err),
 					),
 			),
-			// ui.Stack().
-			// 	Class("youtube-controls").
-			// 	Class("hspace-out").
-			// 	Class("vspace-top").
-			// 	Class("vspace-bottom").
-			// 	Center().
-			// 	Middle().
-			// 	Content(
-			// 		app.Div().Class("youtube-left-space"),
-			// 		newControl().
-			// 			Class("youtube-back").
-			// 			Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(backwardSVG)).
-			// 			Disabled(!p.canBack).
-			// 			OnClick(p.onBackClicked),
-			// 		app.If(p.isPlaying || p.isBuffering,
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(pauseSVG)).
-			// 				Disabled(p.player == nil).
-			// 				OnClick(p.onPauseClicked),
-			// 		).Else(
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(playSVG)).
-			// 				Disabled(p.player == nil || p.isBuffering).
-			// 				OnClick(p.onPlayClicked),
-			// 		),
-			// 		app.If(p.volume.Value > 60,
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(soundHighSVG)).
-			// 				Disabled(p.player == nil).
-			// 				OnClick(p.onSoundClicked),
-			// 		).ElseIf(p.volume.Value > 20,
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(soundMediumSVG)).
-			// 				Disabled(p.player == nil).
-			// 				OnClick(p.onSoundClicked),
-			// 		).ElseIf(p.volume.Value > 0,
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(soundLowSVG)).
-			// 				Disabled(p.player == nil).
-			// 				OnClick(p.onSoundClicked),
-			// 		).Else(
-			// 			newControl().Icon(newSVGIcon().
-			// 				Size(controlIconSize).
-			// 				RawSVG(soundMutedSVG)).
-			// 				Disabled(p.player == nil).
-			// 				OnClick(p.onSoundClicked),
-			// 		),
-			// 		app.Div().
-			// 			Class("youtube-volume").
-			// 			Class(volumeDisplay).
-			// 			Body(
-			// 				app.Input().
-			// 					ID("youtube-volume").
-			// 					Type("range").
-			// 					Min("0").
-			// 					Max("100").
-			// 					Value(p.volume.Value).
-			// 					OnChange(p.onVolumeChanged).
-			// 					OnInput(p.onVolumeChanged),
-			// 			),
-			// 	),
 		)
 }
 
@@ -391,8 +281,8 @@ func loadVolume(ctx app.Context) volume {
 	}
 
 	if v == (volume{}) {
-		v.Value = 100
-		v.LastHearableValue = 100
+		v.Value = 50
+		v.LastHearableValue = 50
 	}
 	return v
 }

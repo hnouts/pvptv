@@ -201,6 +201,13 @@ h2,
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: white;
 }
+.h3 {
+  padding-bottom: 4px;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
 
 .h2-nav {
   padding-bottom: 0px;
@@ -587,7 +594,7 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .nav-streams-class-selected {
-  height: calc(100% - 180px);
+  height: calc(100% - 50px);
   overflow-y: scroll;
 }
 
@@ -597,7 +604,7 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .nav-support {
-  margin-top: 168px;
+  margin-top: 38px;
 }
 
 .nav-support-home {
@@ -636,6 +643,9 @@ input[type="range"]:hover::-moz-range-thumb {
   }
   .header-page {
     display: block !important;
+  }
+  .spaced-on-mobile {
+    margin-left: 0.5rem;
   }
 }
 

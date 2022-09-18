@@ -67,52 +67,92 @@ func (n *nav) OnNav(ctx app.Context) {
 func parseTitle(t string) string {
 	t = strings.ToLower(t)
 	if strings.Contains(t, "wotlk") {
-		return wotlkSVG
+		return "wotlk"
 	}
-	if strings.Contains(t, "tbc") {
-		return tbcSVG
-	}
-	return retailSVG
+	return "retail"
 }
 
-func parseSvg(s string) string {
-	if s == "death_knight" {
-		return dkSVG
+func parseSpecList(s []specList, c string) string {
+	// range speclist, if class = c then spec = current item
+	for _, spec := range s {
+		if c == spec.SPClass {
+			return parseSpecToSvg(spec.SPSpec)
+		}
 	}
-	if s == "demon_hunter" {
-		return dhSVG
+	return websiteSVG
+}
+
+func parseSpecToSvg(s string) string {
+	switch s {
+	case "mistweaver":
+		return mistweaverMonkSVG
+	case "windwalker":
+		return windwalkerMonkSVG
+	case "holyPaladin":
+		return holyPaladinSVG
+	case "ret":
+		return retPaladinSVG
+	case "restorationShaman":
+		return restorationShamanSVG
+	case "elemental":
+		return elementalShamanSVG
+	case "enhancement":
+		return enhancementShamanSVG
+	case "restorationDruid":
+		return restorationDruidSVG
+	case "balance":
+		return balanceDruidSVG
+	case "feral":
+		return feralDruidSVG
+	case "shadow":
+		return shadowPriestSVG
+	case "disc":
+		return discPriestSVG
+	case "holyPriest":
+		return holyPriestSVG
+	case "destruction":
+		return destructionWarlockSVG
+	case "demonology":
+		return demonologyWarlockSVG
+	case "affliction":
+		return afflictionWarlockSVG
+	case "arms":
+		return armsWarriorSVG
+	case "fury":
+		return furyWarriorSVG
+	case "protection":
+		return protectionWarriorSVG
+	case "bm":
+		return bmHunterSVG
+	case "survival":
+		return survivalHunterSVG
+	case "mm":
+		return mmHunterSVG
+	case "sub":
+		return subRogueSVG
+	case "outlaw":
+		return outlawRogueSVG
+	case "assa":
+		return assassinationRogueSVG
+	case "fire":
+		return fireMageSVG
+	case "frostMage":
+		return frostMageSVG
+	case "arcane":
+		return arcaneMageSVG
+	case "havoc":
+		return havocDhSVG
+	case "vengeance":
+		return vengeanceDhSVG
+	case "blood":
+		return bloodDkSVG
+	case "unholy":
+		return unholyDkSVG
+	case "frostDk":
+		return frostDkSVG
+	default:
+		return websiteSVG
 	}
-	if s == "druid" {
-		return druidSVG
-	}
-	if s == "hunter" {
-		return hunterSVG
-	}
-	if s == "mage" {
-		return mageSVG
-	}
-	if s == "monk" {
-		return monkSVG
-	}
-	if s == "paladin" {
-		return paladinSVG
-	}
-	if s == "priest" {
-		return priestSVG
-	}
-	if s == "rogue" {
-		return rogueSVG
-	}
-	if s == "shaman" {
-		return shamanSVG
-	}
-	if s == "warlock" {
-		return warlockSVG
-	}
-	if s == "warrior" {
-		return warriorSVG
-	}
-	return retailSVG
 }
 
 func (n *nav) Render() app.UI {
@@ -206,39 +246,88 @@ func (n *nav) Render() app.UI {
 									app.Div().
 										Class("hspace-out").
 										Body(
+											app.Div().Class("separator"),
+											app.H3().
+												Class("hApp h3").
+												Text("Classic"),
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
-												if lr.Online == true {
-													gameVersionIcon := parseTitle(lr.Title)
+												if lr.Online == true && parseTitle(lr.Title) == "wotlk" && lr.GameName == "World of Warcraft" {
+													specIcon := parseSpecList(lr.SpecList, n.IcurrentClass)
 													return app.Div().Class("stream-label-style").
 														Body(
 															newLink().
 																ID(lr.Slug).
-																Class("glow").
+																Class("glow icon-circle").
 																Label(lr.Name).
 																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).
-																Icon(newSVGIcon().RawSVG(gameVersionIcon)).
+																// Icon(newSVGIcon().RawSVG(gameVersionIcon)).
+																Icon(newSVGIcon().RawSVG(specIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 															newLink().
 																ID(lr.Slug).
-																Class("glow unresponsive").
+																Class("glow unresponsive spaced-on-mobile").
 																Label("🔴 "+strconv.Itoa(lr.Viewers)).
 																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																// Help(lr.Title).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 														)
 												} else {
+													return app.Div()
+												}
+											}),
+
+											app.H3().
+												Class("hApp h3").
+												Text("Retail"),
+											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
+												lr := n.IliveStreams[i]
+												if lr.Online == true && parseTitle(lr.Title) == "retail" && lr.GameName == "World of Warcraft" {
+													// gameVersionIcon := parseTitle(lr.Title)
+													specIcon := parseSpecList(lr.SpecList, n.IcurrentClass)
+													return app.Div().Class("stream-label-style").
+														Body(
+															newLink().
+																ID(lr.Slug).
+																Class("glow icon-circle").
+																Label(lr.Name).
+																Href("/"+n.IcurrentClass+"/"+lr.Slug).
+																Help(lr.Title).
+																// Icon(newSVGIcon().RawSVG(gameVersionIcon)).
+																Icon(newSVGIcon().RawSVG(specIcon)).
+																Focus(lr.Slug == n.IcurrentStream.Slug),
+															newLink().
+																ID(lr.Slug).
+																Class("glow unresponsive spaced-on-mobile").
+																Label("🔴 "+strconv.Itoa(lr.Viewers)).
+																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
+																// Help(lr.Title).
+																Focus(lr.Slug == n.IcurrentStream.Slug),
+														)
+												} else {
+													return app.Div()
+												}
+											}),
+
+											app.Div().Class("separator"),
+											app.H3().
+												Class("hApp h3").
+												Text("Offline"),
+											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
+												lr := n.IliveStreams[i]
+												if lr.Online == false || lr.GameName != "World of Warcraft" {
 													return app.Div().Class("stream-offline").
 														Body(
 															newLink().
 																ID(lr.Slug).
 																Class("offlineLink").
-																// Icon(newSVGIcon().RawSVG(playSVG)).
 																Label(lr.Name).
 																Href("/" + n.IcurrentClass + "/" + lr.Slug).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 														)
+												} else {
+													return app.Div()
 												}
 											}),
 										),

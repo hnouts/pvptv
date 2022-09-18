@@ -1,8 +1,6 @@
 package main
 
 import (
-	"sort"
-	"strings"
 	"time"
 )
 
@@ -10,13 +8,20 @@ type liveStream struct {
 	Slug      string
 	MainClass string
 	ClassList []string
+	SpecList  []specList
 	Name      string
 	URL       string
 	Viewers   int
+	GameName  string
 	Online    bool
 	Title     string
 	Links     []socialLink
 	AddedAt   time.Time
+}
+
+type specList struct {
+	SPClass string
+	SPSpec  string
 }
 
 type socialLink struct {
@@ -234,6 +239,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"druid",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "restorationDruid",
+				},
+			},
 			Name: "Asgarath",
 			URL:  "https://www.twitch.tv/asgarathpvp",
 			Links: []socialLink{
@@ -269,7 +280,13 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"druid",
 			},
-			Name: "Tonyferalmovies",
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "feral",
+				},
+			},
+			Name: "Tonyferal",
 			URL:  "https://www.twitch.tv/tonyferalmovies",
 			Links: []socialLink{
 				{
@@ -335,6 +352,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"druid",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "feral",
+				},
+			},
 			Name: "Sodapoppin",
 			URL:  "https://www.twitch.tv/sodapoppin",
 			Links: []socialLink{
@@ -361,6 +384,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "druid",
 			ClassList: []string{
 				"druid",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "feral",
+				},
 			},
 			Name: "Snupy",
 			URL:  "https://www.twitch.tv/snupy",
@@ -453,6 +482,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "druid",
 			ClassList: []string{
 				"druid",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "restorationDruid",
+				},
 			},
 			Name: "Supatease",
 			URL:  "https://www.twitch.tv/supatease",
@@ -660,6 +695,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"hunter",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "hunter",
+					SPSpec:  "mm",
+				},
+			},
 			Name: "Freezion",
 			URL:  "https://www.twitch.tv/freezion",
 			Links: []socialLink{
@@ -792,6 +833,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"mage",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "mage",
+					SPSpec:  "fire",
+				},
+			},
 			Name: "Hansol",
 			URL:  "https://www.twitch.tv/hansol",
 			Links: []socialLink{
@@ -830,6 +877,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"mage",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "mage",
+					SPSpec:  "frost",
+				},
+			},
 			Name: "Albraik",
 			URL:  "https://www.twitch.tv/albraik",
 			Links: []socialLink{
@@ -844,6 +897,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "mage",
 			ClassList: []string{
 				"mage",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "mage",
+					SPSpec:  "fire",
+				},
 			},
 			Name: "Venruki",
 			URL:  "https://www.twitch.tv/venruki",
@@ -951,6 +1010,56 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//MONK
+		{
+			Slug:      "mysticallx",
+			MainClass: "monk",
+			ClassList: []string{
+				"monk",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "monk",
+					SPSpec:  "mistweaver",
+				},
+			},
+			Name: "Mysticallx",
+			URL:  "https://www.twitch.tv/mysticallx",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/MysticalTheMonk",
+				},
+			},
+		},
+		{
+			Slug:      "panzerhenk",
+			MainClass: "monk",
+			ClassList: []string{
+				"monk",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "monk",
+					SPSpec:  "mistweaver",
+				},
+			},
+			Name: "Panzerhenk",
+			URL:  "https://www.twitch.tv/panzerhenk",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/panzerhenk",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/panzerhenk/",
+				},
+			},
+		},
 		{
 			Slug:      "banwellx",
 			MainClass: "monk",
@@ -1114,6 +1223,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"priest",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "shadow",
+				},
+			},
 			Name: "Stahpsp",
 			URL:  "https://www.twitch.tv/stahpsp",
 			Links: []socialLink{
@@ -1169,6 +1284,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"priest",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "disc",
+				},
+			},
 			Name: "Hydramist",
 			URL:  "https://www.twitch.tv/hydramist",
 			Links: []socialLink{
@@ -1217,6 +1338,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "priest",
 			ClassList: []string{
 				"priest",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "shadow",
+				},
 			},
 			Name: "Anboniwow",
 			URL:  "https://www.twitch.tv/anboniwow",
@@ -1379,6 +1506,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"paladin",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "ret",
+				},
+			},
 			Name: "Savix",
 			URL:  "https://www.twitch.tv/savix",
 			Links: []socialLink{
@@ -1410,6 +1543,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"paladin",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "holyPaladin",
+				},
+			},
 			Name: "Pvplab",
 			URL:  "https://www.twitch.tv/pvplab",
 			Links: []socialLink{
@@ -1433,6 +1572,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"paladin",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "ret",
+				},
+			},
 			Name:  "Accident",
 			URL:   "https://www.twitch.tv/accident_",
 			Links: []socialLink{},
@@ -1452,6 +1597,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "paladin",
 			ClassList: []string{
 				"paladin",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "ret",
+				},
 			},
 			Name:  "Tintinlives",
 			URL:   "https://www.twitch.tv/tintinlives",
@@ -1898,6 +2049,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"rogue",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "rogue",
+					SPSpec:  "sub",
+				},
+			},
 			Name: "Frozen",
 			URL:  "https://www.twitch.tv/frozentherogue",
 			Links: []socialLink{
@@ -1913,6 +2070,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "shaman",
 			ClassList: []string{
 				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
 			},
 			Name:  "Warbla",
 			URL:   "https://www.twitch.tv/warbla",
@@ -1939,6 +2102,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "shaman",
 			ClassList: []string{
 				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "enhancement",
+				},
 			},
 			Name: "Tiqqlethis",
 			URL:  "https://www.twitch.tv/tiqqlethis",
@@ -1967,6 +2136,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"shaman",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "enhancement",
+				},
+			},
 			Name: "Swapxy",
 			URL:  "https://www.twitch.tv/swapxy",
 			Links: []socialLink{
@@ -1981,6 +2156,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "shaman",
 			ClassList: []string{
 				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
 			},
 			Name: "Thesterge",
 			URL:  "https://www.twitch.tv/thesterge",
@@ -2009,6 +2190,28 @@ func getLiveStreamers() []liveStream {
 				"priest",
 				"paladin",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
+				{
+					SPClass: "druid",
+					SPSpec:  "restorationDruid",
+				},
+				{
+					SPClass: "paladin",
+					SPSpec:  "holyPaladin",
+				},
+				{
+					SPClass: "priest",
+					SPSpec:  "holyPriest",
+				},
+				{
+					SPClass: "monk",
+					SPSpec:  "mistweaver",
+				},
+			},
 			Name: "Drainerx",
 			URL:  "https://www.twitch.tv/drainerx",
 			Links: []socialLink{
@@ -2031,6 +2234,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "shaman",
 			ClassList: []string{
 				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
 			},
 			Name: "Zeepeye",
 			URL:  "https://www.twitch.tv/zeepeye",
@@ -2055,6 +2264,21 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"shaman",
 				"druid",
+				"paladin",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
+				{
+					SPClass: "druid",
+					SPSpec:  "restorationDruid",
+				},
+				{
+					SPClass: "paladin",
+					SPSpec:  "holyPaladin",
+				},
 			},
 			Name: "Lontar",
 			URL:  "https://www.twitch.tv/lontartv",
@@ -2188,6 +2412,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"warlock",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "destruction",
+				},
+			},
 			Name: "Jazggz",
 			URL:  "https://www.twitch.tv/jazggz",
 			Links: []socialLink{
@@ -2310,6 +2540,17 @@ func getLiveStreamers() []liveStream {
 			MainClass: "warlock",
 			ClassList: []string{
 				"warlock",
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
+				{
+					SPClass: "warlock",
+					SPSpec:  "affliction",
+				},
 			},
 			Name: "Gelubabatv",
 			URL:  "https://www.twitch.tv/gelubabatv",
@@ -2562,6 +2803,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"warrior",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
+			},
 			Name: "Magnusz",
 			URL:  "https://www.twitch.tv/magnusz",
 			Links: []socialLink{
@@ -2581,15 +2828,15 @@ func getLiveStreamers() []liveStream {
 		},
 	}
 
-	sort.Slice(streams, func(a, b int) bool {
-		return strings.Compare(streams[a].Name, streams[b].Name) < 0
-	})
+	// sort.Slice(streams, func(a, b int) bool {
+	// 	return strings.Compare(streams[a].Name, streams[b].Name) < 0
+	// })
 
-	for _, r := range streams {
-		sort.Slice(r.Links, func(a, b int) bool {
-			return strings.Compare(r.Links[a].Slug, r.Links[b].Slug) < 0
-		})
-	}
+	// for _, r := range streams {
+	// 	sort.Slice(r.Links, func(a, b int) bool {
+	// 		return strings.Compare(r.Links[a].Slug, r.Links[b].Slug) < 0
+	// 	})
+	// }
 
 	return streams
 }
