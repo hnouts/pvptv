@@ -531,14 +531,14 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .separator:last-of-type {
-  margin-top: 18px;
+  margin-top: 84px;
 }
 
 .separator,
 .markdown h2,
 .markdown h3,
 .reference h2 {
-  margin-top: 84px;
+  margin-top: 42px;
 }
 
 .markdown h2:first-of-type {

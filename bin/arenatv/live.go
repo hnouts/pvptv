@@ -1132,6 +1132,16 @@ func getLiveStreamers() []liveStream {
 				"monk",
 				"shaman",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "monk",
+					SPSpec:  "mistweaver",
+				},
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
+			},
 			Name: "Orbrexth",
 			URL:  "https://www.twitch.tv/orbrexth",
 			Links: []socialLink{
@@ -1151,7 +1161,7 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"warrior",
 				"rogue",
-				"priest",
+				"monk",
 			},
 			Name: "Trillebartom",
 			URL:  "https://www.twitch.tv/trillebartom",
@@ -2265,6 +2275,7 @@ func getLiveStreamers() []liveStream {
 				"shaman",
 				"druid",
 				"paladin",
+				"monk",
 			},
 			SpecList: []specList{
 				{
@@ -2278,6 +2289,10 @@ func getLiveStreamers() []liveStream {
 				{
 					SPClass: "paladin",
 					SPSpec:  "holyPaladin",
+				},
+				{
+					SPClass: "monk",
+					SPSpec:  "mistweaver",
 				},
 			},
 			Name: "Lontar",

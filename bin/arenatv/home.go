@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "github.com/maxence-charriere/go-app/v9/pkg/analytics"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
@@ -24,8 +23,7 @@ func (p *homePage) OnNav(ctx app.Context) {
 
 func (p *homePage) initPage(ctx app.Context) {
 	ctx.Page().SetTitle("PvPtv.io")
-	ctx.Page().SetDescription("all wow pvp streamer in one place")
-	// analytics.Page("home", nil)
+	ctx.Page().SetDescription("all of wow pvp streaming in one place")
 }
 
 func (p *homePage) Render() app.UI {

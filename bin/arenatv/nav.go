@@ -15,8 +15,7 @@ type nav struct {
 	IcurrentClass  string
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
-	// classSvg       string
-	isFirstLoad bool
+	isFirstLoad    bool
 }
 
 func newNav() *nav {
@@ -53,8 +52,6 @@ func (n *nav) CurrentStream(v liveStream) *nav {
 
 func (n *nav) OnMount(ctx app.Context) {
 	n.isFirstLoad = true
-	// url := strings.Split(ctx.Page().URL().Path, "/")
-	// n.classSvg = parseSvg(url[1])
 }
 
 func (n *nav) OnNav(ctx app.Context) {
@@ -78,6 +75,56 @@ func parseSpecList(s []specList, c string) string {
 		if c == spec.SPClass {
 			return parseSpecToSvg(spec.SPSpec)
 		}
+	}
+	return returnMetaforGivenClass(c)
+}
+
+// func isClassicStreaming(stream []liveStream) bool {
+// 	for _, s := range stream {
+// 		if s.Online == true && parseTitle(s.Title) == "wotlk" && s.GameName == "World of Warcraft" {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+// func isRetailStreaming(stream []liveStream) bool {
+// 	for _, s := range stream {
+// 		if s.Online == true && parseTitle(s.Title) == "retail" && s.GameName == "World of Warcraft" {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+func returnMetaforGivenClass(c string) string {
+	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
+
+	switch c {
+	case "demon_hunter":
+		return havocDhSVG
+	case "death_knight":
+		return unholyDkSVG
+	// case "druid":
+	// 	return restorationDruidSVG
+	case "hunter":
+		return mmHunterSVG
+	case "mage":
+		return fireMageSVG
+	case "monk":
+		return windwalkerMonkSVG
+	// case "priest":
+	// 	return discPriestSVG
+	case "paladin":
+		return retPaladinSVG
+	case "rogue":
+		return subRogueSVG
+	case "shaman":
+		return elementalShamanSVG
+	case "warlock":
+		return destructionWarlockSVG
+	case "warrior":
+		return armsWarriorSVG
 	}
 	return websiteSVG
 }
@@ -262,29 +309,25 @@ func (n *nav) Render() app.UI {
 																Label(lr.Name).
 																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).
-																// Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Icon(newSVGIcon().RawSVG(specIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 															newLink().
 																ID(lr.Slug).
 																Class("glow unresponsive spaced-on-mobile").
 																Label("🔴 "+strconv.Itoa(lr.Viewers)).
-																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
-																// Help(lr.Title).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 														)
 												} else {
 													return app.Div()
 												}
 											}),
-
+											app.Div().Class("separator"),
 											app.H3().
 												Class("hApp h3").
 												Text("Retail"),
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
 												if lr.Online == true && parseTitle(lr.Title) == "retail" && lr.GameName == "World of Warcraft" {
-													// gameVersionIcon := parseTitle(lr.Title)
 													specIcon := parseSpecList(lr.SpecList, n.IcurrentClass)
 													return app.Div().Class("stream-label-style").
 														Body(
@@ -294,15 +337,12 @@ func (n *nav) Render() app.UI {
 																Label(lr.Name).
 																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).
-																// Icon(newSVGIcon().RawSVG(gameVersionIcon)).
 																Icon(newSVGIcon().RawSVG(specIcon)).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 															newLink().
 																ID(lr.Slug).
 																Class("glow unresponsive spaced-on-mobile").
 																Label("🔴 "+strconv.Itoa(lr.Viewers)).
-																// Href("/" + n.IcurrentClass + "/" + lr.Slug).
-																// Help(lr.Title).
 																Focus(lr.Slug == n.IcurrentStream.Slug),
 														)
 												} else {
@@ -342,11 +382,6 @@ func (n *nav) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
 								Label("Buy me a coffee").
 								Href(buyMeACoffeeURL),
-							// newLink().
-							// 	Class("glow").
-							// 	Icon(newSVGIcon().RawSVG(githubSVG)).
-							// 	Label("GitHub").
-							// 	Href(githubURL),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(twitterSVG)).
