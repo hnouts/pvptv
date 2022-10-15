@@ -60,6 +60,35 @@ func getLiveStreamers() []liveStream {
 	streams := []liveStream{
 		//DH
 		{
+			Slug:      "volimond",
+			MainClass: "demon_hunter",
+			ClassList: []string{
+				"demon_hunter",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "demon_hunter",
+					SPSpec:  "vengeance",
+				},
+			},
+			Name: "Volimond",
+			URL:  "https://www.twitch.tv/volimond",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Tank4daze",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/irontriangle",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/volimond/",
+				},
+			},
+		},
+		{
 			Slug:      "fuseton",
 			MainClass: "demon_hunter",
 			ClassList: []string{
@@ -154,6 +183,29 @@ func getLiveStreamers() []liveStream {
 		},
 		//DK
 		{
+			Slug:      "cerva",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			Name: "Cerva",
+			URL:  "https://www.twitch.tv/cerva",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCI2k32-vTf20BJHY6qnTB7w?view_as=subscriber",
+				},
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/cervatv/",
+				},
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/Cervatv",
+				},
+			},
+		},
+		{
 			Slug:      "losiro",
 			MainClass: "death_knight",
 			ClassList: []string{
@@ -233,6 +285,31 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//DRUID
+		{
+			Slug:      "spottman",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "feral",
+				},
+			},
+			Name: "Spottman",
+			URL:  "https://www.twitch.tv/spottman",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/SpottmanTV",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCQCZMWxDuofOStBWprVlK1Q",
+				},
+			},
+		},
 		{
 			Slug:      "asgarathpvp",
 			MainClass: "druid",
@@ -799,14 +876,9 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"mage",
 			},
-			Name: "Wealthyman",
-			URL:  "https://www.twitch.tv/wealthymanx",
-			Links: []socialLink{
-				{
-					Slug: "twitter",
-					URL:  "https://twitter.com/C9Wealthyman",
-				},
-			},
+			Name:  "Wealthyman",
+			URL:   "https://www.twitch.tv/wealthymanx",
+			Links: []socialLink{},
 		},
 		{
 			Slug:      "wowalec",
@@ -820,10 +892,6 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "youtube",
 					URL:  "https://www.youtube.com/channel/UCBXOjQDF5Q96Qf0KNttBqow",
-				},
-				{
-					Slug: "twitter",
-					URL:  "https://twitter.com/TempoAlec",
 				},
 			},
 		},
@@ -880,7 +948,7 @@ func getLiveStreamers() []liveStream {
 			SpecList: []specList{
 				{
 					SPClass: "mage",
-					SPSpec:  "frost",
+					SPSpec:  "frostMage",
 				},
 			},
 			Name: "Albraik",
@@ -989,7 +1057,7 @@ func getLiveStreamers() []liveStream {
 			Links: []socialLink{
 				{
 					Slug: "twitter",
-					URL:  "https://twitter.com/Raiku_Wow",
+					URL:  "https://twitter.com/Xaryu",
 				},
 				{
 					Slug: "youtube",
@@ -1182,6 +1250,35 @@ func getLiveStreamers() []liveStream {
 		},
 		//PRIEST
 		{
+			Slug:      "ascalontv",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "shadow",
+				},
+			},
+			Name: "Ascalontv",
+			URL:  "https://www.twitch.tv/ascalontv",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/AscalonTV",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UC6FKFoJWGtZoKIDZRSXg78A",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.com/invite/uepKAsY",
+				},
+			},
+		},
+		{
 			Slug:      "hozitojones",
 			MainClass: "priest",
 			ClassList: []string{
@@ -1224,6 +1321,27 @@ func getLiveStreamers() []liveStream {
 				{
 					Slug: "instagram",
 					URL:  "https://www.instagram.com/eddphobia91/",
+				},
+			},
+		},
+		{
+			Slug:      "olliektv",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "disc",
+				},
+			},
+			Name: "Olliektv",
+			URL:  "https://www.twitch.tv/olliektv",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/GbQrSUyR",
 				},
 			},
 		},
@@ -2076,6 +2194,27 @@ func getLiveStreamers() []liveStream {
 		},
 		//SHAMAN
 		{
+			Slug:      "hrkzz",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
+			},
+			Name: "Hrkzz",
+			URL:  "https://www.twitch.tv/hrkzz",
+			Links: []socialLink{
+				{
+					Slug: "instagram",
+					URL:  "https://www.instagram.com/rn.fitt/?hl=fr",
+				},
+			},
+		},
+		{
 			Slug:      "warbla",
 			MainClass: "shaman",
 			ClassList: []string{
@@ -2098,14 +2237,9 @@ func getLiveStreamers() []liveStream {
 				"shaman",
 				"monk",
 			},
-			Name: "Kolowavex",
-			URL:  "https://www.twitch.tv/kolowavex",
-			Links: []socialLink{
-				{
-					Slug: "twitter",
-					URL:  "https://twitter.com/Kolohots",
-				},
-			},
+			Name:  "Kolowavex",
+			URL:   "https://www.twitch.tv/kolowavex",
+			Links: []socialLink{},
 		},
 		{
 			Slug:      "tiqqlethis",
@@ -2455,8 +2589,17 @@ func getLiveStreamers() []liveStream {
 			MainClass: "warlock",
 			ClassList: []string{
 				"warlock",
-				"paladin",
 				"priest",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "destruction",
+				},
+				{
+					SPClass: "priest",
+					SPSpec:  "shadow",
+				},
 			},
 			Name: "Anniefuchsia",
 			URL:  "https://www.twitch.tv/anniefuchsia",
