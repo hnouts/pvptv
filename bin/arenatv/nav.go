@@ -63,20 +63,44 @@ func (n *nav) OnNav(ctx app.Context) {
 
 func parseTitle(t string) string {
 	t = strings.ToLower(t)
+
 	if strings.Contains(t, "wotlk") {
 		return "wotlk"
 	}
+	if strings.Contains(t, "classic") {
+		return "wotlk"
+	}
+	if strings.Contains(t, "80") {
+		return "wotlk"
+	}
+	if strings.Contains(t, "wrath") {
+		return "wotlk"
+	}
+	if strings.Contains(t, "lich") {
+		return "wotlk"
+	}
+
 	return "retail"
 }
 
-func parseSpecList(s []specList, c string) string {
+func parseSpecList(version string, mc string, s []specList, c string) (string, string) {
 	// range speclist, if class = c then spec = current item
-	for _, spec := range s {
-		if c == spec.SPClass {
-			return parseSpecToSvg(spec.SPSpec)
+
+	if c == mc {
+		for _, spec := range s {
+			if c == spec.SPClass {
+				return "main", parseSpecToSvg(spec.SPSpec)
+			}
+		}
+	} else {
+		for _, spec := range s {
+			if c == spec.SPClass {
+				return "alt", parseSpecToSvg(spec.SPSpec)
+			}
 		}
 	}
-	return returnMetaforGivenClass(c)
+
+	return "meta", returnMetaforGivenClass(version, c)
 }
 
 // func isClassicStreaming(stream []liveStream) bool {
@@ -97,36 +121,52 @@ func parseSpecList(s []specList, c string) string {
 // 	return false
 // }
 
-func returnMetaforGivenClass(c string) string {
+func returnMetaforGivenClass(version string, class string) string {
 	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
 
-	switch c {
-	case "demon_hunter":
-		return havocDhSVG
-	case "death_knight":
-		return unholyDkSVG
-	// case "druid":
-	// 	return restorationDruidSVG
-	case "hunter":
-		return mmHunterSVG
-	case "mage":
-		return fireMageSVG
-	case "monk":
-		return windwalkerMonkSVG
-	// case "priest":
-	// 	return discPriestSVG
-	case "paladin":
-		return retPaladinSVG
-	case "rogue":
-		return subRogueSVG
-	case "shaman":
-		return elementalShamanSVG
-	case "warlock":
-		return destructionWarlockSVG
-	case "warrior":
-		return armsWarriorSVG
+	if version == "classic" {
+		switch class {
+		case "death_knight":
+			return unholyDkSVG
+		case "hunter":
+			return mmHunterSVG
+		case "mage":
+			return frostMageSVG
+		case "rogue":
+			return subRogueSVG
+		case "shaman":
+			return elementalShamanSVG
+		case "warlock":
+			return destructionWarlockSVG
+		case "warrior":
+			return armsWarriorSVG
+		}
+		return websiteSVG
+	} else {
+		switch class {
+		case "demon_hunter":
+			return havocDhSVG
+		case "death_knight":
+			return unholyDkSVG
+		case "hunter":
+			return mmHunterSVG
+		case "mage":
+			return fireMageSVG
+		case "monk":
+			return windwalkerMonkSVG
+		case "priest":
+			return discPriestSVG
+		case "rogue":
+			return subRogueSVG
+		case "shaman":
+			return elementalShamanSVG
+		case "warlock":
+			return destructionWarlockSVG
+		case "warrior":
+			return armsWarriorSVG
+		}
+		return websiteSVG
 	}
-	return websiteSVG
 }
 
 func parseSpecToSvg(s string) string {
@@ -300,12 +340,14 @@ func (n *nav) Render() app.UI {
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
 												if lr.Online == true && parseTitle(lr.Title) == "wotlk" && lr.GameName == "World of Warcraft" {
-													specIcon := parseSpecList(lr.SpecList, n.IcurrentClass)
+
+													opt, specIcon := parseSpecList("classic", lr.MainClass, lr.SpecList, n.IcurrentClass)
+
 													return app.Div().Class("stream-label-style").
 														Body(
 															newLink().
 																ID(lr.Slug).
-																Class("glow icon-circle").
+																Class("glow icon-circle "+opt).
 																Label(lr.Name).
 																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).
@@ -328,12 +370,12 @@ func (n *nav) Render() app.UI {
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
 												if lr.Online == true && parseTitle(lr.Title) == "retail" && lr.GameName == "World of Warcraft" {
-													specIcon := parseSpecList(lr.SpecList, n.IcurrentClass)
+													opt, specIcon := parseSpecList("retail", lr.MainClass, lr.SpecList, n.IcurrentClass)
 													return app.Div().Class("stream-label-style").
 														Body(
 															newLink().
 																ID(lr.Slug).
-																Class("glow icon-circle").
+																Class("glow icon-circle "+opt).
 																Label(lr.Name).
 																Href("/"+n.IcurrentClass+"/"+lr.Slug).
 																Help(lr.Title).

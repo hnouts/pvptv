@@ -360,6 +360,16 @@ h3,
   border-radius: 50%;
 }
 
+.alt svg {
+  border-radius: 50%;
+  border: solid 0.1rem;
+}
+
+.meta svg {
+  border-radius: 50%;
+  border: dashed 0.1rem;
+}
+
 .icon-circle-mobile {
   display: none;
 }
@@ -754,6 +764,27 @@ input[type="range"]:hover::-moz-range-thumb {
   margin-right: 12px;
 }
 
+.help-icon {
+  display: flex;
+  align-items: center;
+}
+
+.help-icon p {
+  margin-left: 1rem;
+}
+
+.help-icon svg {
+  border-radius: 50%;
+}
+
+.alt-border svg {
+  border: solid 0.1rem;
+}
+
+.border svg {
+  border: dashed 0.1rem;
+}
+
 .link-update {
   animation-timing-function: ease;
   animation-duration: 2s;
@@ -785,6 +816,7 @@ input[type="range"]:hover::-moz-range-thumb {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0.1rem;
 }
 
 @media (max-width: 1042px) {
@@ -792,6 +824,7 @@ input[type="range"]:hover::-moz-range-thumb {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    padding: 0.1rem;
   }
 }
 
