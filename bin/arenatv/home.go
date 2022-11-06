@@ -86,35 +86,35 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.P().
 							Class("text").
-							Text("To help you choose a stream, icons are displayed next to the streamer's name:"),
+							Text("To help you choose a stream, icons are displayed next to the streamer's name."),
 						app.Div().
 							Class("help-icon").
 							Body(
 								app.Raw(fmt.Sprintf(subRogueSVG, 25, 25)),
 								app.P().
-									Text("This player is known to main this given class and spec"),
+									Text("Known to main this given class and spec"),
 							),
 						app.Div().
 							Class("help-icon alt-border").
 							Body(
-								app.Raw(fmt.Sprintf(subRogueSVG, 28, 25)),
+								app.Raw(fmt.Sprintf(subRogueSVG, 25, 25)),
 								app.P().
-									Text("This player has been known to play this given class and spec from time to time"),
+									Text("Known to play this given class and spec from time to time"),
 							),
 
+						// app.Div().
+						// 	Class("help-icon border").
+						// 	Body(
+						// 		app.Raw(fmt.Sprintf(subRogueSVG, 38, 25)),
+						// 		app.P().
+						// 			Text("This streamer could be playing anything, but more likely to be playing this spec based on the current meta"),
+						// 	),
 						app.Div().
 							Class("help-icon border").
 							Body(
-								app.Raw(fmt.Sprintf(subRogueSVG, 38, 25)),
+								app.Raw(fmt.Sprintf(websiteSVG, 25, 25)),
 								app.P().
-									Text("This streamer could be playing anything, but more likely to be playing this spec based on the current meta"),
-							),
-						app.Div().
-							Class("help-icon border").
-							Body(
-								app.Raw(fmt.Sprintf(websiteSVG, 35, 25)),
-								app.P().
-									Text("This streamer could be playing anything, the meta is not clear enough to guess the spec"),
+									Text("Could be playing anything"),
 							),
 					),
 					app.Div().ID("why-is-my-twitch-screen-purple").Body(

@@ -125,46 +125,46 @@ func returnMetaforGivenClass(version string, class string) string {
 	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
 
 	if version == "classic" {
-		switch class {
-		case "death_knight":
-			return unholyDkSVG
-		case "hunter":
-			return mmHunterSVG
-		case "mage":
-			return frostMageSVG
-		case "rogue":
-			return subRogueSVG
-		case "shaman":
-			return elementalShamanSVG
-		case "warlock":
-			return destructionWarlockSVG
-		case "warrior":
-			return armsWarriorSVG
-		}
+		// switch class {
+		// case "death_knight":
+		// 	return unholyDkSVG
+		// case "hunter":
+		// 	return mmHunterSVG
+		// case "mage":
+		// 	return frostMageSVG
+		// case "rogue":
+		// 	return subRogueSVG
+		// case "shaman":
+		// 	return elementalShamanSVG
+		// case "warlock":
+		// 	return destructionWarlockSVG
+		// case "warrior":
+		// 	return armsWarriorSVG
+		// }
 		return websiteSVG
 	} else {
-		switch class {
-		case "demon_hunter":
-			return havocDhSVG
-		case "death_knight":
-			return unholyDkSVG
-		case "hunter":
-			return mmHunterSVG
-		case "mage":
-			return fireMageSVG
-		case "monk":
-			return windwalkerMonkSVG
-		case "priest":
-			return discPriestSVG
-		case "rogue":
-			return subRogueSVG
-		case "shaman":
-			return elementalShamanSVG
-		case "warlock":
-			return destructionWarlockSVG
-		case "warrior":
-			return armsWarriorSVG
-		}
+		// switch class {
+		// case "demon_hunter":
+		// 	return havocDhSVG
+		// case "death_knight":
+		// 	return unholyDkSVG
+		// case "hunter":
+		// 	return mmHunterSVG
+		// case "mage":
+		// 	return fireMageSVG
+		// case "monk":
+		// 	return windwalkerMonkSVG
+		// case "priest":
+		// 	return discPriestSVG
+		// case "rogue":
+		// 	return subRogueSVG
+		// case "shaman":
+		// 	return elementalShamanSVG
+		// case "warlock":
+		// 	return destructionWarlockSVG
+		// case "warrior":
+		// 	return armsWarriorSVG
+		// }
 		return websiteSVG
 	}
 }

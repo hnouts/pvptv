@@ -10,12 +10,13 @@ import (
 type loader struct {
 	app.Compo
 
-	Iloading     bool
-	Iclass       string
-	Ititle       string
-	Idescription string
-	Ierr         error
-	Isize        int
+	Iloading       bool
+	Iclass         string
+	Ititle         string
+	Idescription   string
+	Iplayerclasses []string
+	Ierr           error
+	Isize          int
 }
 
 func newLoader() *loader {
@@ -45,6 +46,11 @@ func (l *loader) Description(v string) *loader {
 	return l
 }
 
+func (l *loader) PlayerClasses(v []string) *loader {
+	l.Iplayerclasses = v
+	return l
+}
+
 func (l *loader) Loading(v bool) *loader {
 	l.Iloading = v
 	return l
@@ -60,6 +66,37 @@ func (l *loader) Size(v int) *loader {
 	return l
 }
 
+func getCuratedNameforClass(c string) string {
+	switch c {
+	case "druid":
+		return "druid"
+	case "demon_hunter":
+		return "demon hunter"
+	case "death_knight":
+		return "death knight"
+	case "hunter":
+		return "hunter"
+	case "mage":
+		return "mage"
+	case "monk":
+		return "monk"
+	case "paladin":
+		return "paladin"
+	case "priest":
+		return "priest"
+	case "rogue":
+		return "rogue"
+	case "shaman":
+		return "shaman"
+	case "warlock":
+		return "warlock"
+	case "warrior":
+		return "warrior"
+	default:
+		return ""
+	}
+}
+
 func (l *loader) Render() app.UI {
 	display := "hide"
 	if l.Iloading {
@@ -69,6 +106,7 @@ func (l *loader) Render() app.UI {
 	title := l.Ititle
 	descriptionMsg := l.Idescription
 	descriptionColor := ""
+	playerClasses := l.Iplayerclasses
 	state := "active"
 
 	if l.Ierr != nil {
@@ -108,6 +146,12 @@ func (l *loader) Render() app.UI {
 							app.P().
 								Class(descriptionColor).
 								Text(descriptionMsg),
+							app.Range(playerClasses).Slice(func(j int) app.UI {
+								c := getCuratedNameforClass(playerClasses[j])
+								return app.P().
+									Class(playerClasses[j]).
+									Text(c)
+							}),
 						),
 				),
 		)

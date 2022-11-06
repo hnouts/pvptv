@@ -195,8 +195,8 @@ func (p *twitchPlayer) Render() app.UI {
 							Class("hspace-out").
 							Class("vspace-stretch").
 							Size(loaderSize).
-							Title("Buffering").
-							Description(p.stream.Name).
+							Title(p.stream.Name).
+							PlayerClasses(p.stream.ClassList).
 							Loading(p.isBuffering).
 							Err(p.err),
 					),

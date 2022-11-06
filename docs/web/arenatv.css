@@ -974,6 +974,46 @@ input[type="range"]:hover::-moz-range-thumb {
   white-space: pre;
 }
 
+.evoker {
+  color: #33937F;
+}
+.druid {
+  color: #FF7C0A;
+}
+.demon_hunter {
+  color: #A330C9;
+}
+.death_knight {
+  color: #C41E3A;
+}
+.hunter {
+  color: #AAD372;
+}
+.mage {
+  color: #3FC7EB;
+}
+.monk {
+  color: #00FF98;
+}
+.paladin {
+  color: #F48CBA;
+}
+.priest {
+  color: #FFFFFF;
+}
+.rogue {
+  color: #FFF468;
+}
+.shaman {
+  color: #0070DD;
+}
+.warlock {
+  color: #8788EE;
+}
+.warrior {
+  color: #C69B6D;
+}
+
 .page-loader {
   position: absolute;
   top: 0;

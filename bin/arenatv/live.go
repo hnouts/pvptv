@@ -557,6 +557,12 @@ func getLiveStreamers() []liveStream {
 				"demon_hunter",
 				"warrior",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
+			},
 			Name: "Haraw",
 			URL:  "https://www.twitch.tv/haraw",
 			Links: []socialLink{
@@ -1558,6 +1564,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"priest",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "disc",
+				},
+			},
 			Name: "Mehhx",
 			URL:  "https://www.twitch.tv/mehhx",
 			Links: []socialLink{
@@ -2189,6 +2201,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"rogue",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "rogue",
+					SPSpec:  "sub",
+				},
+			},
 			Name: "Pshero",
 			URL:  "https://www.twitch.tv/psherotv",
 			Links: []socialLink{
@@ -2248,7 +2266,7 @@ func getLiveStreamers() []liveStream {
 			SpecList: []specList{
 				{
 					SPClass: "rogue",
-					SPSpec:  "sub",
+					SPSpec:  "assa",
 				},
 			},
 			Name: "Frozen",
@@ -2484,18 +2502,6 @@ func getLiveStreamers() []liveStream {
 					SPClass: "shaman",
 					SPSpec:  "restorationShaman",
 				},
-				{
-					SPClass: "druid",
-					SPSpec:  "restorationDruid",
-				},
-				{
-					SPClass: "paladin",
-					SPSpec:  "holyPaladin",
-				},
-				{
-					SPClass: "monk",
-					SPSpec:  "mistweaver",
-				},
 			},
 			Name: "Lontar",
 			URL:  "https://www.twitch.tv/lontartv",
@@ -2564,10 +2570,32 @@ func getLiveStreamers() []liveStream {
 		},
 		//WARLOCK
 		{
+			Slug:      "reverencewarlock",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "destruction",
+				},
+			},
+			Name:  "Reverence",
+			URL:   "https://www.twitch.tv/reverencewarlock",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "bualock",
 			MainClass: "warlock",
 			ClassList: []string{
 				"warlock",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "affliction",
+				},
 			},
 			Name: "Bualock",
 			URL:  "https://www.twitch.tv/bualock",
@@ -2692,6 +2720,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"warlock",
 			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "affliction",
+				},
+			},
 			Name: "Maldiva",
 			URL:  "https://www.twitch.tv/maldiva",
 			Links: []socialLink{
@@ -2718,6 +2752,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "warlock",
 			ClassList: []string{
 				"warlock",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "destruction",
+				},
 			},
 			Name: "Chanimaly",
 			URL:  "https://www.twitch.tv/chanimaly",
@@ -2939,6 +2979,12 @@ func getLiveStreamers() []liveStream {
 			ClassList: []string{
 				"warrior",
 				"druid",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
 			},
 			Name: "Hito",
 			URL:  "https://www.twitch.tv/hito",
