@@ -8,7 +8,6 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/maxence-charriere/go-app/v9/pkg/analytics"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/cli"
 	"github.com/maxence-charriere/go-app/v9/pkg/errors"
@@ -32,7 +31,7 @@ type githubOptions struct {
 }
 
 func main() {
-	analytics.Add(analytics.NewGoogleAnalytics())
+	// analytics.Add(analytics.NewGoogleAnalytics())
 	ctx, cancel := cli.ContextWithSignals(context.Background(),
 		os.Interrupt,
 		syscall.SIGTERM,
@@ -88,8 +87,7 @@ func main() {
 		Name:         "Pvptv",
 		Image:        "/web/logo.png",
 		RawHeaders: []string{
-			// `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1013306768105236" crossorigin="anonymous"></script>`,
-			analytics.GoogleAnalyticsHeader("G-1R6LSHKGJZ"),
+			`<script data-goatcounter="https://pvptv.goatcounter.com/count"	async src="//gc.zgo.at/count.js"></script>`,
 		},
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
