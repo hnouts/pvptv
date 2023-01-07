@@ -74,6 +74,8 @@ func getCuratedNameforClass(c string) string {
 		return "demon hunter"
 	case "death_knight":
 		return "death knight"
+	case "evoker":
+		return "evoker"
 	case "hunter":
 		return "hunter"
 	case "mage":

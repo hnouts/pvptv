@@ -30,7 +30,7 @@ func (p *homePage) initPage(ctx app.Context) {
 
 func (p *homePage) Render() app.UI {
 	return newPage().
-		Title("pvptv.io").
+		Title("PvPtv.io").
 		Icon("/web/logo.png").
 		Index(
 			newIndexLink().Title("Welcome!").Href("#welcome-to-pvptv"),
@@ -49,7 +49,7 @@ func (p *homePage) Render() app.UI {
 							Text("Welcome!"),
 						app.P().
 							Class("text").
-							Text("Pvptv.io is an app that was created in order to help the world of warcraft pvp community find the best arena streamers at any moment. It provides a list of the best known wow arena's streamers for each class, and casts their stream directly from twitch.com"),
+							Text("PvPtv.io is an app that was created in order to help the world of warcraft pvp community find the best arena streamers at any moment. It provides a list of the best known wow arena's streamers for each class, and casts their stream directly from twitch.com"),
 						app.Br(),
 						app.P().Class("text").
 							Text("The idea behind this web application was to finally have an easy solution to the eternal question posted on pvp communities:"),
@@ -74,7 +74,7 @@ func (p *homePage) Render() app.UI {
 								Src("/web/streams-question4.png"),
 						),
 						app.P().Class("text").
-							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on Pvptv.io, there will always be a gladiator streaming! (hopefully)"),
+							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on PvPtv.io, there will always be a gladiator streaming! (hopefully)"),
 					),
 					app.Div().ID("help").Body(
 						app.H2().
@@ -129,7 +129,7 @@ func (p *homePage) Render() app.UI {
 						),
 						app.P().
 							Class("text").
-							Text("Twitch's purple screen error occurs when you're watching live streams from a website other than twitch.com. It can be triggered by your ad-blocker and can be avoided if you disable it on Pvptv.io. Do not worry! Pvptv.io has zero ads!"),
+							Text("Twitch's purple screen error occurs when you're watching live streams from a website other than twitch.com. It can be triggered by your ad-blocker and can be avoided if you disable it on PvPtv.io. Do not worry! PvPtv.io has zero ads!"),
 					),
 					app.Div().ID("special-thanks").Body(
 						app.H2().
@@ -137,7 +137,7 @@ func (p *homePage) Render() app.UI {
 							Text("Special thanks"),
 						app.P().
 							Class("text").
-							Text("Pvptv.io is built with the amazing golang framework go-app-dev! You can contact the author on twitter or visit the frameworks documentation."),
+							Text("PvPtv.io is built with the amazing golang framework go-app-dev! You can contact the author on twitter or visit the frameworks documentation."),
 						app.A().Class().Href("https://twitter.com/jonhymaxoo").Text("Maxence Twitter"),
 						app.Br(),
 						app.A().Class().Href("https://go-app.dev/").Text("Go-App-Dev Documentation"),
