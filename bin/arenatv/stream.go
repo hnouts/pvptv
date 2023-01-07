@@ -103,7 +103,7 @@ func (r *stream) load(ctx app.Context) {
 	r.isPlaying = false
 
 	ctx.Page().SetTitle(fmt.Sprintf("%s Stream", r.current.Name))
-	ctx.Page().SetDescription(fmt.Sprintf("Watch %s on the Pvptv.io open-source player: an installable Progressive Web app (PWA) written in Go (Golang).", r.current.Name))
+	ctx.Page().SetDescription(fmt.Sprintf("Watch %s on PvPtv.io: an installable Progressive Web app (PWA) written in Go (Golang).", r.current.Name))
 }
 
 func (r *stream) OnAppUpdate(ctx app.Context) {

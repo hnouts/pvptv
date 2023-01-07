@@ -1,5 +1,5 @@
 # PvPtv.io
-[Pvptv.io](Pvptv.io) is an installable progressive web application (PWA) that helps the [World of Warcraft](https://worldofwarcraft.com/) pvp community find the best arena player streaming at any moment, for any class.
+[PvPtv.io](pvptv.io) is an installable progressive web application (PWA) that helps the [World of Warcraft](https://worldofwarcraft.com/) pvp community find the best arena player streaming at any moment, for any class.
 
 It provides a list of the best known arena players and cast their stream directly from [twitch](twitch.com).
 

@@ -43,6 +43,11 @@ func getAllClasses() []classes {
 			Classic: true,
 		},
 		{
+			Slug:    "evoker",
+			Name:    "Evoker",
+			Classic: false,
+		},
+		{
 			Slug:    "hunter",
 			Name:    "Hunter",
 			Classic: true,

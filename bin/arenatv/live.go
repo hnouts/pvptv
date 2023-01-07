@@ -2419,6 +2419,7 @@ func getLiveStreamers() []liveStream {
 				"druid",
 				"priest",
 				"paladin",
+				"evoker",
 			},
 			SpecList: []specList{
 				{
@@ -2440,6 +2441,10 @@ func getLiveStreamers() []liveStream {
 				{
 					SPClass: "monk",
 					SPSpec:  "mistweaver",
+				},
+				{
+					SPClass: "evoker",
+					SPSpec:  "preservation",
 				},
 			},
 			Name: "Drainerx",

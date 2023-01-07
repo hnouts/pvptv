@@ -84,7 +84,7 @@ func main() {
 			"dragonflight",
 		},
 		LoadingLabel: "WoW arena stream gallery",
-		Name:         "Pvptv",
+		Name:         "PvPtv",
 		Image:        "/web/logo.png",
 		RawHeaders: []string{
 			`<script data-goatcounter="https://pvptv.goatcounter.com/count"	async src="//gc.zgo.at/count.js"></script>`,
@@ -94,7 +94,7 @@ func main() {
 			"/web/arenatv.css",
 		},
 		ThemeColor: backgroundColor,
-		Title:      "Pvptv",
+		Title:      "PvPtv",
 	}
 	opts := options{Port: 8080}
 	runLocal(ctx, &h, opts)
