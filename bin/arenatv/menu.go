@@ -57,7 +57,7 @@ func (m *menu) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("Pvptv.io"),
+								Text("PvPtv.io"),
 						),
 				),
 
@@ -75,11 +75,11 @@ func (m *menu) Render() app.UI {
 						app.Div().
 							Class("link-update").
 							Body(
-							ui.Link().
-								Class(linkClass).
-								Icon(websiteSVG).
-								Label("Update").
-								OnClick(m.updateApp),
+								ui.Link().
+									Class(linkClass).
+									Icon(websiteSVG).
+									Label("Update").
+									OnClick(m.updateApp),
 							),
 					),
 				),
@@ -110,6 +110,11 @@ func (m *menu) Render() app.UI {
 												Label("Druid").
 												Icon(druidSVG).
 												Href("/druid"),
+											ui.Link().
+												Class(linkClass).
+												Label("Evoker").
+												Icon(evokerSVG).
+												Href("/evoker"),
 											ui.Link().
 												Class(linkClass).
 												Label("Hunter").
@@ -167,11 +172,11 @@ func (m *menu) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
 								Label("Buy me a coffee").
 								Href(buyMeACoffeeURL),
-							// newLink().
-							// 	Class("glow").
-							// 	Icon(newSVGIcon().RawSVG(githubSVG)).
-							// 	Label("GitHub").
-							// 	Href(githubURL),
+							newLink().
+								Class("glow").
+								Icon(newSVGIcon().RawSVG(githubSVG)).
+								Label("GitHub").
+								Href(githubURL),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(twitterSVG)).

@@ -237,6 +237,10 @@ func parseSpecToSvg(s string) string {
 		return unholyDkSVG
 	case "frostDk":
 		return frostDkSVG
+	case "preservation":
+		return preservationEvokerSVG
+	case "devastation":
+		return devastationEvokerSVG
 	default:
 		return websiteSVG
 	}
@@ -262,7 +266,7 @@ func (n *nav) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("Pvptv.io"),
+								Text("PvPtv.io"),
 							app.If(len(n.IcurrentClass) != 0,
 								app.If(n.IcurrentClass == "demon_hunter",
 									app.A().
@@ -424,6 +428,11 @@ func (n *nav) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
 								Label("Buy me a coffee").
 								Href(buyMeACoffeeURL),
+							// newLink().
+							// 	Class("glow").
+							// 	Icon(newSVGIcon().RawSVG(githubSVG)).
+							// 	Label("GitHub").
+							// 	Href(githubURL),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(twitterSVG)).

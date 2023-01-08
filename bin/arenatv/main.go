@@ -18,8 +18,8 @@ const (
 	backgroundColor = "#000000"
 
 	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
-	githubURL       = "https://github.com/selkal"
-	twitterURL      = "https://twitter.com/selkal_dev"
+	githubURL       = "https://github.com/hnouts/pvptv"
+	twitterURL      = "https://twitter.com/pvptv_io"
 )
 
 type options struct {
@@ -84,7 +84,7 @@ func main() {
 			"dragonflight",
 		},
 		LoadingLabel: "WoW arena stream gallery",
-		Name:         "Pvptv",
+		Name:         "PvPtv",
 		Image:        "/web/logo.png",
 		RawHeaders: []string{
 			`<script data-goatcounter="https://pvptv.goatcounter.com/count"	async src="//gc.zgo.at/count.js"></script>`,
@@ -94,7 +94,7 @@ func main() {
 			"/web/arenatv.css",
 		},
 		ThemeColor: backgroundColor,
-		Title:      "Pvptv",
+		Title:      "PvPtv",
 	}
 	opts := options{Port: 8080}
 	runLocal(ctx, &h, opts)
