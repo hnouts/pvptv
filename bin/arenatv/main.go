@@ -18,8 +18,8 @@ const (
 	backgroundColor = "#000000"
 
 	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
-	githubURL       = "https://github.com/selkal"
-	twitterURL      = "https://twitter.com/selkal_dev"
+	githubURL       = "https://github.com/hnouts/pvptv"
+	twitterURL      = "https://twitter.com/pvptv_io"
 )
 
 type options struct {
