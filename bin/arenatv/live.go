@@ -189,6 +189,68 @@ func getLiveStreamers() []liveStream {
 		},
 		//DK
 		{
+			Slug:      "razoonxz",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "death_knight",
+					SPSpec:  "frostDk",
+				},
+			},
+			Name:  "Razoon",
+			URL:   "https://www.twitch.tv/razoonxz",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCSNjHLil0g8B4m2nlV_Pzfw",
+				},
+			},
+		},
+		{
+			Slug:      "dariuswotlk",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "death_knight",
+					SPSpec:  "unholy",
+				},
+			},
+			Name:  "Darius",
+			URL:   "https://www.twitch.tv/dariuswotlk",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCNOmVPwbJH0XCCN7B1Sq8sg",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/MfRdDJQCAv",
+				},
+			},
+		},
+		{
+			Slug:      "gargoylemvp",
+			MainClass: "death_knight",
+			ClassList: []string{
+				"death_knight",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "death_knight",
+					SPSpec:  "unholy",
+				},
+			},
+			Name:  "Gargooyle",
+			URL:   "https://www.twitch.tv/gargoylemvp",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "cerva",
 			MainClass: "death_knight",
 			ClassList: []string{
@@ -246,6 +308,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "death_knight",
 			ClassList: []string{
 				"death_knight",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "death_knight",
+					SPSpec:  "unholy",
+				},
 			},
 			Name:  "Exyth",
 			URL:   "https://www.twitch.tv/exyth1",
@@ -848,6 +916,52 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//MAGE
+		{
+			Slug:      "moopz",
+			MainClass: "mage",
+			ClassList: []string{
+				"mage",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "mage",
+					SPSpec:  "frostMage",
+				},
+			},
+			Name: "Moopz",
+			URL:  "https://www.twitch.tv/moopz",
+			Links: []socialLink{
+			},
+		},
+		{
+			Slug:      "rivahlol",
+			MainClass: "mage",
+			ClassList: []string{
+				"mage",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "mage",
+					SPSpec:  "frostMage",
+				},
+			},
+			Name: "Rivah",
+			URL:  "https://www.twitch.tv/rivahlol",
+			Links: []socialLink{
+				{
+					Slug: "twitter",
+					URL:  "https://twitter.com/RivahTBC",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCF7oCMiG304KSR1BbkutIzg?view_as=subscriber",
+				},
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/KfTrWvBur2",
+				},
+			},
+		},
 		{
 			Slug:      "cmdxyz",
 			MainClass: "mage",
@@ -2280,6 +2394,121 @@ func getLiveStreamers() []liveStream {
 		},
 		//SHAMAN
 		{
+			Slug:      "groblinwow",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
+			},
+			Name: "Groblin",
+			URL:  "https://twitch.tv/groblinwow",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/SFJ8eNnDYS",
+				},
+			},
+		},
+		{
+			Slug:      "zakiwak1",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "restorationShaman",
+				},
+			},
+			Name: "Zakiwaki",
+			URL:  "https://twitch.tv/zakiwak1",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/8akXAsnQ4p",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCaXjkbB_eCUpQo76raxYa1A",
+				},
+			},
+		},
+		{
+			Slug:      "traktorch0",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "enhancement",
+				},
+			},
+			Name: "Traktorcho",
+			URL:  "https://www.twitch.tv/traktorch0",
+			Links: []socialLink{},
+		},		
+		{
+			Slug:      "skilerxtv",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
+			},
+			Name: "Skiler",
+			URL:  "https://www.twitch.tv/skilerxtv",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/yewtFpej6j",
+				},
+			},
+		},
+		{
+			Slug:      "blackbettytv",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
+			},
+			Name: "Blackbetty",
+			URL:  "https://www.twitch.tv/blackbettytv",
+			Links: []socialLink{},
+		},
+		{
+			Slug:      "novoz",
+			MainClass: "shaman",
+			ClassList: []string{
+				"shaman",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "shaman",
+					SPSpec:  "elemental",
+				},
+			},
+			Name: "Novoz",
+			URL:  "https://www.twitch.tv/novoz",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "hrkzz",
 			MainClass: "shaman",
 			ClassList: []string{
@@ -2877,6 +3106,73 @@ func getLiveStreamers() []liveStream {
 		},
 		//WARRIOR
 		{
+			Slug:      "kostickatv",
+			MainClass: "warrior",
+			ClassList: []string{
+				"warrior",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "protection",
+				},
+			},
+			Name: "Kosticka",
+			URL:  "https://www.twitch.tv/kostickatv",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/ejWtuhR",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/channel/UCT0QT0ebAi1U0myAwuoowvQ",
+				},
+			},
+		},
+		{
+			Slug:      "bcxwarr",
+			MainClass: "warrior",
+			ClassList: []string{
+				"warrior",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
+			},
+			Name: "Bcw",
+			URL:  "https://www.twitch.tv/bcxwarr",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/PwCBmNeGDF",
+				},
+			},
+		},
+		{
+			Slug:      "torstenstock",
+			MainClass: "warrior",
+			ClassList: []string{
+				"warrior",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
+			},
+			Name: "Torstenstock",
+			URL:  "https://www.twitch.tv/torstenstock",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/jDVkDEZA",
+				},
+			},
+		},
+		{
 			Slug:      "pvelordtv",
 			MainClass: "warrior",
 			ClassList: []string{
@@ -3067,6 +3363,12 @@ func getLiveStreamers() []liveStream {
 			MainClass: "warrior",
 			ClassList: []string{
 				"warrior",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warrior",
+					SPSpec:  "arms",
+				},
 			},
 			Name: "Dekel",
 			URL:  "https://www.twitch.tv/dekel",
