@@ -36,6 +36,7 @@ func (p *homePage) Render() app.UI {
 			newIndexLink().Title("Welcome!").Href("#welcome-to-pvptv"),
 			newIndexLink().Title("How to find a streamer that plays my class?").Href("#help"),
 			newIndexLink().Title("Why is my twitch screen purple?").Href("#why-is-my-twitch-screen-purple"),
+			newIndexLink().Title("More resources").Href("#more-resources"),
 			newIndexLink().Title("Special thanks"),
 		).
 		Content(
@@ -53,28 +54,12 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.P().Class("text").
 							Text("The idea behind this web application was to finally have an easy solution to the eternal question posted on pvp communities:"),
-						app.Div().Class("").Body(
-							app.Img().
-								Class("welcome-example").
-								Alt("eternal-question-1").
-								Src("/web/streams-question.png"),
-							app.Img().
-								Class("welcome-example").
-								Alt("eternal-question-1").
-								Src("/web/streams-question2.png"),
-						),
-						app.Div().Class("").Body(
-							app.Img().
-								Class("welcome-example").
-								Alt("eternal-question-2").
-								Src("/web/streams-question3.png"),
-							app.Img().
-								Class("welcome-example").
-								Alt("eternal-question-2").
-								Src("/web/streams-question4.png"),
-						),
 						app.P().Class("text").
 							Text("\"Do you know a good streamer for x class?\" Now you do! And among the vast list of streamers stored on PvPtv.io, there will always be a gladiator streaming! (hopefully)"),
+						app.P().
+							Class("text").
+							Text("You can contribute to the list of streamers by filling the following form:"),
+						app.A().Class("center-link").Href("https://forms.gle/y5wj532gvtgwWkca6").Text("-> suggest a streamer <-"),
 					),
 					app.Div().ID("help").Body(
 						app.H2().
@@ -130,6 +115,28 @@ func (p *homePage) Render() app.UI {
 						app.P().
 							Class("text").
 							Text("Twitch's purple screen error occurs when you're watching live streams from a website other than twitch.com. It can be triggered by your ad-blocker and can be avoided if you disable it on PvPtv.io. Do not worry! PvPtv.io has zero ads!"),
+					),
+					app.Div().ID("more-resources").Body(
+						app.H2().
+							Class("title").
+							Text("Pvp Community resources"),
+						app.P().
+							Class("text").
+							Text("Links to other world of warcraft pvp resources."),
+						app.A().Class().Href("https://www.reddit.com/r/worldofpvp").Text("r/worldofpvp"),
+						app.Br(),
+						app.A().Class().Href("https://www.pvpleaderboard.com/").Text("pvpleaderboard"),
+						app.Br(),
+						app.A().Class().Href("https://pvp.subcreation.net/").Text("pvp.subcreation"),
+						app.Br(),
+						app.A().Class().Href("https://check-pvp.fr/").Text("checkpvp"),
+						app.Br(),
+						// app.P().
+						// 	Class("text").
+						// 	Text("Thanks also to reddit user Dmachine_Blizz and his rich list of arena streamers that was a very useful source to me and an inspiration to this project."),
+						// app.A().Class().Href("https://twitter.com/Dmachine_").Text("DMachine Twitter"),
+						// app.Br(),
+						// app.A().Class().Href("https://www.reddit.com/r/worldofpvp/comments/e9uukx/list_of_wow_pvp_streamers_organized_by_classspec/").Text("Reddit list of streamers"),
 					),
 					app.Div().ID("special-thanks").Body(
 						app.H2().
