@@ -39,6 +39,10 @@ body {
   width: 100%;
 }
 
+.center-link {
+  display: table;
+  margin: auto;
+}
 .sticky-pic-thrall {
   position: absolute;
   right: 0px;
@@ -715,7 +719,7 @@ input[type="range"]:hover::-moz-range-thumb {
 
 .index-link:hover {
   color: white;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .index-link:active {
@@ -739,7 +743,7 @@ input[type="range"]:hover::-moz-range-thumb {
 
 .link:hover {
   color: white;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .linkDescription {
@@ -1108,7 +1112,7 @@ input[type="range"]:hover::-moz-range-thumb {
 
 .infolink:hover {
   color: white;
-  transform: scale(1.4);
+  transform: scale(1.1);
 }
 
 .infolink:active {
