@@ -18,6 +18,24 @@ type nav struct {
 	isFirstLoad    bool
 }
 
+func handleMouseOver(ctx app.Context, e app.Event) {
+	dropdown := app.Window().GetElementByID("dropdown-id")
+	if dropdown != nil {
+		dropdown.Set("style", "display:block;")
+	}
+}
+
+func handleMouseOut(ctx app.Context, e app.Event) {
+	dropdown := app.Window().GetElementByID("dropdown-id")
+	if dropdown != nil {
+		dropdown.Set("style", "display:none;")
+		header := app.Window().GetElementByID("header-id")
+		if header != nil {
+			header.Set("innerText","test")
+		}
+	}
+}
+
 func newNav() *nav {
 	return &nav{}
 }
@@ -302,6 +320,46 @@ func (n *nav) Render() app.UI {
 				Center().
 				Middle().
 				Content(
+					// app.Div().Body(
+					// 	app.Header().
+					// 	Class("icon-circle-desktop").
+					// 	Class("hApp h2 h2-nav").
+					// 	Class("hspace-out").
+					// 	Body(
+					// 		app.If(n.IcurrentClass == "demon_hunter",
+					// 			app.H2().
+					// 				Text("Demon Hunter"),
+					// 		),
+					// 		app.If(n.IcurrentClass == "death_knight",
+					// 			app.H2().
+					// 				Text("Death Knight"),
+					// 		),
+					// 		app.If(n.IcurrentClass != "death_knight" && n.IcurrentClass != "demon_hunter",
+					// 			app.H2().
+					// 				Text(n.IcurrentClass).
+					// 				ID("header-id").
+					// 				OnMouseOver(handleMouseOver).
+					// 				OnMouseOut(handleMouseOut).
+					// 				Body(
+					// 					app.Div().
+					// 						Class("dropdown").
+					// 						ID("dropdown-id").
+					// 						Style("display", "none").
+					// 						Body(
+					// 							app.Ul().
+					// 								Class("dropdown-menu").
+					// 								Attr("aria-labelledby", "dropdownMenuButton").
+					// 								Body(
+					// 									app.Li().Text("Class 1"),
+					// 									app.Li().Text("Class 2"),
+					// 									app.Li().Text("Class 3"),
+					// 								),
+					// 						),
+					// 				),
+					// 		),
+					// 	),
+					// ),
+					
 					app.Div().Body(
 						app.Header().
 							Class("icon-circle-desktop").

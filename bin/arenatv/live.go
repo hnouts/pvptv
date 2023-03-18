@@ -360,6 +360,22 @@ func getLiveStreamers() []liveStream {
 		},
 		//DRUID
 		{
+			Slug:      "xnatres",
+			MainClass: "druid",
+			ClassList: []string{
+				"druid",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "druid",
+					SPSpec:  "balance",
+				},
+			},
+			Name: "Xnatres",
+			URL:  "https://www.twitch.tv/xnatres",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "simbo_feral",
 			MainClass: "druid",
 			ClassList: []string{
@@ -1515,6 +1531,53 @@ func getLiveStreamers() []liveStream {
 		},
 		//PRIEST
 		{
+			Slug:      "h0lyundead",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+				"rogue",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "disc",
+				},
+			},
+			Name: "H0lyundead",
+			URL:  "https://www.twitch.tv/h0lyundead",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL: "https://www.youtube.com/channel/UCIxXLM7vT8JKc-UF9cJ9RTw?view_as=subscriber",
+				},
+				{
+					Slug: "discord",
+					URL: "https://discord.gg/BxgGkZ7nEE",
+				},
+			},
+		},
+		{
+			Slug:      "earpugs",
+			MainClass: "priest",
+			ClassList: []string{
+				"priest",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "priest",
+					SPSpec:  "disc",
+				},
+			},
+			Name: "Earpugs",
+			URL:  "https://www.twitch.tv/earpugs",
+			Links: []socialLink{
+				{
+					Slug: "youtube",
+					URL: "https://www.youtube.com/channel/UCTxM4AZCZKfyxNH8l2hm4uQ",
+				},
+			},
+		},
+		{
 			Slug:      "tempestxgg",
 			MainClass: "priest",
 			ClassList: []string{
@@ -1864,6 +1927,47 @@ func getLiveStreamers() []liveStream {
 		},
 		//PALADIN
 		{
+			Slug:      "holypalaswe1",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "holyPaladin",
+				},
+			},
+			Name: "Holypalaswe1",
+			URL:  "https://www.twitch.tv/holypalaswe1",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/geVNEUue7C",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://youtube.com/user/holypalaswe/videos",
+				},
+			},
+		},
+		{
+			Slug:      "flowstateswow",
+			MainClass: "paladin",
+			ClassList: []string{
+				"paladin",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "paladin",
+					SPSpec:  "holyPaladin",
+				},
+			},
+			Name: "Flowstateswow",
+			URL:  "https://www.twitch.tv/flowstateswow",
+			Links: []socialLink{},
+		},
+		{
 			Slug:      "pizzahunter2009",
 			MainClass: "paladin",
 			ClassList: []string{
@@ -2211,6 +2315,31 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//ROGUE
+		{
+			Slug:      "perplexity",
+			MainClass: "rogue",
+			ClassList: []string{
+				"rogue",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "rogue",
+					SPSpec:  "sub",
+				},
+			},
+			Name: "Perplexity",
+			URL:  "https://www.twitch.tv/perplexity",
+			Links: []socialLink{
+				{
+					Slug: "discord",
+					URL:  "https://discord.gg/aXryrUK",
+				},
+				{
+					Slug: "youtube",
+					URL:  "https://www.youtube.com/watch?v=fLkZuz7kjyU&ab_channel=perplexity",
+				},
+			},
+		},
 		{
 			Slug:      "avizura",
 			MainClass: "rogue",
@@ -3054,6 +3183,22 @@ func getLiveStreamers() []liveStream {
 			},
 		},
 		//WARLOCK
+		{
+			Slug:      "chanx",
+			MainClass: "warlock",
+			ClassList: []string{
+				"warlock",
+			},
+			SpecList: []specList{
+				{
+					SPClass: "warlock",
+					SPSpec:  "destruction",
+				},
+			},
+			Name:  "chanx",
+			URL:   "https://www.twitch.tv/chanx",
+			Links: []socialLink{},
+		},
 		{
 			Slug:      "kerosineyo",
 			MainClass: "warlock",
