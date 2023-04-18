@@ -3,7 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
-
+	"fmt"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
@@ -79,26 +79,53 @@ func (n *nav) OnNav(ctx app.Context) {
 	}
 }
 
+func checkSubstrings(str string, subs ...string) (bool, int) {
+
+    matches := 0
+    isCompleteMatch := true
+
+    for _, sub := range subs {
+        if strings.Contains(str, sub) {
+            matches += 1
+        } else {
+            isCompleteMatch = false
+        }
+    }
+
+    return isCompleteMatch, matches
+}
+
 func parseTitle(t string) string {
-	t = strings.ToLower(t)
+    t = strings.ToLower(t)
+    words := strings.Fields(t)
 
-	if strings.Contains(t, "wotlk") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "classic") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "80") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "wrath") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "lich") {
-		return "wotlk"
-	}
 
-	return "retail"
+	for i := 0; i < len(words); i++ {
+        for j := i + 1; j <= len(words); j++ {
+            phrase := strings.Join(words[i:j], " ")
+            if _, ok := wotlkKeywords[phrase]; ok {
+                fmt.Println("Matched keyword:", phrase)
+                return "wotlk"
+            }
+            for k := j + 1; k <= len(words); k++ {
+                phrase := strings.Join(words[i:k], " ")
+                if _, ok := wotlkKeywords[phrase]; ok {
+                    fmt.Println("Matched keyword:", phrase)
+                    return "wotlk"
+                }
+            }
+        }
+    }
+
+    fmt.Println("No match found for:", t)
+    return "retail"
+
+    // for _, word := range words {
+    //     if _, ok := wotlkKeywords[word]; ok {
+    //         return "wotlk"
+    //     }
+    // }
+	// return "retail"
 }
 
 func parseSpecList(version string, mc string, s []specList, c string) (string, string) {
@@ -262,6 +289,30 @@ func parseSpecToSvg(s string) string {
 	default:
 		return websiteSVG
 	}
+}
+
+var wotlkKeywords = map[string]bool{
+	"wotlk":          true,
+	"classic":        true,
+	"80":             true,
+	"wrath":          true,
+	"hardcore":		  true,
+	"death = delete": true,
+	"dead = delete":  true,
+	"lich king":      true,
+	"wrathful":       true,
+	"icc":            true,
+	"ulduar":         true,
+	"hc":             true,
+	"gs":             true,
+	"gearscore": 	  true,
+	"gear score":     true,
+	"gdkp":           true,
+	"s7": 	          true,
+	"s8": 	          true,
+	"season 7": 	  true,
+	"season 8": 	  true,
+	"5s":			  true,
 }
 
 func (n *nav) Render() app.UI {
