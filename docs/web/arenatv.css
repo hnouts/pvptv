@@ -690,6 +690,28 @@ input[type="range"]:hover::-moz-range-thumb {
   }
 }
 
+.dropdown-container {
+  display: initial;
+  animation: fade-in 0.5s;
+
+
+  position: fixed;
+  flex-shrink: 0;
+  flex-basis: 270px;
+  overflow: hidden;
+  top: 10%;
+  left: 280px;
+  background: black;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  color: silver;
+  padding: 1rem;
+}
+
+.dropdown {
+  letter-spacing: 1px;
+}
+
 /* -----------------------------------------------------------------------------
 // Index
 ------------------------------------------------------------------------------*/
@@ -713,7 +735,7 @@ input[type="range"]:hover::-moz-range-thumb {
   display: block;
   padding: 3.5px 0;
   cursor: pointer;
-  transition: 0.2s all;
+  transition: 0.1s all;
   color: currentColor;
 }
 
@@ -737,7 +759,7 @@ input[type="range"]:hover::-moz-range-thumb {
   display: block;
   padding: 3px 0;
   cursor: pointer;
-  transition: 0.2s all;
+  transition: 0.1s all;
   color: currentColor;
 }
 
@@ -942,7 +964,7 @@ input[type="range"]:hover::-moz-range-thumb {
   background-color: transparent;
   color: currentColor;
   cursor: pointer;
-  transition: 0.2s all;
+  transition: 0.1s all;
 }
 
 .control:hover {
@@ -1107,7 +1129,7 @@ input[type="range"]:hover::-moz-range-thumb {
   display: block;
   color: currentColor;
   cursor: pointer;
-  transition: 0.2s all;
+  transition: 0.1s all;
 }
 
 .infolink:hover {

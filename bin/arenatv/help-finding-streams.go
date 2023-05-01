@@ -29,31 +29,13 @@ func (s *githubSponsor) Render() app.UI {
 			app.Aside().
 				Class("support").
 				Class("text-center").
-				// Body(
-				// 	ui.Flow().
-				// 		// StretchItems().
-				// 		// Spacing(84).
-				// 		Content(
-				// 			ui.Stack().
-				// 				Bottom().
-				// 				Content(
-				// 					ui.Icon().
-				// 						// Class("unselectable").
-				// 						Size(320).
-				// 						Src("/web/thrall_dude_paysage.png"),
-				// 				),
-				// 		),
-				// ),
 				Body(
-					// ui.Stack().
-					// 	Content(
 					ui.Stack().
 						Class("sticky-pic-thrall").
 						Middle().
 						Bottom().
 						Content(
 							ui.Icon().
-								// Class("cover_thrall").
 								Size(320).
 								Src("/web/thrall_dude_paysage.png"),
 						),
@@ -63,11 +45,9 @@ func (s *githubSponsor) Render() app.UI {
 						Bottom().
 						Content(
 							ui.Icon().
-								// Class("cover_thrall").
 								Size(50).
 								Src("/web/quest-icon.jpg"),
 						),
-					// ),
 					app.A().
 						Class("default").
 						Href("https://forms.gle/y5wj532gvtgwWkca6").

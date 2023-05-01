@@ -131,12 +131,6 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.A().Class().Href("https://check-pvp.fr/").Text("checkpvp"),
 						app.Br(),
-						// app.P().
-						// 	Class("text").
-						// 	Text("Thanks also to reddit user Dmachine_Blizz and his rich list of arena streamers that was a very useful source to me and an inspiration to this project."),
-						// app.A().Class().Href("https://twitter.com/Dmachine_").Text("DMachine Twitter"),
-						// app.Br(),
-						// app.A().Class().Href("https://www.reddit.com/r/worldofpvp/comments/e9uukx/list_of_wow_pvp_streamers_organized_by_classspec/").Text("Reddit list of streamers"),
 					),
 					app.Div().ID("special-thanks").Body(
 						app.H2().
@@ -151,7 +145,7 @@ func (p *homePage) Render() app.UI {
 						app.Br(),
 						app.P().
 							Class("text").
-							Text("Thanks also to reddit user Dmachine_Blizz and his rich list of arena streamers that was a very useful source to me and an inspiration to this project."),
+							Text("Thanks also to Dmachine and his rich list of arena streamers that was a very useful source to me and an inspiration to this project."),
 						app.A().Class().Href("https://twitter.com/Dmachine_").Text("DMachine Twitter"),
 						app.Br(),
 						app.A().Class().Href("https://www.reddit.com/r/worldofpvp/comments/e9uukx/list_of_wow_pvp_streamers_organized_by_classspec/").Text("Reddit list of streamers"),

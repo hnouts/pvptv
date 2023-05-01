@@ -3,7 +3,6 @@ package main
 import (
 	"strconv"
 	"strings"
-
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
@@ -16,6 +15,7 @@ type nav struct {
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
 	isFirstLoad    bool
+	showDropdown bool
 }
 
 func newNav() *nav {
@@ -62,189 +62,162 @@ func (n *nav) OnNav(ctx app.Context) {
 }
 
 func parseTitle(t string) string {
-	t = strings.ToLower(t)
+    t = strings.ToLower(t)
+    words := strings.Fields(t)
 
-	if strings.Contains(t, "wotlk") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "classic") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "80") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "wrath") {
-		return "wotlk"
-	}
-	if strings.Contains(t, "lich") {
-		return "wotlk"
-	}
+    for i := 0; i < len(words); i++ {
+        for j := i + 1; j <= len(words); j++ {
+            phrase := strings.Join(words[i:j], " ")
+            if _, ok := wotlkKeywords[phrase]; ok {
+                return "wotlk"
+            }
+            for k := j + 1; k <= len(words); k++ {
+                phrase := strings.Join(words[i:k], " ")
+                if _, ok := wotlkKeywords[phrase]; ok {
+                    return "wotlk"
+                }
+            }
+        }
+    }
 
-	return "retail"
+    return "retail"
 }
 
 func parseSpecList(version string, mc string, s []specList, c string) (string, string) {
-	// range speclist, if class = c then spec = current item
+    // Range through specList, if class = c then spec = current item
+    for _, spec := range s {
+        if c == spec.SPClass {
+            if c == mc {
+                return "main", parseSpecToSvg(spec.SPSpec)
+            }
+            return "alt", parseSpecToSvg(spec.SPSpec)
+        }
+    }
 
-	if c == mc {
-		for _, spec := range s {
-			if c == spec.SPClass {
-				return "main", parseSpecToSvg(spec.SPSpec)
-			}
-		}
-	} else {
-		for _, spec := range s {
-			if c == spec.SPClass {
-				return "alt", parseSpecToSvg(spec.SPSpec)
-			}
-		}
-	}
-
-	return "meta", returnMetaforGivenClass(version, c)
+    return "meta", returnMetaForGivenClass(version)
 }
 
-// func isClassicStreaming(stream []liveStream) bool {
-// 	for _, s := range stream {
-// 		if s.Online == true && parseTitle(s.Title) == "wotlk" && s.GameName == "World of Warcraft" {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
 
-// func isRetailStreaming(stream []liveStream) bool {
-// 	for _, s := range stream {
-// 		if s.Online == true && parseTitle(s.Title) == "retail" && s.GameName == "World of Warcraft" {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
+func returnMetaForGivenClass(version string) string {
+    // LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
 
-func returnMetaforGivenClass(version string, class string) string {
-	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
+    if version == "classic" {
+        return websiteSVG
+    }
 
-	if version == "classic" {
-		// switch class {
-		// case "death_knight":
-		// 	return unholyDkSVG
-		// case "hunter":
-		// 	return mmHunterSVG
-		// case "mage":
-		// 	return frostMageSVG
-		// case "rogue":
-		// 	return subRogueSVG
-		// case "shaman":
-		// 	return elementalShamanSVG
-		// case "warlock":
-		// 	return destructionWarlockSVG
-		// case "warrior":
-		// 	return armsWarriorSVG
-		// }
-		return websiteSVG
-	} else {
-		// switch class {
-		// case "demon_hunter":
-		// 	return havocDhSVG
-		// case "death_knight":
-		// 	return unholyDkSVG
-		// case "hunter":
-		// 	return mmHunterSVG
-		// case "mage":
-		// 	return fireMageSVG
-		// case "monk":
-		// 	return windwalkerMonkSVG
-		// case "priest":
-		// 	return discPriestSVG
-		// case "rogue":
-		// 	return subRogueSVG
-		// case "shaman":
-		// 	return elementalShamanSVG
-		// case "warlock":
-		// 	return destructionWarlockSVG
-		// case "warrior":
-		// 	return armsWarriorSVG
-		// }
-		return websiteSVG
-	}
+    return websiteSVG
 }
 
 func parseSpecToSvg(s string) string {
-	switch s {
-	case "mistweaver":
-		return mistweaverMonkSVG
-	case "windwalker":
-		return windwalkerMonkSVG
-	case "holyPaladin":
-		return holyPaladinSVG
-	case "ret":
-		return retPaladinSVG
-	case "restorationShaman":
-		return restorationShamanSVG
-	case "elemental":
-		return elementalShamanSVG
-	case "enhancement":
-		return enhancementShamanSVG
-	case "restorationDruid":
-		return restorationDruidSVG
-	case "balance":
-		return balanceDruidSVG
-	case "feral":
-		return feralDruidSVG
-	case "shadow":
-		return shadowPriestSVG
-	case "disc":
-		return discPriestSVG
-	case "holyPriest":
-		return holyPriestSVG
-	case "destruction":
-		return destructionWarlockSVG
-	case "demonology":
-		return demonologyWarlockSVG
-	case "affliction":
-		return afflictionWarlockSVG
-	case "arms":
-		return armsWarriorSVG
-	case "fury":
-		return furyWarriorSVG
-	case "protection":
-		return protectionWarriorSVG
-	case "bm":
-		return bmHunterSVG
-	case "survival":
-		return survivalHunterSVG
-	case "mm":
-		return mmHunterSVG
-	case "sub":
-		return subRogueSVG
-	case "outlaw":
-		return outlawRogueSVG
-	case "assa":
-		return assassinationRogueSVG
-	case "fire":
-		return fireMageSVG
-	case "frostMage":
-		return frostMageSVG
-	case "arcane":
-		return arcaneMageSVG
-	case "havoc":
-		return havocDhSVG
-	case "vengeance":
-		return vengeanceDhSVG
-	case "blood":
-		return bloodDkSVG
-	case "unholy":
-		return unholyDkSVG
-	case "frostDk":
-		return frostDkSVG
-	case "preservation":
-		return preservationEvokerSVG
-	case "devastation":
-		return devastationEvokerSVG
-	default:
-		return websiteSVG
+	if svg, ok := specSVGs[s]; ok {
+		return svg
 	}
+	return websiteSVG
 }
+
+var wotlkKeywords = map[string]bool{
+	"wotlk":          true,
+	"classic":        true,
+	"80":             true,
+	"wrath":          true,
+	"hardcore":		  true,
+	"!hardcore":	  true,
+	"death = delete": true,
+	"dead = delete":  true,
+	"lich king":      true,
+	"wrathful":       true,
+	"icc":            true,
+	"ulduar":         true,
+	"hc":             true,
+	"gs":             true,
+	"gearscore": 	  true,
+	"gear score":     true,
+	"gdkp":           true,
+	"s7": 	          true,
+	"s8": 	          true,
+	"season 7": 	  true,
+	"season 8": 	  true,
+	"5s":			  true,
+}
+
+var specSVGs = map[string]string{
+	"mistweaver":             mistweaverMonkSVG,
+	"windwalker":             windwalkerMonkSVG,
+	"holyPaladin":            holyPaladinSVG,
+	"ret":                    retPaladinSVG,
+	"restorationShaman":      restorationShamanSVG,
+	"elemental":              elementalShamanSVG,
+	"enhancement":            enhancementShamanSVG,
+	"restorationDruid":       restorationDruidSVG,
+	"balance":                balanceDruidSVG,
+	"feral":                  feralDruidSVG,
+	"shadow":                 shadowPriestSVG,
+	"disc":                   discPriestSVG,
+	"holyPriest":             holyPriestSVG,
+	"destruction":            destructionWarlockSVG,
+	"demonology":             demonologyWarlockSVG,
+	"affliction":             afflictionWarlockSVG,
+	"arms":                   armsWarriorSVG,
+	"fury":                   furyWarriorSVG,
+	"protection":             protectionWarriorSVG,
+	"bm":                     bmHunterSVG,
+	"survival":               survivalHunterSVG,
+	"mm":                     mmHunterSVG,
+	"sub":                    subRogueSVG,
+	"outlaw":                 outlawRogueSVG,
+	"assa":                   assassinationRogueSVG,
+	"fire":                   fireMageSVG,
+	"frostMage":              frostMageSVG,
+	"arcane":                 arcaneMageSVG,
+	"havoc":                  havocDhSVG,
+	"vengeance":              vengeanceDhSVG,
+	"blood":                  bloodDkSVG,
+	"unholy":                 unholyDkSVG,
+	"frostDk":                frostDkSVG,
+	"preservation":           preservationEvokerSVG,
+	"devastation":            devastationEvokerSVG,
+}
+
+func handleClick(ctx app.Context, e app.Event) {
+	ctx.Reload()
+}
+func (n *nav) handleMouseOver(ctx app.Context, e app.Event) {
+	n.showDropdown = true
+}
+
+func (n *nav) handleMouseOut(ctx app.Context, e app.Event) {
+	n.showDropdown = false
+}
+
+func (n *nav) renderDropdown() app.UI {
+	if !n.showDropdown {
+		return nil
+	}
+
+	links := make([]app.UI, 0)
+	for _, c := range getAllClasses() {
+		link := ui.Link().
+			Class("link heading fit icon-circle").
+			Href("/" + c.Slug).
+			Label(c.Name).
+			Icon(c.Svg).
+			OnClick(handleClick)
+
+		links = append(links, app.Div().Body(link))
+	}
+
+	return app.Div().
+		Class("dropdown-container").
+		Body(
+			app.Div().
+				Class("dropdown").
+				Body(
+					app.Div().
+					Body(links...),
+				),
+		)
+}
+
 
 func (n *nav) Render() app.UI {
 	return app.Div().
@@ -266,7 +239,7 @@ func (n *nav) Render() app.UI {
 								Class("focus").
 								Class("glow").
 								Href("/").
-								Text("PvPtv.io"),
+								Text("↩ HOME"),
 							app.If(len(n.IcurrentClass) != 0,
 								app.If(n.IcurrentClass == "demon_hunter",
 									app.A().
@@ -298,37 +271,33 @@ func (n *nav) Render() app.UI {
 							),
 						),
 				),
-			ui.Stack().
+				ui.Stack().
 				Center().
 				Middle().
 				Content(
-					app.Div().Body(
+					app.Div().
+					OnMouseOver(n.handleMouseOver).
+	                 Body(
 						app.Header().
 							Class("icon-circle-desktop").
 							Class("hApp h2 h2-nav").
 							Class("hspace-out").
-							// Class("focus").
+							Style("cursor", "pointer").
 							Body(
-								app.If(n.IcurrentClass == "demon_hunter",
-									app.H2().
-										Text("Demon Hunter"),
-								),
-								app.If(n.IcurrentClass == "death_knight",
-									app.H2().
-										Text("Death Knight"),
-								),
-								app.If(n.IcurrentClass != "death_knight" && n.IcurrentClass != "demon_hunter",
-									app.H2().
-										Text(n.IcurrentClass),
-								),
+								app.H2().
+									Text(n.IcurrentClass).
+									ID("header-id"),
+								n.renderDropdown(),
 							),
 					),
 				),
+			
 			app.Nav().
 				Class("nav-content").
 				Body(
 					app.Div().
-						Class("nav-streams-class-selected").
+					OnMouseOut(n.handleMouseOut).
+					Class("nav-streams-class-selected").
 						Body(
 							ui.Stack().
 								Class("nav-streams-stack").
@@ -428,11 +397,6 @@ func (n *nav) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(coffeeSVG)).
 								Label("Buy me a coffee").
 								Href(buyMeACoffeeURL),
-							// newLink().
-							// 	Class("glow").
-							// 	Icon(newSVGIcon().RawSVG(githubSVG)).
-							// 	Label("GitHub").
-							// 	Href(githubURL),
 							newLink().
 								Class("glow").
 								Icon(newSVGIcon().RawSVG(twitterSVG)).
