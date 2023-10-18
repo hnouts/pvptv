@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
+
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 	"github.com/maxence-charriere/go-app/v9/pkg/ui"
 )
@@ -15,7 +16,7 @@ type nav struct {
 	IliveStreams   []liveStream
 	IcurrentStream liveStream
 	isFirstLoad    bool
-	showDropdown bool
+	showDropdown   bool
 }
 
 func newNav() *nav {
@@ -62,50 +63,49 @@ func (n *nav) OnNav(ctx app.Context) {
 }
 
 func parseTitle(t string) string {
-    t = strings.ToLower(t)
-    words := strings.Fields(t)
+	t = strings.ToLower(t)
+	words := strings.Fields(t)
 
-    for i := 0; i < len(words); i++ {
-        for j := i + 1; j <= len(words); j++ {
-            phrase := strings.Join(words[i:j], " ")
-            if _, ok := wotlkKeywords[phrase]; ok {
-                return "wotlk"
-            }
-            for k := j + 1; k <= len(words); k++ {
-                phrase := strings.Join(words[i:k], " ")
-                if _, ok := wotlkKeywords[phrase]; ok {
-                    return "wotlk"
-                }
-            }
-        }
-    }
+	for i := 0; i < len(words); i++ {
+		for j := i + 1; j <= len(words); j++ {
+			phrase := strings.Join(words[i:j], " ")
+			if _, ok := wotlkKeywords[phrase]; ok {
+				return "wotlk"
+			}
+			for k := j + 1; k <= len(words); k++ {
+				phrase := strings.Join(words[i:k], " ")
+				if _, ok := wotlkKeywords[phrase]; ok {
+					return "wotlk"
+				}
+			}
+		}
+	}
 
-    return "retail"
+	return "retail"
 }
 
 func parseSpecList(version string, mc string, s []specList, c string) (string, string) {
-    // Range through specList, if class = c then spec = current item
-    for _, spec := range s {
-        if c == spec.SPClass {
-            if c == mc {
-                return "main", parseSpecToSvg(spec.SPSpec)
-            }
-            return "alt", parseSpecToSvg(spec.SPSpec)
-        }
-    }
+	// Range through specList, if class = c then spec = current item
+	for _, spec := range s {
+		if c == spec.SPClass {
+			if c == mc {
+				return "main", parseSpecToSvg(spec.SPSpec)
+			}
+			return "alt", parseSpecToSvg(spec.SPSpec)
+		}
+	}
 
-    return "meta", returnMetaForGivenClass(version)
+	return "meta", returnMetaForGivenClass(version)
 }
 
-
 func returnMetaForGivenClass(version string) string {
-    // LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
+	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
 
-    if version == "classic" {
-        return websiteSVG
-    }
+	if version == "classic" {
+		return websiteSVG
+	}
 
-    return websiteSVG
+	return websiteSVG
 }
 
 func parseSpecToSvg(s string) string {
@@ -118,10 +118,11 @@ func parseSpecToSvg(s string) string {
 var wotlkKeywords = map[string]bool{
 	"wotlk":          true,
 	"classic":        true,
+	"60":             true,
 	"80":             true,
 	"wrath":          true,
-	"hardcore":		  true,
-	"!hardcore":	  true,
+	"hardcore":       true,
+	"!hardcore":      true,
 	"death = delete": true,
 	"dead = delete":  true,
 	"lich king":      true,
@@ -130,52 +131,52 @@ var wotlkKeywords = map[string]bool{
 	"ulduar":         true,
 	"hc":             true,
 	"gs":             true,
-	"gearscore": 	  true,
+	"gearscore":      true,
 	"gear score":     true,
 	"gdkp":           true,
-	"s7": 	          true,
-	"s8": 	          true,
-	"season 7": 	  true,
-	"season 8": 	  true,
-	"5s":			  true,
+	"s7":             true,
+	"s8":             true,
+	"season 7":       true,
+	"season 8":       true,
+	"5s":             true,
 }
 
 var specSVGs = map[string]string{
-	"mistweaver":             mistweaverMonkSVG,
-	"windwalker":             windwalkerMonkSVG,
-	"holyPaladin":            holyPaladinSVG,
-	"ret":                    retPaladinSVG,
-	"restorationShaman":      restorationShamanSVG,
-	"elemental":              elementalShamanSVG,
-	"enhancement":            enhancementShamanSVG,
-	"restorationDruid":       restorationDruidSVG,
-	"balance":                balanceDruidSVG,
-	"feral":                  feralDruidSVG,
-	"shadow":                 shadowPriestSVG,
-	"disc":                   discPriestSVG,
-	"holyPriest":             holyPriestSVG,
-	"destruction":            destructionWarlockSVG,
-	"demonology":             demonologyWarlockSVG,
-	"affliction":             afflictionWarlockSVG,
-	"arms":                   armsWarriorSVG,
-	"fury":                   furyWarriorSVG,
-	"protection":             protectionWarriorSVG,
-	"bm":                     bmHunterSVG,
-	"survival":               survivalHunterSVG,
-	"mm":                     mmHunterSVG,
-	"sub":                    subRogueSVG,
-	"outlaw":                 outlawRogueSVG,
-	"assa":                   assassinationRogueSVG,
-	"fire":                   fireMageSVG,
-	"frostMage":              frostMageSVG,
-	"arcane":                 arcaneMageSVG,
-	"havoc":                  havocDhSVG,
-	"vengeance":              vengeanceDhSVG,
-	"blood":                  bloodDkSVG,
-	"unholy":                 unholyDkSVG,
-	"frostDk":                frostDkSVG,
-	"preservation":           preservationEvokerSVG,
-	"devastation":            devastationEvokerSVG,
+	"mistweaver":        mistweaverMonkSVG,
+	"windwalker":        windwalkerMonkSVG,
+	"holyPaladin":       holyPaladinSVG,
+	"ret":               retPaladinSVG,
+	"restorationShaman": restorationShamanSVG,
+	"elemental":         elementalShamanSVG,
+	"enhancement":       enhancementShamanSVG,
+	"restorationDruid":  restorationDruidSVG,
+	"balance":           balanceDruidSVG,
+	"feral":             feralDruidSVG,
+	"shadow":            shadowPriestSVG,
+	"disc":              discPriestSVG,
+	"holyPriest":        holyPriestSVG,
+	"destruction":       destructionWarlockSVG,
+	"demonology":        demonologyWarlockSVG,
+	"affliction":        afflictionWarlockSVG,
+	"arms":              armsWarriorSVG,
+	"fury":              furyWarriorSVG,
+	"protection":        protectionWarriorSVG,
+	"bm":                bmHunterSVG,
+	"survival":          survivalHunterSVG,
+	"mm":                mmHunterSVG,
+	"sub":               subRogueSVG,
+	"outlaw":            outlawRogueSVG,
+	"assa":              assassinationRogueSVG,
+	"fire":              fireMageSVG,
+	"frostMage":         frostMageSVG,
+	"arcane":            arcaneMageSVG,
+	"havoc":             havocDhSVG,
+	"vengeance":         vengeanceDhSVG,
+	"blood":             bloodDkSVG,
+	"unholy":            unholyDkSVG,
+	"frostDk":           frostDkSVG,
+	"preservation":      preservationEvokerSVG,
+	"devastation":       devastationEvokerSVG,
 }
 
 func handleClick(ctx app.Context, e app.Event) {
@@ -213,11 +214,10 @@ func (n *nav) renderDropdown() app.UI {
 				Class("dropdown").
 				Body(
 					app.Div().
-					Body(links...),
+						Body(links...),
 				),
 		)
 }
-
 
 func (n *nav) Render() app.UI {
 	return app.Div().
@@ -271,33 +271,33 @@ func (n *nav) Render() app.UI {
 							),
 						),
 				),
-				ui.Stack().
+			ui.Stack().
 				Center().
 				Middle().
 				Content(
 					app.Div().
-					OnMouseOver(n.handleMouseOver).
-	                 Body(
-						app.Header().
-							Class("icon-circle-desktop").
-							Class("hApp h2 h2-nav").
-							Class("hspace-out").
-							Style("cursor", "pointer").
-							Body(
-								app.H2().
-									Text(n.IcurrentClass).
-									ID("header-id"),
-								n.renderDropdown(),
-							),
-					),
+						OnMouseOver(n.handleMouseOver).
+						Body(
+							app.Header().
+								Class("icon-circle-desktop").
+								Class("hApp h2 h2-nav").
+								Class("hspace-out").
+								Style("cursor", "pointer").
+								Body(
+									app.H2().
+										Text(n.IcurrentClass).
+										ID("header-id"),
+									n.renderDropdown(),
+								),
+						),
 				),
-			
+
 			app.Nav().
 				Class("nav-content").
 				Body(
 					app.Div().
-					OnMouseOut(n.handleMouseOut).
-					Class("nav-streams-class-selected").
+						OnMouseOut(n.handleMouseOut).
+						Class("nav-streams-class-selected").
 						Body(
 							ui.Stack().
 								Class("nav-streams-stack").
