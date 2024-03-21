@@ -19,15 +19,10 @@ const (
 
 	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
 	githubURL       = "https://github.com/hnouts/pvptv"
-	twitterURL      = "https://twitter.com/pvptv_io"
 )
 
 type options struct {
 	Port int `env:"PORT" help:"The port used to listen connections."`
-}
-
-type githubOptions struct {
-	Output string `cli:"o" env:"-" help:"The directory where static resources are saved."`
 }
 
 func main() {
@@ -46,6 +41,8 @@ func main() {
 		} else {
 			app.Route("/"+l.ClassList[0]+"/"+l.Slug, newStream())
 		}
+
+		app.Route("/plunderstorm/"+l.Slug, newStream())
 	}
 
 	for _, c := range getAllClasses() {
@@ -82,6 +79,9 @@ func main() {
 			"classic",
 			"shadowlands",
 			"dragonflight",
+			"plunderstorm",
+			"battleroyal",
+			"br",
 		},
 		LoadingLabel: "WoW arena stream gallery",
 		Name:         "PvPtv",

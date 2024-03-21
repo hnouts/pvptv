@@ -4,10 +4,6 @@ build:
 
 run: build
 	@cd docs && ./arenatv
-# 	@cd docs && ./arenatv local
-
-# build-github: build
-# 	@cd docs && ./arenatv github
 
 clean:
 	@go clean ./...
