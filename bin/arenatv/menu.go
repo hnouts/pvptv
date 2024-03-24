@@ -95,6 +95,12 @@ func (m *menu) Render() app.UI {
 									app.Div().
 										Class("hspace-out").
 										Body(
+											newLink().
+												Class(linkClass).
+												Class("h3").
+												Icon(newSVGBiggerIcon().RawSVG(plunderstormSVG)).
+												Label("Plunderstorm").
+												Href("/plunderstorm"),
 											ui.Link().
 												Class(linkClass).
 												Label("Death Knight").
@@ -177,11 +183,6 @@ func (m *menu) Render() app.UI {
 								Icon(newSVGIcon().RawSVG(githubSVG)).
 								Label("GitHub").
 								Href(githubURL),
-							newLink().
-								Class("glow").
-								Icon(newSVGIcon().RawSVG(twitterSVG)).
-								Label("Twitter").
-								Href(twitterURL),
 						),
 				),
 		)

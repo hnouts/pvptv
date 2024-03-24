@@ -77,8 +77,6 @@ func (r *stream) init(ctx app.Context) {
 	sort.SliceStable(r.lives, func(i, j int) bool {
 		return strings.Compare(r.lives[i].GameName, r.lives[j].GameName) > 0
 	})
-	// println("----------FINAL LIVESTREAM-----------------")
-	// fmt.Printf("%+v\n", r.lives)
 }
 
 func (r *stream) load(ctx app.Context) {
@@ -87,9 +85,6 @@ func (r *stream) load(ctx app.Context) {
 	slug := strings.TrimPrefix(ctx.Page().URL().Path, "/"+url[1]+"/")
 	if slug == "" || len(url) < 3 {
 		r.current = r.lives[0]
-		// u := *ctx.Page().URL()
-		// u.Path = "/" + url[1] + "/" + r.current.Slug
-		// ctx.Page().ReplaceURL(&u)
 	} else {
 		for _, lr := range r.lives {
 			if slug == lr.Slug {
@@ -134,26 +129,6 @@ func (r *stream) Render() app.UI {
 					LiveStreams(r.lives).
 					CurrentStream(r.current)).
 				Content(
-					// app.Aside().
-					// 	Class("stream-update").
-					// 	Class("app-title").
-					// 	Class("hspace-out").
-					// 	Body(
-					// 		ui.Stack().
-					// 			Class("fill").
-					// 			Right().
-					// 			Middle().
-					// 			Content(
-					// 				app.If(r.isUpdateAvailable,
-					// 					newLink().
-					// 						Class("link-update").
-					// 						Class("glow").
-					// 						Label("Update").
-					// 						Icon(newSVGIcon().RawSVG(downloadSVG)).
-					// 						OnClick(r.onUpdateClick),
-					// 				),
-					// 			),
-					// 	),
 					app.If(!r.current.Online,
 						app.Div().
 							Class("hspace-out").
@@ -171,7 +146,3 @@ func (r *stream) Render() app.UI {
 func (r *stream) onPlaybackChange(ctx app.Context, isPlaying bool) {
 	r.isPlaying = isPlaying
 }
-
-// func (r *stream) onUpdateClick(ctx app.Context) {
-// 	ctx.Reload()
-// }

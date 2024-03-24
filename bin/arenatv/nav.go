@@ -62,29 +62,7 @@ func (n *nav) OnNav(ctx app.Context) {
 	}
 }
 
-func parseTitle(t string) string {
-	t = strings.ToLower(t)
-	words := strings.Fields(t)
-
-	for i := 0; i < len(words); i++ {
-		for j := i + 1; j <= len(words); j++ {
-			phrase := strings.Join(words[i:j], " ")
-			if _, ok := wotlkKeywords[phrase]; ok {
-				return "wotlk"
-			}
-			for k := j + 1; k <= len(words); k++ {
-				phrase := strings.Join(words[i:k], " ")
-				if _, ok := wotlkKeywords[phrase]; ok {
-					return "wotlk"
-				}
-			}
-		}
-	}
-
-	return "retail"
-}
-
-func parseSpecList(version string, mc string, s []specList, c string) (string, string) {
+func parseSpecList(mc string, s []specList, c string) (string, string) {
 	// Range through specList, if class = c then spec = current item
 	for _, spec := range s {
 		if c == spec.SPClass {
@@ -95,16 +73,10 @@ func parseSpecList(version string, mc string, s []specList, c string) (string, s
 		}
 	}
 
-	return "meta", returnMetaForGivenClass(version)
+	return "meta", returnMetaForGivenClass()
 }
 
-func returnMetaForGivenClass(version string) string {
-	// LAST UPDATE SHADOWLAND SEASON 4 - SEPTEMBER 2022
-
-	if version == "classic" {
-		return websiteSVG
-	}
-
+func returnMetaForGivenClass() string {
 	return websiteSVG
 }
 
@@ -113,32 +85,6 @@ func parseSpecToSvg(s string) string {
 		return svg
 	}
 	return websiteSVG
-}
-
-var wotlkKeywords = map[string]bool{
-	"wotlk":          true,
-	"classic":        true,
-	"60":             true,
-	"80":             true,
-	"wrath":          true,
-	"hardcore":       true,
-	"!hardcore":      true,
-	"death = delete": true,
-	"dead = delete":  true,
-	"lich king":      true,
-	"wrathful":       true,
-	"icc":            true,
-	"ulduar":         true,
-	"hc":             true,
-	"gs":             true,
-	"gearscore":      true,
-	"gear score":     true,
-	"gdkp":           true,
-	"s7":             true,
-	"s8":             true,
-	"season 7":       true,
-	"season 8":       true,
-	"5s":             true,
 }
 
 var specSVGs = map[string]string{
@@ -196,6 +142,8 @@ func (n *nav) renderDropdown() app.UI {
 	}
 
 	links := make([]app.UI, 0)
+	plunderstormLink := app.UI(nil)
+
 	for _, c := range getAllClasses() {
 		link := ui.Link().
 			Class("link heading fit icon-circle").
@@ -204,7 +152,15 @@ func (n *nav) renderDropdown() app.UI {
 			Icon(c.Svg).
 			OnClick(handleClick)
 
-		links = append(links, app.Div().Body(link))
+		if c.Name == "Plunderstorm" {
+			plunderstormLink = app.Div().Body(link)
+		} else {
+			links = append(links, app.Div().Body(link))
+		}
+	}
+
+	if plunderstormLink != nil {
+		links = append([]app.UI{plunderstormLink}, links...)
 	}
 
 	return app.Div().
@@ -309,41 +265,11 @@ func (n *nav) Render() app.UI {
 											app.Div().Class("separator"),
 											app.H3().
 												Class("hApp h3").
-												Text("Classic"),
+												Text("Streaming"),
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
-												if lr.Online == true && parseTitle(lr.Title) == "wotlk" && lr.GameName == "World of Warcraft" {
-
-													opt, specIcon := parseSpecList("classic", lr.MainClass, lr.SpecList, n.IcurrentClass)
-
-													return app.Div().Class("stream-label-style").
-														Body(
-															newLink().
-																ID(lr.Slug).
-																Class("glow icon-circle "+opt).
-																Label(lr.Name).
-																Href("/"+n.IcurrentClass+"/"+lr.Slug).
-																Help(lr.Title).
-																Icon(newSVGIcon().RawSVG(specIcon)).
-																Focus(lr.Slug == n.IcurrentStream.Slug),
-															newLink().
-																ID(lr.Slug).
-																Class("glow unresponsive spaced-on-mobile").
-																Label("🔴 "+strconv.Itoa(lr.Viewers)).
-																Focus(lr.Slug == n.IcurrentStream.Slug),
-														)
-												} else {
-													return app.Div()
-												}
-											}),
-											app.Div().Class("separator"),
-											app.H3().
-												Class("hApp h3").
-												Text("Retail"),
-											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
-												lr := n.IliveStreams[i]
-												if lr.Online == true && parseTitle(lr.Title) == "retail" && lr.GameName == "World of Warcraft" {
-													opt, specIcon := parseSpecList("retail", lr.MainClass, lr.SpecList, n.IcurrentClass)
+												if lr.Online && lr.GameName == "World of Warcraft" {
+													opt, specIcon := parseSpecList(lr.MainClass, lr.SpecList, n.IcurrentClass)
 													return app.Div().Class("stream-label-style").
 														Body(
 															newLink().
@@ -371,7 +297,7 @@ func (n *nav) Render() app.UI {
 												Text("Offline"),
 											app.Range(n.IliveStreams).Slice(func(i int) app.UI {
 												lr := n.IliveStreams[i]
-												if lr.Online == false || lr.GameName != "World of Warcraft" {
+												if !lr.Online || lr.GameName != "World of Warcraft" {
 													return app.Div().Class("stream-offline").
 														Body(
 															newLink().
@@ -399,9 +325,9 @@ func (n *nav) Render() app.UI {
 								Href(buyMeACoffeeURL),
 							newLink().
 								Class("glow").
-								Icon(newSVGIcon().RawSVG(twitterSVG)).
-								Label("Twitter").
-								Href(twitterURL),
+								Icon(newSVGIcon().RawSVG(githubSVG)).
+								Label("GitHub").
+								Href(githubURL),
 						),
 				),
 		)

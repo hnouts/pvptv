@@ -11,7 +11,7 @@ type classes struct {
 	app.Compo
 	Name           string
 	Slug           string
-	Svg			   string
+	Svg            string
 	lives          []liveStream
 	current        liveStream
 	Classic        bool
@@ -29,82 +29,74 @@ func newClasses() *classes {
 func getAllClasses() []classes {
 	classes := []classes{
 		{
-			Slug:    "death_knight",
-			Name:    "Death Knight",
-			Svg:	 dkSVG,
-			Classic: true,
+			Slug: "death_knight",
+			Name: "Death Knight",
+			Svg:  dkSVG,
 		},
 		{
-			Slug:    "demon_hunter",
-			Name:    "Demon Hunter",
-			Svg:	 dhSVG,
-			Classic: false,
+			Slug: "demon_hunter",
+			Name: "Demon Hunter",
+			Svg:  dhSVG,
 		},
 		{
-			Slug:    "druid",
-			Name:    "Druid",
-			Svg:	 druidSVG,
-			Classic: true,
+			Slug: "druid",
+			Name: "Druid",
+			Svg:  druidSVG,
 		},
 		{
-			Slug:    "evoker",
-			Name:    "Evoker",
-			Svg:	 evokerSVG,
-			Classic: false,
+			Slug: "evoker",
+			Name: "Evoker",
+			Svg:  evokerSVG,
 		},
 		{
-			Slug:    "hunter",
-			Name:    "Hunter",
-			Svg:	 hunterSVG,
-			Classic: true,
+			Slug: "hunter",
+			Name: "Hunter",
+			Svg:  hunterSVG,
 		},
 		{
-			Slug:    "mage",
-			Name:    "Mage",
-			Svg:	 mageSVG,
-			Classic: true,
+			Slug: "mage",
+			Name: "Mage",
+			Svg:  mageSVG,
 		},
 		{
-			Slug:    "monk",
-			Name:    "Monk",
-			Svg:	 monkSVG,
-			Classic: false,
+			Slug: "monk",
+			Name: "Monk",
+			Svg:  monkSVG,
 		},
 		{
-			Slug:    "paladin",
-			Name:    "Paladin",
-			Svg:	 paladinSVG,
-			Classic: true,
+			Slug: "paladin",
+			Name: "Paladin",
+			Svg:  paladinSVG,
 		},
 		{
-			Slug:    "priest",
-			Name:    "Priest",
-			Svg:	 priestSVG,
-			Classic: true,
+			Slug: "priest",
+			Name: "Priest",
+			Svg:  priestSVG,
 		},
 		{
-			Slug:    "rogue",
-			Name:    "Rogue",
-			Svg:	 rogueSVG,
-			Classic: true,
+			Slug: "rogue",
+			Name: "Rogue",
+			Svg:  rogueSVG,
 		},
 		{
-			Slug:    "shaman",
-			Name:    "Shaman",
-			Svg:	 shamanSVG,
-			Classic: true,
+			Slug: "shaman",
+			Name: "Shaman",
+			Svg:  shamanSVG,
 		},
 		{
-			Slug:    "warlock",
-			Name:    "Warlock",
-			Svg:	 warlockSVG,
-			Classic: true,
+			Slug: "warlock",
+			Name: "Warlock",
+			Svg:  warlockSVG,
 		},
 		{
-			Slug:    "warrior",
-			Name:    "Warrior",
-			Svg:	 warriorSVG,
-			Classic: true,
+			Slug: "warrior",
+			Name: "Warrior",
+			Svg:  warriorSVG,
+		},
+		{
+			Slug: "plunderstorm",
+			Name: "Plunderstorm",
+			Svg:  plunderstormSVG,
 		},
 	}
 
@@ -118,19 +110,4 @@ func getAllClasses() []classes {
 func (c *classes) Render() app.UI {
 	return newPage().
 		Title(c.Name)
-	// Content(
-	// 	ui.Shell().
-	// 		Class("stream-shell").
-	// 		Class("fill").
-	// 		PaneWidth(menuWidth).
-	// 		Menu(newNav().
-	// 			CurrentClass(c.current.Class).
-	// 			LiveStreams(c.lives).
-	// 			CurrentStream(c.current)).
-	// 		HamburgerMenu(newNav().
-	// 			Class("background-overlay").
-	// 			CurrentClass(c.current.Class).
-	// 			LiveStreams(c.lives).
-	// 			CurrentStream(c.current)),
-	// )
 }

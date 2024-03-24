@@ -87,13 +87,6 @@ func (p *homePage) Render() app.UI {
 									Text("Known to play this given class and spec from time to time"),
 							),
 
-						// app.Div().
-						// 	Class("help-icon border").
-						// 	Body(
-						// 		app.Raw(fmt.Sprintf(subRogueSVG, 38, 25)),
-						// 		app.P().
-						// 			Text("This streamer could be playing anything, but more likely to be playing this spec based on the current meta"),
-						// 	),
 						app.Div().
 							Class("help-icon border").
 							Body(

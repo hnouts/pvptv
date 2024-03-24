@@ -19,26 +19,19 @@ const (
 
 	buyMeACoffeeURL = "https://www.buymeacoffee.com/hugodev"
 	githubURL       = "https://github.com/hnouts/pvptv"
-	twitterURL      = "https://twitter.com/pvptv_io"
 )
 
 type options struct {
 	Port int `env:"PORT" help:"The port used to listen connections."`
 }
 
-type githubOptions struct {
-	Output string `cli:"o" env:"-" help:"The directory where static resources are saved."`
-}
-
 func main() {
-	// analytics.Add(analytics.NewGoogleAnalytics())
 	ctx, cancel := cli.ContextWithSignals(context.Background(),
 		os.Interrupt,
 		syscall.SIGTERM,
 	)
 
 	for _, l := range getLiveStreamers() {
-		// app.Route("/"+l.Slug, newStream())
 		if len(l.ClassList) > 1 {
 			for c := range l.ClassList {
 				app.Route("/"+l.ClassList[c]+"/"+l.Slug, newStream())
@@ -46,6 +39,8 @@ func main() {
 		} else {
 			app.Route("/"+l.ClassList[0]+"/"+l.Slug, newStream())
 		}
+
+		app.Route("/plunderstorm/"+l.Slug, newStream())
 	}
 
 	for _, c := range getAllClasses() {
@@ -82,6 +77,9 @@ func main() {
 			"classic",
 			"shadowlands",
 			"dragonflight",
+			"plunderstorm",
+			"battleroyal",
+			"br",
 		},
 		LoadingLabel: "WoW arena stream gallery",
 		Name:         "PvPtv",
