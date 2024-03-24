@@ -142,6 +142,8 @@ func (n *nav) renderDropdown() app.UI {
 	}
 
 	links := make([]app.UI, 0)
+	plunderstormLink := app.UI(nil)
+
 	for _, c := range getAllClasses() {
 		link := ui.Link().
 			Class("link heading fit icon-circle").
@@ -150,7 +152,15 @@ func (n *nav) renderDropdown() app.UI {
 			Icon(c.Svg).
 			OnClick(handleClick)
 
-		links = append(links, app.Div().Body(link))
+		if c.Name == "Plunderstorm" {
+			plunderstormLink = app.Div().Body(link)
+		} else {
+			links = append(links, app.Div().Body(link))
+		}
+	}
+
+	if plunderstormLink != nil {
+		links = append([]app.UI{plunderstormLink}, links...)
 	}
 
 	return app.Div().

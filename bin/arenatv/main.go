@@ -26,14 +26,12 @@ type options struct {
 }
 
 func main() {
-	// analytics.Add(analytics.NewGoogleAnalytics())
 	ctx, cancel := cli.ContextWithSignals(context.Background(),
 		os.Interrupt,
 		syscall.SIGTERM,
 	)
 
 	for _, l := range getLiveStreamers() {
-		// app.Route("/"+l.Slug, newStream())
 		if len(l.ClassList) > 1 {
 			for c := range l.ClassList {
 				app.Route("/"+l.ClassList[c]+"/"+l.Slug, newStream())
