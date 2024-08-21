@@ -5,6 +5,11 @@ It provides a list of the best known arena players and cast their stream directl
 
 The website is built with the golang framework [go-app-dev](https://go-app.dev/).
 
+![image](https://github.com/user-attachments/assets/cd3f04ef-5fea-4d6a-b659-16455f6da219)
+---
+![image](https://github.com/user-attachments/assets/dbc66219-ab1c-4310-b235-e5342bd87609)
+
+
 # How to install
 
 ## Chrome
