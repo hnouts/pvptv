@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  arenatv:
+    build: .
+    container_name: arenatv
+    restart: unless-stopped
+    networks:
+      - proxy
+    # simple healthcheck (alpine has busybox wget)
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -T 2 -O - http://127.0.0.1:8080/ >/dev/null || exit 1",
+        ]
+      interval: 15s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: proxy
+      traefik.http.routers.arenatv.rule: Host(`pvptv.hnts.dev`)
+      traefik.http.routers.arenatv.entrypoints: websecure
+      traefik.http.routers.arenatv.tls.certresolver: le
+      traefik.http.services.arenatv.loadbalancer.server.port: "8080"
+
+networks:
+  proxy:
+    external: true
