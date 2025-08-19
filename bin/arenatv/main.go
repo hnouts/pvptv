@@ -85,7 +85,7 @@ func main() {
 		Name:         "PvPtv",
 		Image:        "/web/logo.png",
 		RawHeaders: []string{
-			`<script data-goatcounter="https://pvptv.goatcounter.com/count"	async src="//gc.zgo.at/count.js"></script>`,
+			`<script defer data-domain="pvptv.hnts.dev" src="https://plausible.hnts.dev/js/script.js"></script>`,
 		},
 		Styles: []string{
 			"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
