@@ -1,21 +1,28 @@
-FROM golang:1.19-alpine as builder
+FROM golang:1.23-alpine AS builder
 
 WORKDIR /app
 
+# Cache dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the rest of the source
 COPY . .
 
-RUN go mod download
-# RUN apk update && apk add make \
-#      rm -rf /var/cache/apk/*
+# Build the server binary
+RUN go build -o /server ./cmd/server
 
-# CMD make build
-RUN GOARCH=wasm GOOS=js go build -o docs/web/app.wasm ./bin/arenatv
-RUN go build -o docs/arenatv ./bin/arenatv
-RUN chown -Rf "1000" ./*
+FROM alpine:3.20
 
-FROM alpine
+RUN apk add --no-cache ca-certificates
 
-COPY --from=builder /app/docs /app
-EXPOSE 8080
 WORKDIR /app
-CMD ["./arenatv"]
+
+# Copy binary and required runtime assets
+COPY --from=builder /server ./server
+COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/docs/web ./docs/web
+
+EXPOSE 8080
+
+CMD ["./server"]

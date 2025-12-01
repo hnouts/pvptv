@@ -5,14 +5,19 @@ services:
     build: .
     container_name: arenatv
     restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
     networks:
       - proxy
+      - backend
     # simple healthcheck (alpine has busybox wget)
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "wget -q -T 2 -O - http://127.0.0.1:8080/ >/dev/null || exit 1",
+          "wget -q -T 2 -O - http://127.0.0.1:8080/healthz >/dev/null || exit 1",
         ]
       interval: 15s
       timeout: 3s
@@ -26,6 +31,24 @@ services:
       traefik.http.routers.arenatv.tls.certresolver: le
       traefik.http.services.arenatv.loadbalancer.server.port: "8080"
 
+  db:
+    image: postgres:16-alpine
+    container_name: pvptv-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pvptv
+      POSTGRES_USER: pvptv
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pvptv}
+    volumes:
+      - pvptv-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
 networks:
   proxy:
     external: true
+  backend:
+    driver: bridge
+
+volumes:
+  pvptv-db-data:

@@ -1,0 +1,347 @@
+{{define "admin_channel_edit"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+        .admin-nav {
+            width: 250px;
+            background-color: #1e1e1e;
+            border-right: 1px solid #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .admin-nav a {
+            color: #aaa;
+            text-decoration: none;
+            padding: 10px 0;
+            display: block;
+            font-size: 1.1em;
+        }
+        .admin-nav a:hover, .admin-nav a.active {
+            color: white;
+        }
+        .admin-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .separator {
+            height: 1px;
+            background: #333;
+            margin: 10px 0;
+        }
+        h1 { margin-top: 0; }
+        h3 { color: #aaa; margin-top: 30px; }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"], input[type="url"], input[type="search"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            background: #333;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            width: auto;
+            margin: 0 8px 0 0;
+        }
+        button, .btn {
+            padding: 10px 20px;
+            background-color: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        button:hover, .btn:hover { background-color: #7c4dff; }
+        .class-group {
+            margin-bottom: 15px;
+        }
+        .class-checkbox {
+            transition: background-color 0.2s;
+        }
+        .class-checkbox:hover {
+            background-color: #2a2a2a !important;
+        }
+        .specs-container {
+            margin-top: 5px;
+        }
+        .spec-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .spec-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .spec-item:hover {
+            background-color: #1e1e1e;
+        }
+        .spec-item.primary {
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .socials-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .preview-link {
+            margin-left: 20px;
+            color: #aaa;
+        }
+        .preview-link:hover {
+            color: white;
+        }
+        #spec-search {
+            margin-bottom: 15px;
+        }
+        .spec-group.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-shell">
+        <div class="admin-nav">
+            <div class="admin-header">PvPtv Admin</div>
+            <a href="/admin/channels">Channels</a>
+            <div class="separator"></div>
+            <a href="/" target="_blank">View Site ↗</a>
+            <a href="/admin/logout">Logout</a>
+        </div>
+        <div class="admin-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h1>Edit Channel: {{.Channel.Name}}</h1>
+                <a href="/{{.Channel.Slug}}" target="_blank" class="preview-link">Preview ↗</a>
+            </div>
+
+            <form method="post" action="/admin/channels/{{.Channel.ID}}" style="max-width: 800px;">
+                <label>
+                    Display Name
+                    <input type="text" name="display_name" value="{{.Channel.Name}}" required>
+                </label>
+                
+                <label>
+                    Twitch Login (Slug)
+                    <input type="text" name="twitch_login" value="{{.Channel.Slug}}" required>
+                </label>
+
+                <label>
+                    Sort Weight (Higher = top of list)
+                    <input type="number" name="sort_weight" value="{{.Channel.SortWeight}}">
+                </label>
+
+                <label style="display:flex; align-items:center; margin: 20px 0;">
+                    <input type="checkbox" name="is_published" value="true" {{if .Channel.Published}}checked{{end}}>
+                    <span style="margin-left: 10px;">Published</span>
+                </label>
+
+                <div class="separator"></div>
+                <h3>Social Links</h3>
+                <div class="socials-grid">
+                    <label>
+                        Twitter
+                        <input type="url" name="social_twitter" value="{{index .Channel.Socials "twitter"}}" placeholder="https://twitter.com/...">
+                    </label>
+                    <label>
+                        YouTube
+                        <input type="url" name="social_youtube" value="{{index .Channel.Socials "youtube"}}" placeholder="https://youtube.com/...">
+                    </label>
+                    <label>
+                        Discord
+                        <input type="url" name="social_discord" value="{{index .Channel.Socials "discord"}}" placeholder="https://discord.gg/...">
+                    </label>
+                    <label>
+                        Instagram
+                        <input type="url" name="social_instagram" value="{{index .Channel.Socials "instagram"}}" placeholder="https://instagram.com/...">
+                    </label>
+                    <label>
+                        Website
+                        <input type="url" name="social_website" value="{{index .Channel.Socials "website"}}" placeholder="https://...">
+                    </label>
+                </div>
+
+                <div class="separator"></div>
+                <h3>Classes & Specs</h3>
+                <p style="color: #888; margin-bottom: 15px;">Select classes this channel plays, then select specs within those classes. Mark one spec as primary (main spec).</p>
+                
+                <input type="search" id="class-search" placeholder="Search classes or specs..." onkeyup="filterClasses(this.value)">
+
+                {{range .Classes}}
+                <div class="class-group" data-class="{{.Name}}" data-class-id="{{.ID}}">
+                    <label class="class-checkbox" style="display: flex; align-items: center; cursor: pointer; padding: 10px; background: #1e1e1e; border-radius: 4px; margin-bottom: 10px;">
+                        <input type="checkbox" class="class-selector" data-class-id="{{.ID}}" {{if .Selected}}checked{{end}} onchange="toggleClassSpecs(this)">
+                        <span style="margin-left: 10px; font-weight: bold; font-size: 1.1em;">{{.Name}}</span>
+                    </label>
+                    <div class="specs-container" data-initially-visible="{{.Selected}}" style="margin-left: 30px;">
+                        {{if .Specs}}
+                        <div class="spec-list">
+                            {{range .Specs}}
+                            <label class="spec-item {{if .IsPrimary}}primary{{end}}" data-spec="{{.Name}}" data-class="{{$.Name}}">
+                                <input type="checkbox" name="spec_ids" value="{{.ID}}" {{if .Selected}}checked{{end}} onchange="updatePrimaryOptions()">
+                                <input type="radio" name="primary_spec_id" value="{{.ID}}" {{if .IsPrimary}}checked{{end}} {{if not .Selected}}disabled{{end}} style="margin-left: 10px;">
+                                <span style="margin-left: 5px;">{{.Name}}</span>
+                            </label>
+                            {{end}}
+                        </div>
+                        {{else}}
+                        <p style="color: #666; font-style: italic;">No specs available for this class</p>
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn">Save Changes</button>
+                    <a href="/admin/channels" style="margin-left: 20px; color: #aaa;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize visibility on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const classGroups = document.querySelectorAll('.class-group');
+            classGroups.forEach(group => {
+                const specsContainer = group.querySelector('.specs-container');
+                const classCheckbox = group.querySelector('.class-selector');
+                if (specsContainer && classCheckbox) {
+                    const initiallyVisible = specsContainer.getAttribute('data-initially-visible') === 'true';
+                    if (initiallyVisible || classCheckbox.checked) {
+                        specsContainer.style.display = 'block';
+                    } else {
+                        specsContainer.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        function filterClasses(query) {
+            const groups = document.querySelectorAll('.class-group');
+            const searchLower = query.toLowerCase();
+            
+            if (query === '') {
+                // Show all classes, but respect their expanded/collapsed state
+                groups.forEach(group => {
+                    group.style.display = 'block';
+                    const classSelector = group.querySelector('.class-selector');
+                    const specsContainer = group.querySelector('.specs-container');
+                    if (classSelector && classSelector.checked) {
+                        specsContainer.style.display = 'block';
+                    }
+                });
+                return;
+            }
+            
+            groups.forEach(group => {
+                const className = group.getAttribute('data-class').toLowerCase();
+                const specs = group.querySelectorAll('.spec-item');
+                let classMatches = className.includes(searchLower);
+                let specMatches = false;
+                
+                specs.forEach(spec => {
+                    const specName = spec.getAttribute('data-spec').toLowerCase();
+                    if (specName.includes(searchLower)) {
+                        spec.style.display = 'flex';
+                        specMatches = true;
+                    } else {
+                        spec.style.display = 'none';
+                    }
+                });
+                
+                // Show class if class name matches or any spec matches
+                if (classMatches || specMatches) {
+                    group.style.display = 'block';
+                    // Auto-expand if there's a match
+                    const specsContainer = group.querySelector('.specs-container');
+                    if (specsContainer) {
+                        specsContainer.style.display = 'block';
+                    }
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleClassSpecs(classCheckbox) {
+            const classGroup = classCheckbox.closest('.class-group');
+            const specsContainer = classGroup.querySelector('.specs-container');
+            
+            if (!specsContainer) {
+                console.error('Specs container not found');
+                return;
+            }
+            
+            if (classCheckbox.checked) {
+                specsContainer.style.display = 'block';
+            } else {
+                specsContainer.style.display = 'none';
+                // Uncheck all specs in this class
+                const specCheckboxes = specsContainer.querySelectorAll('input[name="spec_ids"]');
+                specCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    updatePrimaryOptions();
+                });
+            }
+        }
+
+        function updatePrimaryOptions() {
+            const checkboxes = document.querySelectorAll('input[name="spec_ids"]');
+            const radios = document.querySelectorAll('input[name="primary_spec_id"]');
+            
+            // Create a map of spec IDs to their radio buttons
+            const specToRadio = new Map();
+            radios.forEach(radio => {
+                specToRadio.set(radio.value, radio);
+            });
+            
+            checkboxes.forEach(checkbox => {
+                const radio = specToRadio.get(checkbox.value);
+                if (radio) {
+                    radio.disabled = !checkbox.checked;
+                    if (!checkbox.checked && radio.checked) {
+                        radio.checked = false;
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+{{end}}

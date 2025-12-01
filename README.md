@@ -1,37 +1,62 @@
-# PvPtv.io
-[PvPtv.io](https://pvptv.io) is an installable progressive web application (PWA) that helps the [World of Warcraft](https://worldofwarcraft.com/) pvp community find the best arena player streaming at any moment, for any class.
+# PvPtv.io (v2)
 
-It provides a list of the best known arena players and cast their stream directly from [twitch](twitch.com).
+[PvPtv.io](https://pvptv.io) is a web application that helps the [World of Warcraft](https://worldofwarcraft.com/) PvP community find the best arena streamers live at any moment, for any class.
 
-The website is built with the golang framework [go-app-dev](https://go-app.dev/).
+It provides a curated list of top arena players and embeds their streams directly from [Twitch](https://twitch.tv).
 
-![image](https://github.com/user-attachments/assets/cd3f04ef-5fea-4d6a-b659-16455f6da219)
----
-![image](https://github.com/user-attachments/assets/dbc66219-ab1c-4310-b235-e5342bd87609)
+## Architecture (v2)
+
+The application has been completely refactored from a client-side WASM app to a robust server-side architecture:
+
+- **Backend**: Go 1.21+ using [Gin](https://github.com/gin-gonic/gin) for routing and HTML templates.
+- **Database**: PostgreSQL for data persistence
+- **Deployment**: Docker Compose with Traefik for HTTPS and routing.
+- **SEO**: Fully server-rendered pages with JSON-LD structured data, sitemaps, and proper meta tags.
+- **Admin**: Secure admin panel for managing channels and assignments.
+
+## Development
+
+### Prerequisites
+
+- Docker & Docker Compose
+- Go 1.21+ (optional, for local non-docker dev)
+
+### Running Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/hnouts/pvptv.git
+   cd pvptv
+   ```
+
+2. **Setup Environment**
+   Copy the template env file:
+   ```bash
+   cp .template.env .env
+   ```
+   *Note: You'll need Twitch API credentials (`TWITCH_CLIENT_ID`, `TWITCH_CLIENT_SECRET`) to fetch live stream data.*
+
+3. **Run with Docker Compose**
+   This starts the app and a Postgres database.
+   ```bash
+   docker compose -f docker-compose.dev.yml up --build
+   ```
+   Access the site at `http://localhost:8080`.
+
+### Admin Access
+
+The default dev setup seeds an admin user.
+- **Login**: `/admin/login`
+- **Username**: `admin`
+- **Password**: `admin`
 
 
-# How to install
+## Contributing
 
-## Chrome
+Suggestions for new streamers are welcome! You can fill out this [form](https://forms.gle/y5wj532gvtgwWkca6).
 
-1. Go to [pvptv.io](https://pvptv.io)
-2. Click the ```+``` on the right of the search bar.
+To report issues, please open a [GitHub issue](https://github.com/hnouts/pvptv/issues).
 
-## IOS
-1. Go to [pvptv.io](https://pvptv.io)
-2. Click the ```Share``` button
-3. Click on ```Add to homescreen```
+## Support
 
-# Availability
-- Works on all browser that support web assembly but optimized for Chrome on a desktop
-- May require authorization for autoplay (eg. Firefox)
-
-# Suggestions
-
-For adding a new streamer channel you can fill this [form](https://forms.gle/y5wj532gvtgwWkca6).
-
-To report any issue, you can open a [Github issue](https://github.com/hnouts/pvptv/issues).
-
-# Support PvPtv.io
-[pvptv.io](https://pvptv.io) is an app meant to watch and discover wow pvp streamers, it has no monetization purposes.
-Though, if you like the work please support me by [buying me a coffee](https://www.buymeacoffee.com/hugodev).
+PvPtv.io is a free tool for the community. If you like the project, you can support the development by [buying me a coffee](https://www.buymeacoffee.com/hugodev).

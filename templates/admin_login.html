@@ -1,0 +1,83 @@
+{{define "admin_login"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            width: 350px;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+        .error {
+            color: #cf6679;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: #333;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #7c4dff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Admin Login</h1>
+        {{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+        <form method="post" action="/admin/login">
+            <label>
+                Username
+                <input type="text" name="username" required autofocus>
+            </label>
+            <label>
+                Password
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: pvptv-dev
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://pvptv:pvptv@db:5432/pvptv?sslmode=disable
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD_HASH=631380b43b1b3ac5e0c5e68a1eee8f1ab2c43ceaf34be200aa4d260addddfe8a
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+  db:
+    image: postgres:16-alpine
+    container_name: pvptv-dev-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pvptv
+      POSTGRES_USER: pvptv
+      POSTGRES_PASSWORD: pvptv
+    volumes:
+      - pvptv-dev-db-data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  pvptv-dev-db-data:

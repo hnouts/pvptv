@@ -1,0 +1,106 @@
+{{define "home"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "head" .}}
+</head>
+<body>
+<div class="shell fill background">
+    {{template "sidebar" .}}
+
+    <!-- MAIN CONTENT -->
+    <div class="content fill">
+        <div class="fill header-height">
+            <nav class="index">
+                <div class="separator"></div>
+                <a href="#welcome-to-pvptv">Welcome!</a>
+                <a href="#help">How to find a streamer?</a>
+                <a href="#why-is-my-twitch-screen-purple">Why is my twitch screen purple?</a>
+                <a href="#more-resources">More resources</a>
+                <a href="#special-thanks">Special thanks</a>
+                <div class="separator"></div>
+            </nav>
+
+            <main>
+                <article>
+                    <header id="welcome-to-pvptv" class="page-title header-page center">
+                        <div class="center middle">
+                            <img class="icon-left" src="/assets/logo.png" style="width:100px;height:100px;">
+                            <h1>PvPtv.io</h1>
+                        </div>
+                    </header>
+                    <div class="separator"></div>
+
+                    <!-- Welcome Content -->
+                    <div id="welcome-to-pvptv">
+                        <h2 class="title">Welcome!</h2>
+                        <p class="text">PvPtv.io is an app that was created in order to help the world of warcraft pvp community find the best arena streamers at any moment. It provides a list of the best known wow arena's streamers for each class, and casts their stream directly from twitch.com</p>
+                        <br>
+                        <p class="text">The idea behind this web application was to finally have an easy solution to the eternal question posted on pvp communities:</p>
+                        <p class="text">"Do you know a good streamer for x class?" Now you do! And among the vast list of streamers stored on PvPtv.io, there will always be a gladiator streaming! (hopefully)</p>
+                        <p class="text">You can contribute to the list of streamers by filling the following form:</p>
+                        <a class="center-link" href="https://forms.gle/y5wj532gvtgwWkca6">-> suggest a streamer <-</a>
+                    </div>
+
+                    <div id="help">
+                        <h2 class="title">How to find a streamer that plays my class?</h2>
+                        <p class="text">It's very easy! Select a class and the app will list streamers known to play this class. Sometimes streamers will be playing a different class... But the app is trying its best to determine what the streamer is playing right now!</p>
+                        <br>
+                        <p class="text">To help you choose a stream, icons are displayed next to the streamer's name.</p>
+                        <div class="help-icon">
+                            <!-- Placeholder icon -->
+                            <svg style="width:25px;height:25px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" /></svg>
+                            <p>Known to main this given class and spec</p>
+                        </div>
+                        <div class="help-icon alt-border">
+                            <svg style="width:25px;height:25px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" /></svg>
+                            <p>Known to play this given class and spec from time to time</p>
+                        </div>
+                        <div class="help-icon border">
+                            <svg style="width:25px;height:25px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" /></svg>
+                            <p>Could be playing anything</p>
+                        </div>
+                    </div>
+
+                    <div id="why-is-my-twitch-screen-purple">
+                        <h2 class="title">Why is my twitch screen purple?</h2>
+                        <div>
+                            <img class="twitch-pod" alt="twitch-purple-screen" src="/assets/twitch-purple-screen.png">
+                        </div>
+                        <p class="text">Twitch's purple screen error occurs when you're watching live streams from a website other than twitch.com. It can be triggered by your ad-blocker and can be avoided if you disable it on PvPtv.io. Do not worry! PvPtv.io has zero ads!</p>
+                    </div>
+
+                    <div id="more-resources">
+                        <h2 class="title">Pvp Community resources</h2>
+                        <p class="text">Links to other world of warcraft pvp resources.</p>
+                        <a href="https://www.reddit.com/r/worldofpvp">r/worldofpvp</a><br>
+                        <a href="https://www.pvpleaderboard.com/">pvpleaderboard</a><br>
+                        <a href="https://pvp.subcreation.net/">pvp.subcreation</a><br>
+                        <a href="https://check-pvp.fr/">checkpvp</a><br>
+                    </div>
+
+                    <div id="special-thanks">
+                        <h2 class="title">Special thanks</h2>
+                        <p class="text">PvPtv.io is built with the amazing golang framework go-app-dev! You can contact the author on twitter or visit the frameworks documentation.</p>
+                        <a href="https://twitter.com/jonhymaxoo">Maxence Twitter</a><br>
+                        <a href="https://go-app.dev/">Go-App-Dev Documentation</a><br>
+                        <p class="text">Thanks also to Dmachine and his rich list of arena streamers that was a very useful source to me and an inspiration to this project.</p>
+                        <a href="https://twitter.com/Dmachine_">DMachine Twitter</a><br>
+                        <a href="https://www.reddit.com/r/worldofpvp/comments/e9uukx/list_of_wow_pvp_streamers_organized_by_classspec/">Reddit list of streamers</a>
+                    </div>
+
+                    <div class="separator"></div>
+                </article>
+            </main>
+        </div>
+    </div>
+</div>
+<div class="sticky-pic-thrall">
+    <img src="/assets/thrall_dude_paysage.png" alt="thrall">
+</div>
+<div class="sticky-pic-quest">
+    <img src="/assets/quest-icon.jpg" alt="quest">
+</div>
+</body>
+</html>
+{{end}}
