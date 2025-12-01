@@ -4,13 +4,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"sort"
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"arenatv/internal/twitch"
+
+	"github.com/gin-gonic/gin"
 )
 
 // getAllClasses fetches all classes for the sidebar navigation.
@@ -39,12 +41,63 @@ func getAllClasses(db *sql.DB) ([]map[string]string, error) {
 }
 
 // homeHandler renders the public home page.
-func homeHandler(db *sql.DB) gin.HandlerFunc {
+func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		classes, err := getAllClasses(db)
 		if err != nil {
 			c.String(http.StatusInternalServerError, "DB Error: %v", err)
 			return
+		}
+
+		// Featured Stream Logic
+		var featuredStream map[string]interface{}
+		
+		if twitchClient != nil {
+			// 1. Get candidate channels (high priority first)
+			rows, err := db.Query(`
+				SELECT twitch_login, display_name 
+				FROM channels 
+				WHERE is_published = true 
+				ORDER BY sort_weight DESC 
+				LIMIT 100
+			`)
+			if err == nil {
+				defer rows.Close()
+				var logins []string
+				var channelMap = make(map[string]string) // login -> display_name
+				
+				for rows.Next() {
+					var login, name string
+					if err := rows.Scan(&login, &name); err == nil {
+						logins = append(logins, login)
+						channelMap[strings.ToLower(login)] = name
+					}
+				}
+
+				// 2. Check who is online
+				if len(logins) > 0 {
+					ctx := c.Request.Context()
+					// Twitch API limit is usually 100, which matches our limit
+					resp, err := twitchClient.GetStreamsByLogin(ctx, logins)
+					if err == nil && len(resp.Data) > 0 {
+						// 3. Pick a random one (or just the first one since we sorted by weight)
+						rand.Seed(time.Now().UnixNano())
+						rand.Shuffle(len(resp.Data), func(i, j int) {
+							resp.Data[i], resp.Data[j] = resp.Data[j], resp.Data[i]
+						})
+						stream := resp.Data[0]
+						
+						featuredStream = map[string]interface{}{
+							"login":       stream.UserLogin,
+							"displayName": channelMap[strings.ToLower(stream.UserLogin)],
+							"title":       stream.Title,
+							"viewers":     stream.ViewerCount,
+							"game":        stream.GameName,
+							"online":      true,
+						}
+					}
+				}
+			}
 		}
 
 		canonical := canonicalURL(c)
@@ -59,6 +112,7 @@ func homeHandler(db *sql.DB) gin.HandlerFunc {
 			"Canonical":       canonical,
 			"OGImage":         "/assets/logo.png",
 			"Classes":         classes,
+			"FeaturedStream":  featuredStream,
 			"Title":           "PvPtv.io – Best WoW PvP Streamers & Arena Gameplay",
 			"MetaDescription": "The ultimate directory for World of Warcraft PvP streamers. Find top Arena and RBG players by class and spec. Watch live WoW PvP now.",
 			"JSONLD":          jsonLD,

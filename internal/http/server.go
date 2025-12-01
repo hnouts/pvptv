@@ -59,7 +59,7 @@ func NewServer(db *sql.DB) *gin.Engine {
 	twitchClient, _ := twitch.NewHelixClient()
 
 	// Public site routes.
-	r.GET("/", homeHandler(db))
+	r.GET("/", homeHandler(db, twitchClient))
 	r.GET("/suggest-streamer", suggestStreamerForm(db))
 	r.POST("/suggest-streamer", suggestStreamerSubmit(db))
 	r.GET("/:class", classHandler(db, twitchClient))
