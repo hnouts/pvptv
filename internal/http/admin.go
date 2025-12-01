@@ -28,6 +28,10 @@ func registerAdminRoutes(r *gin.Engine, db *sql.DB) {
 		admin.GET("/channels/:id/edit", adminChannelEdit(db))
 		admin.POST("/channels/:id", adminChannelUpdate(db))
 		admin.POST("/channels/:id/delete", adminChannelDelete(db))
+		
+		// Pending channels
+		admin.GET("/pending", adminPendingChannels(db))
+		admin.POST("/pending/:id/approve", adminChannelApprove(db))
 	}
 }
 
@@ -144,10 +148,11 @@ func adminChannelsList(db *sql.DB) gin.HandlerFunc {
 		}
 
 		c.HTML(http.StatusOK, "admin_channels", gin.H{
-			"Canonical": canonicalURL(c),
-			"Channels":  channels,
-			"Search":    search,
-			"Title":     "Admin Channels",
+			"Canonical":   canonicalURL(c),
+			"Channels":    channels,
+			"Search":      search,
+			"Title":       "Admin Channels",
+			"CurrentPage": "channels",
 		})
 	}
 }
@@ -300,7 +305,6 @@ func adminChannelUpdate(db *sql.DB) gin.HandlerFunc {
 		sortWeight := c.PostForm("sort_weight")
 		isPublished := c.PostForm("is_published") == "true"
 		specIDs := c.PostFormArray("spec_ids")
-		primarySpecID := c.PostForm("primary_spec_id")
 
 		// Parse socials from form
 		socials := make(map[string]string)
@@ -345,8 +349,8 @@ func adminChannelUpdate(db *sql.DB) gin.HandlerFunc {
 		}
 		defer stmt.Close()
 
-		for _, specID := range specIDs {
-			isPrimary := specID == primarySpecID
+		for i, specID := range specIDs {
+			isPrimary := i == 0
 			if _, err := stmt.Exec(id, specID, isPrimary); err != nil {
 				tx.Rollback()
 				c.String(http.StatusInternalServerError, "DB Error inserting spec: %v", err)
@@ -438,7 +442,6 @@ func adminChannelCreate(db *sql.DB) gin.HandlerFunc {
 		sortWeight := c.PostForm("sort_weight")
 		isPublished := c.PostForm("is_published") == "true"
 		specIDs := c.PostFormArray("spec_ids")
-		primarySpecID := c.PostForm("primary_spec_id")
 
 		// Parse socials from form
 		socials := make(map[string]string)
@@ -478,8 +481,8 @@ func adminChannelCreate(db *sql.DB) gin.HandlerFunc {
 			}
 			defer stmt.Close()
 
-			for _, specID := range specIDs {
-				isPrimary := specID == primarySpecID
+			for i, specID := range specIDs {
+				isPrimary := i == 0
 				if _, err := stmt.Exec(id, specID, isPrimary); err != nil {
 					tx.Rollback()
 					c.String(http.StatusInternalServerError, "DB Error inserting spec: %v", err)
@@ -506,5 +509,66 @@ func adminChannelDelete(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		c.Redirect(http.StatusFound, "/admin/channels")
+	}
+}
+
+// adminPendingChannels lists unpublished channels
+func adminPendingChannels(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		query := `
+			SELECT id, display_name, twitch_login, sort_weight, socials
+			FROM channels
+			WHERE is_published = false
+			ORDER BY created_at DESC
+		`
+		
+		rows, err := db.Query(query)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "DB Error: %v", err)
+			return
+		}
+		defer rows.Close()
+
+		var channels []map[string]interface{}
+		for rows.Next() {
+			var id, name, slug string
+			var sortWeight int
+			var socialsJSON []byte
+			if err := rows.Scan(&id, &name, &slug, &sortWeight, &socialsJSON); err != nil {
+				continue
+			}
+			
+			// Parse socials for preview if needed
+			var socials map[string]string
+			json.Unmarshal(socialsJSON, &socials)
+
+			channels = append(channels, map[string]interface{}{
+				"ID":         id,
+				"Name":       name,
+				"Slug":       slug,
+				"SortWeight": sortWeight,
+				"Socials":    socials,
+			})
+		}
+
+		c.HTML(http.StatusOK, "admin_pending", gin.H{
+			"Canonical":   canonicalURL(c),
+			"Channels":    channels,
+			"Title":       "Pending Channels",
+			"CurrentPage": "pending",
+		})
+	}
+}
+
+// adminChannelApprove publishes a channel
+func adminChannelApprove(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		_, err := db.Exec("UPDATE channels SET is_published = true WHERE id = $1", id)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "DB Error approving channel: %v", err)
+			return
+		}
+		c.Redirect(http.StatusFound, "/admin/pending")
 	}
 }

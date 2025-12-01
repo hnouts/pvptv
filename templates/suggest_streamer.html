@@ -1,0 +1,188 @@
+{{define "suggest_streamer"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "head" .}}
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            background: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: #6200ee;
+            outline: none;
+        }
+        .class-section {
+            background: #252525;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .class-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .class-header input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .specs-container {
+            margin-left: 30px;
+            display: none; /* Hidden by default, toggled by JS */
+            padding-top: 10px;
+            border-top: 1px solid #333;
+        }
+        .specs-container.visible {
+            display: block;
+        }
+        .spec-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .spec-item input {
+            margin-right: 10px;
+        }
+        .btn-submit {
+            background: #6200ee;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background: #7c4dff;
+        }
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        .required { color: #cf6679; }
+    </style>
+</head>
+<body>
+<div class="shell fill background">
+    {{template "sidebar" .}}
+    <div class="content fill">
+        <div class="form-container">
+            <h1>Suggest a Streamer</h1>
+            
+            {{if .Success}}
+            <div class="success-message">
+                Thanks! The streamer has been submitted for review.
+            </div>
+            {{end}}
+            
+            {{if .Error}}
+            <div class="error-message" style="background: #cf6679; color: white; padding: 15px; border-radius: 4px; margin-bottom: 20px; text-align: center;">
+                {{.Error}}
+            </div>
+            {{end}}
+
+            <form method="POST" action="/suggest-streamer">
+                <div class="form-group">
+                    <label>Streamer Name <span class="required">*</span></label>
+                    <input type="text" name="display_name" required placeholder="e.g. Pikaboo">
+                </div>
+                
+                <div class="form-group">
+                    <label>Twitch URL/Login <span class="required">*</span></label>
+                    <input type="text" name="twitch_login" required placeholder="e.g. pikabooirl">
+                </div>
+
+                <div class="form-group">
+                    <label>Classes & Specs (Select all that apply) <span class="required">*</span></label>
+                    {{range .FormClasses}}
+                    <div class="class-section">
+                        <label class="class-header">
+                            <input type="checkbox" class="class-checkbox" onchange="toggleSpecs(this)">
+                            <span style="font-weight: bold; font-size: 1.1em;">{{.Name}}</span>
+                        </label>
+                        <div class="specs-container">
+                            {{range .Specs}}
+                            <div class="spec-item">
+                                <label style="font-weight: normal; cursor: pointer;">
+                                    <input type="checkbox" name="spec_ids" value="{{.ID}}">
+                                    {{.Name}}
+                                </label>
+                            </div>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+
+                <h3>Social Links (Optional)</h3>
+                <div class="form-group">
+                    <label>Twitter</label>
+                    <input type="url" name="social_twitter" placeholder="https://twitter.com/...">
+                </div>
+                <div class="form-group">
+                    <label>YouTube</label>
+                    <input type="url" name="social_youtube" placeholder="https://youtube.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Discord</label>
+                    <input type="url" name="social_discord" placeholder="https://discord.gg/...">
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Streamer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleSpecs(checkbox) {
+        const container = checkbox.closest('.class-section').querySelector('.specs-container');
+        if (checkbox.checked) {
+            container.classList.add('visible');
+        } else {
+            container.classList.remove('visible');
+            // Uncheck all specs if class is unchecked
+            container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+        }
+    }
+</script>
+</body>
+</html>
+{{end}}
+

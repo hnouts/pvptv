@@ -60,6 +60,8 @@ func NewServer(db *sql.DB) *gin.Engine {
 
 	// Public site routes.
 	r.GET("/", homeHandler(db))
+	r.GET("/suggest-streamer", suggestStreamerForm(db))
+	r.POST("/suggest-streamer", suggestStreamerSubmit(db))
 	r.GET("/:class", classHandler(db, twitchClient))
 	r.GET("/:class/:channel", streamHandler(db, twitchClient))
 	

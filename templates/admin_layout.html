@@ -6,16 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{.Title}}</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #121212;
             color: #e0e0e0;
-            margin: 0;
-            padding: 0;
         }
         .admin-shell {
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
         .admin-nav {
             width: 250px;
@@ -24,11 +28,13 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
         .admin-content {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            height: 100vh;
         }
         .admin-nav a {
             color: #aaa;
@@ -88,14 +94,21 @@
     {{else}}
     <div class="admin-shell">
         <div class="admin-nav">
-            <div class="admin-header">PvPtv Admin</div>
-            <a href="/admin/channels">Channels</a>
-            <div class="separator"></div>
+                <div class="admin-header">PvPtv Admin</div>
+                <a href="/admin/channels" {{if eq .CurrentPage "channels"}}class="active"{{end}}>Channels</a>
+                <a href="/admin/pending" {{if eq .CurrentPage "pending"}}class="active"{{end}}>Pending Suggestions</a>
+                <div class="separator"></div>
             <a href="/" target="_blank">View Site ↗</a>
             <a href="/admin/logout">Logout</a>
         </div>
         <div class="admin-content">
-            {{block "body" .}}{{end}}
+            {{if eq .CurrentPage "channels"}}
+                {{template "admin_channels_body" .}}
+            {{else if eq .CurrentPage "pending"}}
+                {{template "admin_pending_body" .}}
+            {{else}}
+                {{block "body" .}}{{end}}
+            {{end}}
         </div>
     </div>
     {{end}}

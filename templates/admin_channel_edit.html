@@ -213,8 +213,7 @@
                         <div class="spec-list">
                             {{range .Specs}}
                             <label class="spec-item {{if .IsPrimary}}primary{{end}}" data-spec="{{.Name}}" data-class="{{$.Name}}">
-                                <input type="checkbox" name="spec_ids" value="{{.ID}}" {{if .Selected}}checked{{end}} onchange="updatePrimaryOptions()">
-                                <input type="radio" name="primary_spec_id" value="{{.ID}}" {{if .IsPrimary}}checked{{end}} {{if not .Selected}}disabled{{end}} style="margin-left: 10px;">
+                                <input type="checkbox" name="spec_ids" value="{{.ID}}" {{if .Selected}}checked{{end}}>
                                 <span style="margin-left: 5px;">{{.Name}}</span>
                             </label>
                             {{end}}

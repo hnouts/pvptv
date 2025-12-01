@@ -1,151 +1,56 @@
 {{define "admin_channels"}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{.Title}}</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 0;
-        }
-        .admin-shell {
-            display: flex;
-            min-height: 100vh;
-        }
-        .admin-nav {
-            width: 250px;
-            background-color: #1e1e1e;
-            border-right: 1px solid #333;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .admin-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .admin-nav a {
-            color: #aaa;
-            text-decoration: none;
-            padding: 10px 0;
-            display: block;
-            font-size: 1.1em;
-        }
-        .admin-nav a:hover, .admin-nav a.active {
-            color: white;
-        }
-        .admin-header {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: white;
-        }
-        .separator {
-            height: 1px;
-            background: #333;
-            margin: 10px 0;
-        }
-        h1 { margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #333; }
-        th { background-color: #1e1e1e; }
-        .btn {
-            padding: 5px 10px;
-            background-color: #6200ee;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9em;
-        }
-        .btn:hover { background-color: #7c4dff; }
-        .btn-danger {
-            background-color: #d32f2f;
-        }
-        .btn-danger:hover {
-            background-color: #c62828;
-        }
-        input[type="text"], input[type="search"] {
-            padding: 8px;
-            background: #333;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 4px;
-            width: 300px;
-        }
-        .search-form {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="admin-shell">
-        <div class="admin-nav">
-            <div class="admin-header">PvPtv Admin</div>
-            <a href="/admin/channels" class="active">Channels</a>
-            <div class="separator"></div>
-            <a href="/" target="_blank">View Site ↗</a>
-            <a href="/admin/logout">Logout</a>
-        </div>
-        <div class="admin-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h1>Channels</h1>
-                <a href="/admin/channels/new" class="btn">+ Add Channel</a>
-            </div>
+{{template "admin_layout" .}}
+{{end}}
 
-            <form method="get" action="/admin/channels" class="search-form">
-                <input type="search" name="search" placeholder="Search by name or login..." value="{{.Search}}">
-                <button type="submit" class="btn">Search</button>
-                {{if .Search}}
-                <a href="/admin/channels" class="btn" style="background-color: #666;">Clear</a>
-                {{end}}
-            </form>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Twitch Login</th>
-                        <th>Published</th>
-                        <th>Sort Weight</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{if .Channels}}
-                    {{range .Channels}}
-                    <tr>
-                        <td>{{.Name}}</td>
-                        <td>{{.Slug}}</td>
-                        <td>{{if .Published}}Yes{{else}}No{{end}}</td>
-                        <td>{{.SortWeight}}</td>
-                        <td>
-                            <a href="/admin/channels/{{.ID}}/edit" class="btn">Edit</a>
-                            <form method="post" action="/admin/channels/{{.ID}}/delete" style="display:inline; margin-left:10px;" onsubmit="return confirm('Are you sure you want to delete {{.Name}}?');">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {{end}}
-                    {{else}}
-                    <tr>
-                        <td colspan="5" style="text-align:center; padding:20px;">No channels found.</td>
-                    </tr>
-                    {{end}}
-                </tbody>
-            </table>
-        </div>
+{{define "admin_channels_body"}}
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h1>Channels</h1>
+        <a href="/admin/channels/new" class="btn">+ Add Channel</a>
     </div>
-</body>
-</html>
+
+    <form method="get" action="/admin/channels" style="display:flex; gap: 10px; margin-bottom: 20px;">
+        <input type="search" name="search" placeholder="Search by name or login..." value="{{.Search}}" style="padding: 8px; background: #333; border: 1px solid #444; color: white; border-radius: 4px; width: 300px;">
+        <button type="submit" class="btn" style="padding: 8px 16px;">Search</button>
+        {{if .Search}}
+        <a href="/admin/channels" class="btn" style="background-color: #666; padding: 8px 16px;">Clear</a>
+        {{end}}
+    </form>
+
+    {{if not .Channels}}
+        <p style="text-align:center; margin-top:50px; color:#888;">No channels found.</p>
+    {{else}}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Twitch Login</th>
+                    <th>Published</th>
+                    <th>Sort Weight</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Channels}}
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>
+                        <a href="https://twitch.tv/{{.Slug}}" target="_blank" style="color:#a88aff; text-decoration:none;">
+                            {{.Slug}} ↗
+                        </a>
+                    </td>
+                    <td>{{if .Published}}Yes{{else}}No{{end}}</td>
+                    <td>{{.SortWeight}}</td>
+                    <td>
+                        <div style="display:flex; gap: 10px;">
+                            <a href="/admin/channels/{{.ID}}/edit" class="btn" style="background-color: #2196f3; padding: 6px 12px; font-size: 0.9em;">Edit</a>
+                            <form method="post" action="/admin/channels/{{.ID}}/delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete {{.Name}}?');">
+                                <button type="submit" style="background-color: #f44336; padding: 6px 12px; font-size: 0.9em; color: white; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    {{end}}
 {{end}}

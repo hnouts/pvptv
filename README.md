@@ -53,7 +53,7 @@ The default dev setup seeds an admin user.
 
 ## Contributing
 
-Suggestions for new streamers are welcome! You can fill out this [form](https://forms.gle/y5wj532gvtgwWkca6).
+Suggestions for new streamers are welcome! You can fill out the form directly on the website at `/suggest-streamer`.
 
 To report issues, please open a [GitHub issue](https://github.com/hnouts/pvptv/issues).
 

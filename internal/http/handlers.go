@@ -59,8 +59,8 @@ func homeHandler(db *sql.DB) gin.HandlerFunc {
 			"Canonical":       canonical,
 			"OGImage":         "/assets/logo.png",
 			"Classes":         classes,
-			"Title":           "PvPtv.io – WoW PvP streams",
-			"MetaDescription": "All of WoW PvP streaming in one place – discover top arena streamers by class and spec.",
+			"Title":           "PvPtv.io – Best WoW PvP Streamers & Arena Gameplay",
+			"MetaDescription": "The ultimate directory for World of Warcraft PvP streamers. Find top Arena and RBG players by class and spec. Watch live WoW PvP now.",
 			"JSONLD":          jsonLD,
 		})
 	}
@@ -196,8 +196,8 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		})
 
 		canonical := canonicalURL(c)
-		title := fmt.Sprintf("%s – PvPtv.io", className)
-		desc := fmt.Sprintf("Watch top %s WoW PvP streamers live on PvPtv.io", className)
+		title := fmt.Sprintf("%s WoW PvP Streamers - Watch Live | PvPtv.io", className)
+		desc := fmt.Sprintf("Watch top %s WoW PvP streamers live. Best %s arena and RBG players online now.", className, className)
 
 		jsonLD := map[string]interface{}{
 			"@context":    "https://schema.org",
@@ -525,4 +525,186 @@ func canonicalURL(c *gin.Context) string {
 		host = "pvptv.hnts.dev"
 	}
 	return scheme + "://" + host + c.Request.URL.Path
+}
+
+// renderFormWithError is a helper to render the suggestion form with an error message
+func renderFormWithError(c *gin.Context, db *sql.DB, errorMsg string) {
+	sidebarClasses, _ := getAllClasses(db)
+	formClasses, _ := getFormClasses(db)
+	c.HTML(http.StatusOK, "suggest_streamer", gin.H{
+		"Canonical":   canonicalURL(c),
+		"Title":       "Suggest a Streamer - PvPtv.io",
+		"Classes":     sidebarClasses,
+		"FormClasses": formClasses,
+		"Error":       errorMsg,
+	})
+}
+
+// getFormClasses fetches classes with their specs for the suggestion form
+func getFormClasses(db *sql.DB) ([]interface{}, error) {
+	rows, err := db.Query(`
+		SELECT c.id, c.class_name, s.id, s.spec_name
+		FROM classes c
+		LEFT JOIN specs s ON c.id = s.class_id
+		WHERE c.game_slug = 'wow'
+		ORDER BY c.class_name, s.spec_name
+	`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	type SpecView struct {
+		ID   string
+		Name string
+	}
+	type ClassView struct {
+		ID    string
+		Name  string
+		Specs []SpecView
+	}
+
+	var classes []*ClassView
+	classMap := make(map[string]*ClassView)
+
+	for rows.Next() {
+		var classID, className, specID, specName sql.NullString
+		rows.Scan(&classID, &className, &specID, &specName)
+
+		if !classID.Valid {
+			continue
+		}
+
+		class, exists := classMap[classID.String]
+		if !exists {
+			class = &ClassView{
+				ID:    classID.String,
+				Name:  className.String,
+				Specs: []SpecView{},
+			}
+			classMap[classID.String] = class
+			classes = append(classes, class)
+		}
+
+		if specID.Valid && specName.Valid {
+			class.Specs = append(class.Specs, SpecView{
+				ID:   specID.String,
+				Name: specName.String,
+			})
+		}
+	}
+
+	// Convert to interface{} slice for template
+	result := make([]interface{}, len(classes))
+	for i, c := range classes {
+		result[i] = c
+	}
+	return result, nil
+}
+
+// suggestStreamerForm renders the public suggestion form
+func suggestStreamerForm(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		formClasses, err := getFormClasses(db)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "DB Error: %v", err)
+			return
+		}
+		
+		// Get Sidebar Classes (for the sidebar template)
+		sidebarClasses, _ := getAllClasses(db)
+
+		c.HTML(http.StatusOK, "suggest_streamer", gin.H{
+			"Canonical":   canonicalURL(c),
+			"Title":       "Suggest a Streamer - PvPtv.io",
+			"Classes":     sidebarClasses, // For sidebar (standard structure)
+			"FormClasses": formClasses,    // For form (complex structure with specs)
+			"Success":     c.Query("success") == "true",
+		})
+	}
+}
+
+// suggestStreamerSubmit handles the public suggestion form submission
+func suggestStreamerSubmit(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		displayName := c.PostForm("display_name")
+		twitchLogin := c.PostForm("twitch_login")
+		specIDs := c.PostFormArray("spec_ids")
+
+		// Basic Validation
+		if displayName == "" || twitchLogin == "" || len(specIDs) == 0 {
+			renderFormWithError(c, db, "Missing required fields (Name, Twitch URL, Specs)")
+			return
+		}
+
+		// Cleanup twitch login (remove url parts if pasted)
+		twitchLogin = strings.TrimSuffix(twitchLogin, "/")
+		parts := strings.Split(twitchLogin, "/")
+		twitchLogin = parts[len(parts)-1]
+
+		// Parse socials
+		socials := make(map[string]string)
+		socialKeys := []string{"twitter", "youtube", "discord", "instagram", "website"}
+		for _, key := range socialKeys {
+			if val := c.PostForm("social_" + key); val != "" {
+				socials[key] = val
+			}
+		}
+		socialsJSON, _ := json.Marshal(socials)
+
+		// Insert Channel as unpublished (pending)
+		var id string
+		err := db.QueryRow(`
+			INSERT INTO channels (display_name, twitch_login, is_published, socials)
+			VALUES ($1, $2, false, $3)
+			RETURNING id
+		`, displayName, twitchLogin, socialsJSON).Scan(&id)
+		
+		if err != nil {
+			// Check for duplicate key error
+			if strings.Contains(err.Error(), "unique constraint") {
+				renderFormWithError(c, db, "Streamer already referenced, or is in validation process")
+				return
+			}
+			// Re-render form with generic error
+			renderFormWithError(c, db, "An error occurred. Please try again later.")
+			return
+		}
+
+		// Insert Specs
+		tx, err := db.Begin()
+		if err != nil {
+			renderFormWithError(c, db, "An error occurred. Please try again later.")
+			return
+		}
+		
+		stmt, err := tx.Prepare("INSERT INTO channel_specs (channel_id, spec_id, is_primary) VALUES ($1, $2, false)")
+		if err != nil {
+			tx.Rollback()
+			renderFormWithError(c, db, "An error occurred. Please try again later.")
+			return
+		}
+		defer stmt.Close()
+
+		for _, specID := range specIDs {
+			// No primary spec for suggestions, admin decides.
+			if _, err := stmt.Exec(id, specID); err != nil {
+				tx.Rollback()
+				renderFormWithError(c, db, "An error occurred. Please try again later.")
+				return
+			}
+		}
+
+		if err := tx.Commit(); err != nil {
+			renderFormWithError(c, db, "An error occurred. Please try again later.")
+			return
+		}
+
+		// Re-render form with success message
+		// We need to fetch classes again for the form re-render
+		// For simplicity, just redirect to same page with query param?
+		// Or reuse the form handler logic.
+		// Redirect is cleaner.
+		c.Redirect(http.StatusFound, "/suggest-streamer?success=true")
+	}
 }

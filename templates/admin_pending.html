@@ -1,0 +1,54 @@
+{{define "admin_pending"}}
+{{template "admin_layout" .}}
+{{end}}
+
+{{define "admin_pending_body"}}
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h1>Pending Channels</h1>
+        <a href="/admin/channels" class="btn" style="background-color: #333;">Back to All Channels</a>
+    </div>
+
+    {{if not .Channels}}
+        <p style="text-align:center; margin-top:50px; color:#888;">No pending channel suggestions.</p>
+    {{else}}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Twitch Login</th>
+                    <th>Socials</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Channels}}
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>
+                        <a href="https://twitch.tv/{{.Slug}}" target="_blank" style="color:#a88aff; text-decoration:none;">
+                            {{.Slug}} ↗
+                        </a>
+                    </td>
+                    <td>
+                        {{if .Socials.twitter}}Twitter {{end}}
+                        {{if .Socials.youtube}}YT {{end}}
+                        {{if .Socials.discord}}Disc {{end}}
+                    </td>
+                    <td>
+                        <div style="display:flex; gap: 10px;">
+                            <form method="POST" action="/admin/pending/{{.ID}}/approve" style="display:inline;">
+                                <button type="submit" style="background-color: #4caf50; padding: 6px 12px; font-size: 0.9em;">Approve</button>
+                            </form>
+                            <a href="/admin/channels/{{.ID}}/edit" class="btn" style="background-color: #2196f3; padding: 6px 12px; font-size: 0.9em;">Edit</a>
+                            <form method="POST" action="/admin/channels/{{.ID}}/delete" style="display:inline;" onsubmit="return confirm('Delete this suggestion?');">
+                                <button type="submit" style="background-color: #f44336; padding: 6px 12px; font-size: 0.9em;">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    {{end}}
+{{end}}
+
