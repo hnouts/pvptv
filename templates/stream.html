@@ -1,112 +1,99 @@
 {{define "stream"}}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {{template "head" .}}
 </head>
-
-<body class="stream">
-    <div class="shell fill background">
-        <!-- SIDEBAR -->
-        <div class="nav fill">
-            <div class="app-title hspace-out middle">
-                <header>
-                    <a class="hApp focus glow" href="/">↩ HOME</a>
-                </header>
-            </div>
-
-            <nav class="nav-content">
-                <div class="nav-streams-class-selected">
-                    <div class="nav-streams-stack">
-                        <div class="hspace-out">
-                            <div class="separator"></div>
-                            <h3 class="hApp h3">Streaming</h3>
-                            {{range .Channels}}
+<body>
+<div class="shell fill background">
+    <!-- SIDEBAR -->
+    <div class="nav fill">
+        <div class="app-title hspace-out middle">
+            <header>
+                <a class="hApp focus glow" href="/">↩ HOME</a>
+            </header>
+        </div>
+        
+        <nav class="nav-content">
+            <div class="nav-streams-class-selected">
+                <div class="nav-streams-stack">
+                    <div class="hspace-out">
+                        <div class="separator"></div>
+                        <h3 class="h2">STREAMING</h3>
+                        {{range .Channels}}
                             {{$stream := index . "stream"}}
                             {{$online := index $stream "online"}}
                             {{$game := index $stream "game"}}
                             {{$slug := index . "slug"}}
                             {{if and $online (eq $game "World of Warcraft")}}
-                            {{$name := index . "name"}}
-                            {{$viewers := index $stream "viewers"}}
-                            {{$iconType := index . "iconType"}}
-                            <div class="stream-label-style">
-                                <a class="link glow {{$iconType}} {{if eq $slug $.ChannelSlug}}focus{{end}}"
-                                    href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
-                                    <svg style="width:25px;height:25px" viewBox="0 0 24 24">
-                                        <path fill="currentColor"
-                                            d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" />
-                                    </svg>
-                                    <span>{{$name}}</span>
-                                </a>
-                                <span class="viewer-count glow {{if eq $slug $.ChannelSlug}}focus{{end}}">🔴
-                                    {{$viewers}}</span>
-                            </div>
+                                {{$name := index . "name"}}
+                                {{$viewers := index $stream "viewers"}}
+                                {{$iconType := index . "iconType"}}
+                                <div class="stream-label-style">
+                                    <a class="link glow {{$iconType}} {{if eq $slug $.ChannelSlug}}focus{{end}}" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
+                                        <svg style="width:25px;height:25px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" /></svg>
+                                        <span>{{$name}}</span>
+                                    </a>
+                                    <span class="viewer-count glow {{if eq $slug $.ChannelSlug}}focus{{end}}">🔴 {{$viewers}}</span>
+                                </div>
                             {{end}}
-                            {{end}}
-                            <div class="separator"></div>
-                            <h3 class="hApp h3">Offline</h3>
-                            {{range .Channels}}
+                        {{end}}
+                        <div class="separator"></div>
+                        <h3 class="h2">OFFLINE</h3>
+                        {{range .Channels}}
                             {{$stream := index . "stream"}}
                             {{$online := index $stream "online"}}
                             {{$game := index $stream "game"}}
                             {{$slug := index . "slug"}}
                             {{if or (not $online) (ne $game "World of Warcraft")}}
-                            {{$name := index . "name"}}
-                            <a class="link offlineLink {{if eq $slug $.ChannelSlug}}focus{{end}}"
-                                href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
-                                <span>{{$name}}</span>
-                            </a>
+                                {{$name := index . "name"}}
+                                <a class="link offlineLink {{if eq $slug $.ChannelSlug}}focus{{end}}" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
+                                    <span>{{$name}}</span>
+                                </a>
                             {{end}}
-                            {{end}}
-                        </div>
+                        {{end}}
                     </div>
                 </div>
-            </nav>
-        </div>
-
-        <!-- MAIN CONTENT -->
-        <div class="content fill">
-            <div class="stream-player fill">
-                <div id="twitch-player" style="width:100%;height:100%"></div>
             </div>
-
-            {{if not (index .Stream "online")}}
-            <div class="hspace-out vspace-content"
-                style="position:absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 8px;">
-                <div class="info">
-                    <h2 style="margin-top:0">{{.ChannelName}} is offline</h2>
-                    {{if .Socials}}
-                    <div style="display:flex; gap:10px;">
-                        {{if index .Socials "twitter"}}
-                        <a class="link" href="{{index .Socials " twitter"}}" target="_blank" rel="noopener">Twitter</a>
-                        {{end}}
-                        {{if index .Socials "youtube"}}
-                        <a class="link" href="{{index .Socials " youtube"}}" target="_blank" rel="noopener">YouTube</a>
-                        {{end}}
-                        {{if index .Socials "discord"}}
-                        <a class="link" href="{{index .Socials " discord"}}" target="_blank" rel="noopener">Discord</a>
-                        {{end}}
-                    </div>
-                    {{end}}
-                </div>
-            </div>
-            {{end}}
-        </div>
+        </nav>
     </div>
 
-    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-    <script>
-        var player = new Twitch.Player("twitch-player", {
-            channel: "{{.ChannelSlug}}",
-            width: "100%",
-            height: "100%",
-            layout: "video",
-            parent: window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? ["localhost", "127.0.0.1"] : ["pvptv.hnts.dev", "hnts.dev"]
-        });
-    </script>
-</body>
+    <!-- MAIN CONTENT -->
+    <div class="content fill">
+        <div class="stream-player fill">
+             <div id="twitch-player" style="width:100%;height:100%"></div>
+        </div>
 
+        {{if not (index .Stream "online")}}
+        <div class="hspace-out vspace-content" style="position:absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 8px;">
+            <div class="info">
+                <h2 style="margin-top:0">{{.ChannelName}} is offline</h2>
+                {{if .Socials}}
+                    <div style="display:flex; gap:10px;">
+                    {{if index .Socials "twitter"}}
+                        <a class="link" href="{{index .Socials "twitter"}}" target="_blank" rel="noopener">Twitter</a>
+                    {{end}}
+                    {{if index .Socials "youtube"}}
+                        <a class="link" href="{{index .Socials "youtube"}}" target="_blank" rel="noopener">YouTube</a>
+                    {{end}}
+                    {{if index .Socials "discord"}}
+                        <a class="link" href="{{index .Socials "discord"}}" target="_blank" rel="noopener">Discord</a>
+                    {{end}}
+                    </div>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
+<script>
+    var player = new Twitch.Player("twitch-player", {
+        channel: "{{.ChannelSlug}}",
+        parent: window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? ["localhost", "127.0.0.1"] : ["pvptv.hnts.dev", "hnts.dev"]
+    });
+</script>
+</body>
 </html>
 {{end}}
