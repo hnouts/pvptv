@@ -9,7 +9,7 @@
 <body>
     <div class="shell fill background">
         <!-- SIDEBAR -->
-        <div class="nav fill">
+        <div class="nav">
             <div class="app-title hspace-out middle">
                 <header>
                     <a class="hApp focus glow" href="/">↩ HOME</a>
@@ -46,7 +46,7 @@
                             {{end}}
                             {{end}}
                             <div class="separator"></div>
-                            <h3 class="h2">OFFLINE</h3>
+                            <h3 class="h3">OFFLINE</h3>
                             {{range .Channels}}
                             {{$stream := index . "stream"}}
                             {{$online := index $stream "online"}}
@@ -86,14 +86,14 @@
         </div>
 
         <!-- MAIN CONTENT -->
-        <div class="content fill">
-            <div class="stream-player fill">
+        <div class="content">
+            <div class="stream-player">
                 <div id="twitch-player" style="width:100%;height:100%"></div>
             </div>
 
             {{if not (index .Stream "online")}}
             <div class="hspace-out vspace-content"
-                style="position:absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 8px;">
+                style="bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 20px; border-radius: 8px;">
                 <div class="info">
                     <h2 style="margin-top:0">{{.ChannelName}} is offline</h2>
                     {{if .Socials}}

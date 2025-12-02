@@ -95,8 +95,12 @@
 
     .stream-player {
         position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
         width: 100% !important;
         height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     /* Mobile overrides */
@@ -120,7 +124,7 @@
 {{end}}
 
 {{define "sidebar"}}
-<div class="nav fill">
+<div class="nav">
     <div class="app-title hspace-out middle">
         <header>
             <a class="hApp focus glow" href="/">PvPtv</a>

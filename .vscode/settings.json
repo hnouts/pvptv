@@ -1,3 +1,5 @@
 {
-    "makefile.extensionOutputFolder": "./.vscode"
+  "[html]": {
+    "editor.formatOnSave": false
+  }
 }
