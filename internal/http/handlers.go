@@ -162,7 +162,8 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		rows, err := db.Query(`
 			SELECT DISTINCT
 				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
-				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary
+				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary,
+				MAX(CASE WHEN cs.is_primary = true THEN s.spec_slug ELSE NULL END) as primary_spec_slug
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
@@ -184,7 +185,8 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 			var id, login, name string
 			var socialsJSON []byte
 			var sortWeight, hasPrimary int
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary); err != nil {
+			var primarySpecSlug sql.NullString
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary, &primarySpecSlug); err != nil {
 				continue
 			}
 			var socials map[string]string
@@ -204,6 +206,7 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 				"name":     name,
 				"socials":  socials,
 				"iconType": iconType,
+				"specSlug": primarySpecSlug.String,
 			})
 			logins = append(logins, login)
 		}
@@ -345,7 +348,8 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 		rows, err := db.Query(`
 			SELECT DISTINCT
 				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
-				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary
+				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary,
+				MAX(CASE WHEN cs.is_primary = true THEN s.spec_slug ELSE NULL END) as primary_spec_slug
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
@@ -367,7 +371,8 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 			var id, login, name string
 			var socialsJSON []byte
 			var sortWeight, hasPrimary int
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary); err != nil {
+			var primarySpecSlug sql.NullString
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary, &primarySpecSlug); err != nil {
 				continue
 			}
 			var socials map[string]string
@@ -380,13 +385,20 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 			} else {
 				iconType = "alt"
 			}
+
+			var specIconPath string
+			if primarySpecSlug.Valid && primarySpecSlug.String != "" {
+				specIconPath = fmt.Sprintf("/public/icons/spec/%s-%s.jpg", primarySpecSlug.String, classSlug)
+			}
 			
 			channels = append(channels, map[string]interface{}{
-				"id":       id,
-				"slug":     login,
-				"name":     name,
-				"socials":  socials,
-				"iconType": iconType,
+				"id":           id,
+				"slug":         login,
+				"name":         name,
+				"socials":      socials,
+				"iconType":     iconType,
+				"specSlug":     primarySpecSlug.String,
+				"specIconPath": specIconPath,
 			})
 			logins = append(logins, login)
 		}

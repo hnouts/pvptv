@@ -23,6 +23,8 @@ func NewServer(db *sql.DB) *gin.Engine {
 
 	// Static assets (reuse existing CSS/images from docs/web).
 	r.Static("/assets", "./docs/web")
+	// Public assets (user provided icons etc)
+	r.Static("/public", "./public")
 
 	// Register templates (public + admin will live here).
 	r.SetFuncMap(template.FuncMap{
