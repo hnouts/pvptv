@@ -18,15 +18,25 @@
                         <header id="welcome-to-pvptv" class="page-title header-page center">
                             <div class="center middle">
                                 <img class="icon-left" src="/assets/logo.png" style="width:100px;height:100px;">
-                                <h1>PvPtv.io</h1>
+                                <h1>PvPtv</h1>
                             </div>
                         </header>
                         <div class="separator"></div>
 
                         <!-- Welcome Content -->
                         <div id="welcome-to-pvptv" class="home-welcome">
-                            <h2 class="title">Welcome!</h2>
-                            <p class="text">PvPtv.io is an app that was created in order to help the world of warcraft
+                            <div class="welcome-header">
+                                <h2 class="title">Welcome!</h2>
+                                {{if .OnlineCount}}
+                                <div class="online-counter">
+                                    <span class="online-dot"></span>
+                                    <span class="online-text">{{.OnlineCount}} streamers online</span>
+                                </div>
+                                {{end}}
+                            </div>
+                            <br>
+                            <br>
+                            <p class="text">PvPtv is an app created to help the world of warcraft
                                 pvp community find the best arena streamers at any moment. It provides a list of the
                                 best known wow arena's streamers for each class, and casts their stream directly from
                                 twitch.com</p>
@@ -34,7 +44,7 @@
                             <p class="text">The idea behind this web application was to finally have an easy solution to
                                 the eternal question posted on pvp communities:</p>
                             <p class="text">"Do you know a good streamer for x class?" Now you do! And among the vast
-                                list of streamers stored on PvPtv.io, there will always be a gladiator streaming!
+                                list of streamers stored on PvPtv, there will always be a gladiator streaming!
                                 (hopefully)</p>
                         </div>
 
@@ -49,7 +59,7 @@
                                     new Twitch.Player("twitch-embed", {
                                         channel: "{{.FeaturedStream.login}}",
                                         width: "100%",
-                                        height: "500",
+                                        height: "100%",
                                         layout: "video",
                                         autoplay: true,
                                         parent: ["pvptv.hnts.dev", "localhost"]
@@ -65,7 +75,7 @@
                                     new Twitch.Player("twitch-embed", {
                                         channel: "pikabooirl",
                                         width: "100%",
-                                        height: "500",
+                                        height: "100%",
                                         layout: "video",
                                         autoplay: false,
                                         parent: ["pvptv.hnts.dev", "localhost"]

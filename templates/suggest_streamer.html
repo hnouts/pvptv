@@ -4,16 +4,28 @@
 <head>
     {{template "head" .}}
     <style>
+        .suggest-streamer-page .content {
+            overflow-y: auto !important;
+        }
         .form-container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 30px;
             background: rgba(30, 30, 30, 0.9);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
         .form-group {
             margin-bottom: 20px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
         label {
             display: block;
@@ -34,10 +46,28 @@
             border-color: #6200ee;
             outline: none;
         }
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        @media (max-width: 1200px) {
+            .classes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .classes-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
         .class-section {
             background: #252525;
             padding: 15px;
-            margin-bottom: 15px;
             border-radius: 4px;
             border: 1px solid #333;
         }
@@ -53,7 +83,7 @@
         }
         .specs-container {
             margin-left: 30px;
-            display: none; /* Hidden by default, toggled by JS */
+            display: none;
             padding-top: 10px;
             border-top: 1px solid #333;
         }
@@ -67,6 +97,10 @@
         }
         .spec-item input {
             margin-right: 10px;
+        }
+        .spec-item label {
+            font-weight: normal;
+            font-size: 0.9em;
         }
         .btn-submit {
             background: #6200ee;
@@ -95,11 +129,16 @@
             margin-bottom: 30px;
             color: white;
         }
+        h3 {
+            color: white;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
         .required { color: #cf6679; }
     </style>
 </head>
 <body>
-<div class="shell fill background">
+<div class="shell fill background suggest-streamer-page">
     {{template "sidebar" .}}
     <div class="content fill">
         <div class="form-container">
@@ -118,50 +157,61 @@
             {{end}}
 
             <form method="POST" action="/suggest-streamer">
-                <div class="form-group">
-                    <label>Streamer Name <span class="required">*</span></label>
-                    <input type="text" name="display_name" required placeholder="e.g. Pikaboo">
-                </div>
-                
-                <div class="form-group">
-                    <label>Twitch URL/Login <span class="required">*</span></label>
-                    <input type="text" name="twitch_login" required placeholder="e.g. pikabooirl">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Streamer Name <span class="required">*</span></label>
+                        <input type="text" name="display_name" required placeholder="e.g. Pikaboo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Twitch URL/Login <span class="required">*</span></label>
+                        <input type="text" name="twitch_login" required placeholder="e.g. pikabooirl">
+                    </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label>Classes & Specs (Select all that apply) <span class="required">*</span></label>
-                    {{range .FormClasses}}
-                    <div class="class-section">
-                        <label class="class-header">
-                            <input type="checkbox" class="class-checkbox" onchange="toggleSpecs(this)">
-                            <span style="font-weight: bold; font-size: 1.1em;">{{.Name}}</span>
-                        </label>
-                        <div class="specs-container">
-                            {{range .Specs}}
-                            <div class="spec-item">
-                                <label style="font-weight: normal; cursor: pointer;">
-                                    <input type="checkbox" name="spec_ids" value="{{.ID}}">
-                                    {{.Name}}
-                                </label>
+                    <div class="classes-grid">
+                        {{range .FormClasses}}
+                        <div class="class-section">
+                            <label class="class-header">
+                                <input type="checkbox" class="class-checkbox" onchange="toggleSpecs(this)">
+                                <span style="font-weight: bold; font-size: 1.1em;">{{.Name}}</span>
+                            </label>
+                            <div class="specs-container">
+                                {{range .Specs}}
+                                <div class="spec-item">
+                                    <label style="cursor: pointer;">
+                                        <input type="checkbox" name="spec_ids" value="{{.ID}}">
+                                        {{.Name}}
+                                    </label>
+                                </div>
+                                {{end}}
                             </div>
-                            {{end}}
                         </div>
+                        {{end}}
                     </div>
-                    {{end}}
                 </div>
 
                 <h3>Social Links (Optional)</h3>
-                <div class="form-group">
-                    <label>Twitter</label>
-                    <input type="url" name="social_twitter" placeholder="https://twitter.com/...">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Twitter</label>
+                        <input type="url" name="social_twitter" placeholder="https://twitter.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label>YouTube</label>
+                        <input type="url" name="social_youtube" placeholder="https://youtube.com/...">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>YouTube</label>
-                    <input type="url" name="social_youtube" placeholder="https://youtube.com/...">
-                </div>
-                <div class="form-group">
-                    <label>Discord</label>
-                    <input type="url" name="social_discord" placeholder="https://discord.gg/...">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Discord</label>
+                        <input type="url" name="social_discord" placeholder="https://discord.gg/...">
+                    </div>
+                    <div class="form-group">
+                        <!-- Empty to balance grid -->
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-submit">Submit Streamer</button>

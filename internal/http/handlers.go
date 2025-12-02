@@ -51,6 +51,7 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 
 		// Featured Stream Logic
 		var featuredStream map[string]interface{}
+		var onlineCount int
 		
 		if twitchClient != nil {
 			// 1. Get candidate channels (high priority first)
@@ -80,6 +81,8 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 					// Twitch API limit is usually 100, which matches our limit
 					resp, err := twitchClient.GetStreamsByLogin(ctx, logins)
 					if err == nil && len(resp.Data) > 0 {
+						onlineCount = len(resp.Data)
+						
 						// 3. Pick a random one (or just the first one since we sorted by weight)
 						rand.Seed(time.Now().UnixNano())
 						rand.Shuffle(len(resp.Data), func(i, j int) {
@@ -104,7 +107,7 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 		jsonLD := map[string]interface{}{
 			"@context": "https://schema.org",
 			"@type":    "WebSite",
-			"name":     "PvPtv.io",
+			"name":     "PvPtv",
 			"url":      "https://pvptv.hnts.dev/",
 		}
 
@@ -113,7 +116,8 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 			"OGImage":         "/assets/logo.png",
 			"Classes":         classes,
 			"FeaturedStream":  featuredStream,
-			"Title":           "PvPtv.io – Best WoW PvP Streamers & Arena Gameplay",
+			"OnlineCount":     onlineCount,
+			"Title":           "PvPtv – Best WoW PvP Streamers & Arena Gameplay",
 			"MetaDescription": "The ultimate directory for World of Warcraft PvP streamers. Find top Arena and RBG players by class and spec. Watch live WoW PvP now.",
 			"JSONLD":          jsonLD,
 		})
@@ -250,7 +254,7 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		})
 
 		canonical := canonicalURL(c)
-		title := fmt.Sprintf("%s WoW PvP Streamers - Watch Live | PvPtv.io", className)
+		title := fmt.Sprintf("%s WoW PvP Streamers - Watch Live | PvPtv", className)
 		desc := fmt.Sprintf("Watch top %s WoW PvP streamers live. Best %s arena and RBG players online now.", className, className)
 
 		jsonLD := map[string]interface{}{
@@ -436,8 +440,8 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 		}
 
 		canonical := canonicalURL(c)
-		title := fmt.Sprintf("%s – %s PvP – PvPtv.io", channelName, className)
-		desc := fmt.Sprintf("Watch %s play %s PvP live on PvPtv.io", channelName, className)
+		title := fmt.Sprintf("%s – %s PvP – PvPtv", channelName, className)
+		desc := fmt.Sprintf("Watch %s play %s PvP live on PvPtv", channelName, className)
 
 		var jsonLD []interface{}
 		person := map[string]interface{}{
@@ -587,7 +591,7 @@ func renderFormWithError(c *gin.Context, db *sql.DB, errorMsg string) {
 	formClasses, _ := getFormClasses(db)
 	c.HTML(http.StatusOK, "suggest_streamer", gin.H{
 		"Canonical":   canonicalURL(c),
-		"Title":       "Suggest a Streamer - PvPtv.io",
+		"Title":       "Suggest a Streamer - PvPtv",
 		"Classes":     sidebarClasses,
 		"FormClasses": formClasses,
 		"Error":       errorMsg,
@@ -670,7 +674,7 @@ func suggestStreamerForm(db *sql.DB) gin.HandlerFunc {
 
 		c.HTML(http.StatusOK, "suggest_streamer", gin.H{
 			"Canonical":   canonicalURL(c),
-			"Title":       "Suggest a Streamer - PvPtv.io",
+			"Title":       "Suggest a Streamer - PvPtv",
 			"Classes":     sidebarClasses, // For sidebar (standard structure)
 			"FormClasses": formClasses,    // For form (complex structure with specs)
 			"Success":     c.Query("success") == "true",
