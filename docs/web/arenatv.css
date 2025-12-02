@@ -23,8 +23,20 @@ body {
   text-size-adjust: 100%;
 }
 
-.content {
+/* Home page should not scroll */
+body.home .content {
   overflow: hidden !important;
+}
+
+/* Stream pages should fill the viewport */
+body.stream .content,
+body.class .content {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 260px;
+  right: 0;
+  bottom: 0;
 }
 
 .fullheight {
@@ -507,7 +519,7 @@ h3,
   border-radius: 50%;
 }
 
-.alt {
+.main svg {
   border-radius: 50%;
   border: solid 0.1rem;
 }
@@ -515,11 +527,6 @@ h3,
 .alt svg {
   border-radius: 50%;
   border: solid 0.1rem;
-}
-
-.meta {
-  border-radius: 50%;
-  border: dashed 0.1rem;
 }
 
 .meta svg {
@@ -1017,6 +1024,22 @@ input[type="range"]:hover::-moz-range-thumb {
   align-items: center;
   justify-content: space-between;
   padding: 0.1rem;
+  gap: 1rem;
+}
+
+.stream-label-style a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stream-label-style .link svg {
+  flex-shrink: 0;
+}
+
+.viewer-count {
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 @media (max-width: 1042px) {
@@ -1041,7 +1064,7 @@ input[type="range"]:hover::-moz-range-thumb {
   overflow: hidden;
   position: fixed;
   height: 100vh;
-  left: 281px;
+  left: 260px;
   width: calc(100vw - 281px);
 }
 
@@ -1055,7 +1078,7 @@ input[type="range"]:hover::-moz-range-thumb {
   position: fixed;
   z-index: 1;
   height: 100vh;
-  left: 281px;
+  left: 260px;
   width: -webkit-calc(100vw - 281px);
   width: calc(100vw - 281px);
 }
@@ -1063,7 +1086,7 @@ input[type="range"]:hover::-moz-range-thumb {
 .youtube-video iframe {
   position: fixed;
   height: 100vh;
-  left: 281px;
+  left: 260px;
   width: calc(100vw - 281px);
 }
 

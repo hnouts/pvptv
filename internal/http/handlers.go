@@ -161,12 +161,14 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		// Only show channels that have specs assigned to this class
 		rows, err := db.Query(`
 			SELECT DISTINCT
-				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight
+				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
+				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
 			WHERE s.class_id = $1
 			  AND c.is_published = true
+			GROUP BY c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight
 			ORDER BY c.sort_weight DESC, c.display_name ASC
 			LIMIT 100
 		`, classID)
@@ -181,17 +183,27 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		for rows.Next() {
 			var id, login, name string
 			var socialsJSON []byte
-			var sortWeight int
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight); err != nil {
+			var sortWeight, hasPrimary int
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary); err != nil {
 				continue
 			}
 			var socials map[string]string
 			json.Unmarshal(socialsJSON, &socials)
+			
+			// Determine icon type: primary (solid), alt (has spec but not primary), meta (no spec info/generic)
+			iconType := "meta" // Default: could be playing anything (dashed)
+			if hasPrimary == 1 {
+				iconType = "main" // Solid circle: mains this class
+			} else {
+				iconType = "alt" // Hollow circle: plays from time to time
+			}
+			
 			channels = append(channels, map[string]interface{}{
 				"id":       id,
 				"slug":     login,
 				"name":     name,
 				"socials":  socials,
+				"iconType": iconType,
 			})
 			logins = append(logins, login)
 		}
@@ -332,12 +344,14 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 
 		rows, err := db.Query(`
 			SELECT DISTINCT
-				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight
+				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
+				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
 			WHERE s.class_id = $1
 			  AND c.is_published = true
+			GROUP BY c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight
 			ORDER BY c.sort_weight DESC, c.display_name ASC
 			LIMIT 100
 		`, classID)
@@ -352,17 +366,27 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 		for rows.Next() {
 			var id, login, name string
 			var socialsJSON []byte
-			var sortWeight int
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight); err != nil {
+			var sortWeight, hasPrimary int
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary); err != nil {
 				continue
 			}
 			var socials map[string]string
 			json.Unmarshal(socialsJSON, &socials)
+			
+			// Determine icon type
+			iconType := "meta"
+			if hasPrimary == 1 {
+				iconType = "main"
+			} else {
+				iconType = "alt"
+			}
+			
 			channels = append(channels, map[string]interface{}{
 				"id":       id,
 				"slug":     login,
 				"name":     name,
 				"socials":  socials,
+				"iconType": iconType,
 			})
 			logins = append(logins, login)
 		}

@@ -1,91 +1,98 @@
 {{define "class"}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {{template "head" .}}
 </head>
-<body>
-<div class="shell fill background">
-    <!-- SIDEBAR (Specific to Class) -->
-    <div class="nav fill">
-        <div class="app-title hspace-out middle">
-            <header>
-                <a class="hApp focus glow" href="/">↩ HOME</a>
-            </header>
-        </div>
-        
-        <nav class="nav-content">
-            <div class="nav-streams-class-selected">
-                <div class="nav-streams-stack">
-                    <div class="hspace-out">
-                        <div class="separator"></div>
-                        <h3 class="hApp h3">Streaming</h3>
-                        {{range .Channels}}
+
+<body class="class">
+    <div class="shell fill background">
+        <!-- SIDEBAR (Specific to Class) -->
+        <div class="nav fill">
+            <div class="app-title hspace-out middle">
+                <header>
+                    <a class="hApp focus glow" href="/">↩ HOME</a>
+                </header>
+            </div>
+
+            <nav class="nav-content">
+                <div class="nav-streams-class-selected">
+                    <div class="nav-streams-stack">
+                        <div class="hspace-out">
+                            <div class="separator"></div>
+                            <h3 class="hApp h3">Streaming</h3>
+                            {{range .Channels}}
                             {{$stream := index . "stream"}}
                             {{$online := index $stream "online"}}
                             {{$game := index $stream "game"}}
                             {{if and $online (eq $game "World of Warcraft")}}
-                                {{$slug := index . "slug"}}
-                                {{$name := index . "name"}}
-                                {{$viewers := index $stream "viewers"}}
-                                <div class="stream-label-style">
-                                    <a class="glow icon-circle main" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
-                                        <span>{{$name}}</span>
-                                    </a>
-                                    <a class="glow unresponsive spaced-on-mobile" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
-                                        <span>🔴 {{$viewers}}</span>
-                                    </a>
-                                </div>
+                            {{$slug := index . "slug"}}
+                            {{$name := index . "name"}}
+                            {{$viewers := index $stream "viewers"}}
+                            {{$iconType := index . "iconType"}}
+                            <div class="stream-label-style">
+                                <a class="link glow {{$iconType}}" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
+                                    <svg style="width:25px;height:25px" viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="M12,2A10,10 0 0,0 2,12C2,17.5 6.5,22 12,22A10,10 0 0,0 22,12C22,6.5 17.5,2 12,2Z" />
+                                    </svg>
+                                    <span>{{$name}}</span>
+                                </a>
+                                <span class="viewer-count glow">🔴 {{$viewers}}</span>
+                            </div>
                             {{end}}
-                        {{end}}
-                        <div class="separator"></div>
-                        <h3 class="hApp h3">Offline</h3>
-                        {{range .Channels}}
+                            {{end}}
+                            <div class="separator"></div>
+                            <h3 class="hApp h3">Offline</h3>
+                            {{range .Channels}}
                             {{$stream := index . "stream"}}
                             {{$online := index $stream "online"}}
                             {{$game := index $stream "game"}}
                             {{if or (not $online) (ne $game "World of Warcraft")}}
-                                {{$slug := index . "slug"}}
-                                {{$name := index . "name"}}
-                                <div class="stream-offline">
-                                    <a class="offlineLink" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
-                                        <span>{{$name}}</span>
-                                    </a>
-                                </div>
+                            {{$slug := index . "slug"}}
+                            {{$name := index . "name"}}
+                            <a class="link offlineLink" href="/{{$.ClassSlug}}/{{$slug}}" id="{{$slug}}">
+                                <span>{{$name}}</span>
+                            </a>
                             {{end}}
-                        {{end}}
+                            {{end}}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
-    <!-- MAIN CONTENT (Player) -->
-    <div class="content fill">
-        <div class="stream-player fill">
-             <div id="twitch-player" style="width:100%;height:100%"></div>
+        <!-- MAIN CONTENT (Player) -->
+        <div class="content fill">
+            <div class="stream-player fill">
+                <div id="twitch-player" style="width:100%;height:100%"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://player.twitch.tv/js/embed/v1.js"></script>
-<script>
-    // Auto-load first online stream
-    {{range .Channels}}
-        {{$stream := index . "stream"}}
-        {{$online := index $stream "online"}}
-        {{$game := index $stream "game"}}
-        {{if and $online (eq $game "World of Warcraft")}}
-            {{$slug := index . "slug"}}
-            var player = new Twitch.Player("twitch-player", {
-                channel: "{{$slug}}",
-                parent: window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? ["localhost", "127.0.0.1"] : ["pvptv.hnts.dev", "hnts.dev"]
-            });
-            // We only want the first one
-            {{break}}
-        {{end}}
-    {{end}}
-</script>
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    <script>
+        // Auto-load first online stream
+        { { range.Channels } }
+        { { $stream:= index. "stream" } }
+        { { $online:= index $stream "online" } }
+        { { $game:= index $stream "game" } }
+        { { if and $online(eq $game "World of Warcraft") } }
+        { { $slug:= index. "slug" } }
+        var player = new Twitch.Player("twitch-player", {
+            channel: "{{$slug}}",
+            width: "100%",
+            height: "100%",
+            layout: "video",
+            parent: window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? ["localhost", "127.0.0.1"] : ["pvptv.hnts.dev", "hnts.dev"]
+        });
+        // We only want the first one
+        { { break } }
+        { { end } }
+        { { end } }
+    </script>
 </body>
+
 </html>
 {{end}}
