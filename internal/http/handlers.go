@@ -487,16 +487,36 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 	}
 }
 
-// robotsHandler serves a basic robots.txt; will be extended as spec finalizes.
+// robotsHandler serves a basic robots.txt
 func robotsHandler(c *gin.Context) {
+	scheme := "https"
+	if c.Request.TLS == nil && c.Request.Header.Get("X-Forwarded-Proto") != "https" {
+		scheme = "http"
+	}
+	host := c.Request.Host
+	if host == "" {
+		host = "pvptv.hnts.dev"
+	}
+
+	sitemapURL := fmt.Sprintf("%s://%s/sitemap.xml", scheme, host)
 	c.Header("Content-Type", "text/plain; charset=utf-8")
-	c.String(http.StatusOK, "User-agent: *\nDisallow: /admin\n\nSitemap: https://pvptv.hnts.dev/sitemap.xml\n")
+	c.String(http.StatusOK, fmt.Sprintf("User-agent: *\nDisallow: /admin\n\nSitemap: %s\n", sitemapURL))
 }
 
 // sitemapHandler returns a handler that will generate sitemap.xml from DB.
 func sitemapHandler(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/xml; charset=utf-8")
+
+		scheme := "https"
+		if c.Request.TLS == nil && c.Request.Header.Get("X-Forwarded-Proto") != "https" {
+			scheme = "http"
+		}
+		host := c.Request.Host
+		if host == "" {
+			host = "pvptv.hnts.dev"
+		}
+		baseURL := fmt.Sprintf("%s://%s", scheme, host)
 
 		type URL struct {
 			Loc        string
@@ -507,7 +527,7 @@ func sitemapHandler(db *sql.DB) gin.HandlerFunc {
 		var urls []URL
 
 		// Home
-		urls = append(urls, URL{Loc: "https://pvptv.hnts.dev/", ChangeFreq: "daily", Priority: "1.0"})
+		urls = append(urls, URL{Loc: baseURL + "/", ChangeFreq: "daily", Priority: "1.0"})
 
 		// Classes
 		rows, err := db.Query("SELECT class_slug FROM classes WHERE game_slug = 'wow'")
@@ -517,7 +537,7 @@ func sitemapHandler(db *sql.DB) gin.HandlerFunc {
 				var slug string
 				if err := rows.Scan(&slug); err == nil {
 					urls = append(urls, URL{
-						Loc:        fmt.Sprintf("https://pvptv.hnts.dev/%s", slug),
+						Loc:        fmt.Sprintf("%s/%s", baseURL, slug),
 						ChangeFreq: "daily",
 						Priority:   "0.8",
 					})
@@ -542,7 +562,7 @@ func sitemapHandler(db *sql.DB) gin.HandlerFunc {
 				var updatedAt time.Time
 				if err := rows.Scan(&login, &classSlug, &updatedAt); err == nil {
 					urls = append(urls, URL{
-						Loc:        fmt.Sprintf("https://pvptv.hnts.dev/%s/%s", classSlug, login),
+						Loc:        fmt.Sprintf("%s/%s/%s", baseURL, classSlug, login),
 						LastMod:    updatedAt.Format("2006-01-02"),
 						ChangeFreq: "weekly",
 						Priority:   "0.6",
