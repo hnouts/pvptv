@@ -55,10 +55,68 @@ body {
   z-index: 5;
 }
 
+.mob-text {
+  display: none;
+}
+
+.desk-text {
+  display: inline;
+}
+
 @media (max-width: 1042px) {
+  .mob-text {
+    display: inline;
+  }
+
+  .desk-text {
+    display: none;
+  }
+
+  .welcome-header {
+    margin-top: 20px;
+  }
+
+  .mobile-suggest-link {
+    display: block !important;
+  }
+
+  .mobile-header {
+    justify-content: center;
+    flex-direction: column;
+  }
+
   .home-welcome {
+    position: relative;
+    top: 0;
     left: 0;
-    max-width: calc(100vw - 72px);
+    right: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    /* Ensure it pushes the featured stream down */
+    margin-bottom: 20px;
+  }
+
+  .featured-stream-container {
+    position: relative;
+    left: 0;
+    /* Let it take natural height or a specific height */
+    height: auto;
+    min-height: 300px;
+    padding: 20px;
+    /* Add space at the bottom for scrolling */
+    padding-bottom: 100px;
+  }
+
+  .featured-embed {
+    /* Adjust height for mobile */
+    height: 300px;
+  }
+  
+  .content {
+    overflow-y: auto !important;
+    /* Enable momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
   }
 }
 

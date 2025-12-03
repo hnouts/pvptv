@@ -109,18 +109,59 @@
             flex-direction: column;
         }
 
+        /* In mobile stream view, sidebar is hidden by default */
         .nav {
+            display: none;
             width: 100%;
-            height: auto;
-            min-height: auto;
-            border-right: none;
+            height: 100%;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+        }
+
+        /* When active, it covers the screen */
+        .nav.active {
+            display: flex;
+        }
+
+        .nav.active .mobile-menu-btn {
+            display: block !important;
         }
 
         .content {
             width: 100%;
         }
+        
+        /* Hamburger menu button - only visible on mobile */
+        .mobile-menu-btn {
+            display: block;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 5000;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    }
+
+    @media (min-width: 1043px) {
+        .mobile-menu-btn {
+            display: none;
+        }
     }
 </style>
+<script>
+    function toggleMenu() {
+        var nav = document.querySelector('.nav');
+        nav.classList.toggle('active');
+    }
+</script>
 {{end}}
 
 {{define "sidebar"}}

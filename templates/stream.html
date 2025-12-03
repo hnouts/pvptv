@@ -8,13 +8,20 @@
 
 <body>
     <div class="shell fill background">
+        <!-- Mobile Menu Button -->
+        <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+
         <!-- SIDEBAR -->
         <div class="nav">
             <div class="app-title hspace-out middle">
                 <header>
-                    <a class="hApp focus glow" href="/">↩ HOME</a>
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                         <a class="hApp focus glow" href="/">↩ HOME</a>
+                         <div class="mobile-menu-btn" style="position: static; display: none;" onclick="toggleMenu()">✕</div>
+                    </div>
                 </header>
             </div>
+
 
             <nav class="nav-content" style="display: flex; flex-direction: column;">
                 <div class="nav-streams-class-selected" style="flex: 1;">
