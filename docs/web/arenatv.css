@@ -868,9 +868,21 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 @media (max-width: 1042px) {
+  .app-title {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+  }
+
   .nav-content {
     /* height: calc(100% - 170px) !important; */
     height: 85% !important;
+  }
+
+  .nav-streams {
+    height: calc(100% - 95px);
+    overflow-y: scroll;
   }
 
   .nav-streams-class-selected {
@@ -883,7 +895,8 @@ input[type="range"]:hover::-moz-range-thumb {
   }
 
   .nav-support-home {
-    margin-top: 40px;
+    margin-top: 0px;
+    margin-left: 2rem;
   }
 
   .view-mobile {
@@ -901,12 +914,68 @@ input[type="range"]:hover::-moz-range-thumb {
   .spaced-on-mobile {
     margin-left: 0.5rem;
   }
+
+  /* Center and enlarge nav items on mobile */
+  .nav-content .link {
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+    padding: 6px 0;
+  }
+
+  .nav-content .link img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* Full width for streamer list items on mobile */
+  .nav-streams-class-selected .stream-label-style {
+    justify-content: space-between;
+  }
+
+  .nav-streams-class-selected .link {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+  }
+
+  .offlineLink {
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
+    color: #999999 !important;
+    margin-left: 4rem;
+  }
+
+  .nav-streams-class-selected .viewer-count {
+    font-size: 14px;
+    margin-left: 10px;
+  }
+
+  .nav-streams-stack .hspace-out {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 600px) {
+  .app-title {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+  }
+
   .nav-content {
     /* height: calc(100% - 170px) !important; */
     height: 85% !important;
+  }
+
+  .nav-streams {
+    height: calc(100% - 95px);
+    overflow-y: scroll;
   }
 
   .nav-streams-class-selected {
@@ -920,7 +989,7 @@ input[type="range"]:hover::-moz-range-thumb {
   }
 
   .nav-support-home {
-    margin-top: 120px;
+    margin-top: 24px;
   }
 
   .view-mobile {
@@ -985,7 +1054,7 @@ input[type="range"]:hover::-moz-range-thumb {
 ------------------------------------------------------------------------------*/
 .link {
   display: block;
-  padding: 6px 0;
+  padding: 10px 0;
   cursor: pointer;
   transition: 0.1s all;
   color: currentColor;
