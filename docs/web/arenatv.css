@@ -94,29 +94,35 @@ body {
     margin: 0;
     padding: 20px;
     /* Ensure it pushes the featured stream down */
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 
   .featured-stream-container {
-    position: relative;
+    position: relative !important;
     left: 0;
     /* Let it take natural height or a specific height */
     height: auto;
     min-height: 300px;
     padding: 20px;
     /* Add space at the bottom for scrolling */
-    padding-bottom: 100px;
+    padding-bottom: 120px;
+    margin-top: 20px;
   }
 
   .featured-embed {
     /* Adjust height for mobile */
     height: 300px;
   }
-  
+
   .content {
     overflow-y: auto !important;
     /* Enable momentum scrolling on iOS */
     -webkit-overflow-scrolling: touch;
+    height: 100% !important;
+  }
+
+  .support {
+    display: none;
   }
 }
 
@@ -836,7 +842,7 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .nav-support-home {
-  margin-top: 100px;
+  margin-top: 125px;
 }
 
 .nav-support-home .nav-support-link {
@@ -877,7 +883,7 @@ input[type="range"]:hover::-moz-range-thumb {
   }
 
   .nav-support-home {
-    margin-top: 10px;
+    margin-top: 40px;
   }
 
   .view-mobile {
@@ -914,7 +920,7 @@ input[type="range"]:hover::-moz-range-thumb {
   }
 
   .nav-support-home {
-    margin-top: 40px;
+    margin-top: 120px;
   }
 
   .view-mobile {
