@@ -28,7 +28,7 @@ CREATE TABLE channels (
   language         TEXT,                     -- e.g. 'en'
   region           TEXT,                     -- free text for now
   mature_flag      BOOLEAN DEFAULT FALSE,
-  is_published     BOOLEAN DEFAULT TRUE,
+  is_published     BOOLEAN DEFAULT FALSE,
   sort_weight      INT DEFAULT 0,
   notes            TEXT,
   avatar_url       TEXT,

@@ -106,13 +106,16 @@
                     {{if .Socials}}
                     <div style="display:flex; gap:10px;">
                         {{if index .Socials "twitter"}}
-                        <a class="link" href="{{index .Socials " twitter"}}" target="_blank" rel="noopener">Twitter</a>
+                        <a class="link" href="{{index .Socials "twitter"}}" target="_blank" rel="noopener">Twitter</a>
                         {{end}}
                         {{if index .Socials "youtube"}}
-                        <a class="link" href="{{index .Socials " youtube"}}" target="_blank" rel="noopener">YouTube</a>
+                        <a class="link" href="{{index .Socials "youtube"}}" target="_blank" rel="noopener">YouTube</a>
                         {{end}}
                         {{if index .Socials "discord"}}
-                        <a class="link" href="{{index .Socials " discord"}}" target="_blank" rel="noopener">Discord</a>
+                        <a class="link" href="{{index .Socials "discord"}}" target="_blank" rel="noopener">Discord</a>
+                        {{end}}
+                        {{if index .Socials "instagram"}}
+                        <a class="link" href="{{index .Socials "instagram"}}" target="_blank" rel="noopener">Instagram</a>
                         {{end}}
                     </div>
                     {{end}}
