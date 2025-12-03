@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - DATABASE_URL=postgres://pvptv:${POSTGRES_PASSWORD:-pvptv}@db:5432/pvptv?sslmode=disable
     depends_on:
       - db
     networks:
