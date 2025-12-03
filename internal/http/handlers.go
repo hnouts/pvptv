@@ -157,13 +157,12 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 			return
 		}
 
-		// Get channels for this class (via specs)
-		// Only show channels that have specs assigned to this class
+		// Get channels for this class (via specs).
+		// For v2 we don't distinguish primary vs alt spec – we just pick the first spec (MIN(spec_slug)).
 		rows, err := db.Query(`
-			SELECT DISTINCT
+			SELECT
 				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
-				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary,
-				MAX(CASE WHEN cs.is_primary = true THEN s.spec_slug ELSE NULL END) as primary_spec_slug
+				MIN(s.spec_slug) as spec_slug
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
@@ -184,29 +183,31 @@ func classHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc 
 		for rows.Next() {
 			var id, login, name string
 			var socialsJSON []byte
-			var sortWeight, hasPrimary int
-			var primarySpecSlug sql.NullString
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary, &primarySpecSlug); err != nil {
+			var sortWeight int
+			var specSlug sql.NullString
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &specSlug); err != nil {
 				continue
 			}
 			var socials map[string]string
 			json.Unmarshal(socialsJSON, &socials)
 			
-			// Determine icon type: primary (solid), alt (has spec but not primary), meta (no spec info/generic)
-			iconType := "meta" // Default: could be playing anything (dashed)
-			if hasPrimary == 1 {
-				iconType = "main" // Solid circle: mains this class
-			} else {
-				iconType = "alt" // Hollow circle: plays from time to time
+			// For v2 we don't visually distinguish primary/alt/meta; use a single style.
+			iconType := "main"
+
+			// Spec icon (PNG) served from /assets/icons/spec/{specSlug}-{classSlug}.png when a spec exists.
+			var specIconPath string
+			if specSlug.Valid && specSlug.String != "" {
+				specIconPath = fmt.Sprintf("/assets/icons/spec/%s-%s.png", specSlug.String, classSlug)
 			}
 			
 			channels = append(channels, map[string]interface{}{
-				"id":       id,
-				"slug":     login,
-				"name":     name,
-				"socials":  socials,
-				"iconType": iconType,
-				"specSlug": primarySpecSlug.String,
+				"id":           id,
+				"slug":         login,
+				"name":         name,
+				"socials":      socials,
+				"iconType":     iconType,
+				"specSlug":     specSlug.String,
+				"specIconPath": specIconPath,
 			})
 			logins = append(logins, login)
 		}
@@ -346,10 +347,9 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 		).Scan(&classID)
 
 		rows, err := db.Query(`
-			SELECT DISTINCT
+			SELECT
 				c.id, c.twitch_login, c.display_name, c.socials, c.sort_weight,
-				MAX(CASE WHEN cs.is_primary = true THEN 1 ELSE 0 END) as has_primary,
-				MAX(CASE WHEN cs.is_primary = true THEN s.spec_slug ELSE NULL END) as primary_spec_slug
+				MIN(s.spec_slug) as spec_slug
 			FROM channels c
 			INNER JOIN channel_specs cs ON c.id = cs.channel_id
 			INNER JOIN specs s ON cs.spec_id = s.id
@@ -370,25 +370,21 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 		for rows.Next() {
 			var id, login, name string
 			var socialsJSON []byte
-			var sortWeight, hasPrimary int
-			var primarySpecSlug sql.NullString
-			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &hasPrimary, &primarySpecSlug); err != nil {
+			var sortWeight int
+			var specSlug sql.NullString
+			if err := rows.Scan(&id, &login, &name, &socialsJSON, &sortWeight, &specSlug); err != nil {
 				continue
 			}
 			var socials map[string]string
 			json.Unmarshal(socialsJSON, &socials)
 			
-			// Determine icon type
-			iconType := "meta"
-			if hasPrimary == 1 {
-				iconType = "main"
-			} else {
-				iconType = "alt"
-			}
+			// For v2 we don't visually distinguish primary/alt/meta; use a single style.
+			iconType := "main"
 
+			// Spec icon (PNG) served from /assets/icons/spec/{specSlug}-{classSlug}.png when a spec exists.
 			var specIconPath string
-			if primarySpecSlug.Valid && primarySpecSlug.String != "" {
-				specIconPath = fmt.Sprintf("/public/icons/spec/%s-%s.jpg", primarySpecSlug.String, classSlug)
+			if specSlug.Valid && specSlug.String != "" {
+				specIconPath = fmt.Sprintf("/assets/icons/spec/%s-%s.png", specSlug.String, classSlug)
 			}
 			
 			channels = append(channels, map[string]interface{}{
@@ -397,7 +393,7 @@ func streamHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc
 				"name":         name,
 				"socials":      socials,
 				"iconType":     iconType,
-				"specSlug":     primarySpecSlug.String,
+				"specSlug":     specSlug.String,
 				"specIconPath": specIconPath,
 			})
 			logins = append(logins, login)
