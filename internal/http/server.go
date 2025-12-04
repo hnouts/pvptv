@@ -8,8 +8,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"arenatv/internal/twitch"
+
+	"github.com/gin-gonic/gin"
 )
 
 // NewServer constructs the Gin engine with all middleware and routes wired.
@@ -56,6 +57,11 @@ func NewServer(db *sql.DB) *gin.Engine {
 	// SEO-related endpoints (will be filled out properly later).
 	r.GET("/robots.txt", robotsHandler)
 	r.GET("/sitemap.xml", sitemapHandler(db))
+	
+	// Favicon - serve logo.png as favicon
+	r.GET("/favicon.ico", func(c *gin.Context) {
+		c.File("./docs/web/logo.png")
+	})
 
 	// Initialize Twitch client (non-fatal if missing credentials)
 	twitchClient, _ := twitch.NewHelixClient()

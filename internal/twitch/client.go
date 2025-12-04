@@ -47,6 +47,9 @@ type HelixStreamsResponse struct {
 		Thumbnail   string    `json:"thumbnail_url"`
 		IsMature    bool      `json:"is_mature"`
 	} `json:"data"`
+	Pagination struct {
+		Cursor string `json:"cursor"`
+	} `json:"pagination"`
 }
 
 // NewHelixClient constructs a HelixClient using env vars for credentials.
@@ -68,7 +71,8 @@ func NewHelixClient() (*HelixClient, error) {
 	}, nil
 }
 
-// GetStreamsByLogin calls Helix Get Streams for up to 100 user_logins with 60s cache.
+// GetStreamsByLogin calls Helix Get Streams for user_logins with 60s cache.
+// Handles batching automatically if more than 100 logins are provided.
 func (c *HelixClient) GetStreamsByLogin(ctx context.Context, logins []string) (HelixStreamsResponse, error) {
 	if len(logins) == 0 {
 		return HelixStreamsResponse{}, nil
@@ -100,33 +104,74 @@ func (c *HelixClient) GetStreamsByLogin(ctx context.Context, logins []string) (H
 	}
 
 	// Build request
-	u, _ := url.Parse("https://api.twitch.tv/helix/streams")
-	q := u.Query()
-	for _, login := range norm {
-		q.Add("user_login", login)
+	// Twitch API allows up to 100 user_login parameters per request
+	// and up to 100 results per request (via first parameter)
+	// We need to batch if we have more than 100 logins
+	const maxLoginsPerRequest = 100
+	
+	var allStreams []struct {
+		ID          string    `json:"id"`
+		UserID      string    `json:"user_id"`
+		UserLogin   string    `json:"user_login"`
+		UserName    string    `json:"user_name"`
+		GameID      string    `json:"game_id"`
+		GameName    string    `json:"game_name"`
+		Type        string    `json:"type"`
+		Title       string    `json:"title"`
+		ViewerCount int       `json:"viewer_count"`
+		StartedAt   time.Time `json:"started_at"`
+		Language    string    `json:"language"`
+		Thumbnail   string    `json:"thumbnail_url"`
+		IsMature    bool      `json:"is_mature"`
 	}
-	u.RawQuery = q.Encode()
+	
+	// Process in batches of 100
+	for i := 0; i < len(norm); i += maxLoginsPerRequest {
+		end := i + maxLoginsPerRequest
+		if end > len(norm) {
+			end = len(norm)
+		}
+		batch := norm[i:end]
+		
+		u, _ := url.Parse("https://api.twitch.tv/helix/streams")
+		q := u.Query()
+		q.Set("first", "100") // Request up to 100 results
+		for _, login := range batch {
+			q.Add("user_login", login)
+		}
+		u.RawQuery = q.Encode()
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
-	if err != nil {
-		return HelixStreamsResponse{}, err
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+		if err != nil {
+			return HelixStreamsResponse{}, err
+		}
+		req.Header.Set("Client-Id", c.clientID)
+		req.Header.Set("Authorization", "Bearer "+c.accessToken)
+
+		resp, err := c.client.Do(req)
+		if err != nil {
+			return HelixStreamsResponse{}, err
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			return HelixStreamsResponse{}, errors.New("twitch helix streams request failed: " + resp.Status)
+		}
+
+		var batchResp HelixStreamsResponse
+		if err := json.NewDecoder(resp.Body).Decode(&batchResp); err != nil {
+			return HelixStreamsResponse{}, err
+		}
+		
+		// Collect streams from this batch
+		// When querying by user_login, Twitch returns all matching streams for those users
+		// (up to the 'first' limit, which we set to 100)
+		allStreams = append(allStreams, batchResp.Data...)
 	}
-	req.Header.Set("Client-Id", c.clientID)
-	req.Header.Set("Authorization", "Bearer "+c.accessToken)
-
-	resp, err := c.client.Do(req)
-	if err != nil {
-		return HelixStreamsResponse{}, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return HelixStreamsResponse{}, errors.New("twitch helix streams request failed: " + resp.Status)
-	}
-
-	var parsed HelixStreamsResponse
-	if err := json.NewDecoder(resp.Body).Decode(&parsed); err != nil {
-		return HelixStreamsResponse{}, err
+	
+	// Combine all results
+	parsed := HelixStreamsResponse{
+		Data: allStreams,
 	}
 
 	// Store in cache

@@ -54,13 +54,13 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 		var onlineCount int
 		
 		if twitchClient != nil {
-			// 1. Get candidate channels (high priority first)
+			// 1. Get all published channels (high priority first)
+			// No LIMIT - we want to count ALL online streamers
 			rows, err := db.Query(`
 				SELECT twitch_login, display_name 
 				FROM channels 
 				WHERE is_published = true 
-				ORDER BY sort_weight DESC 
-				LIMIT 100
+				ORDER BY sort_weight DESC
 			`)
 			if err == nil {
 				defer rows.Close()
@@ -78,7 +78,7 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 				// 2. Check who is online
 				if len(logins) > 0 {
 					ctx := c.Request.Context()
-					// Twitch API limit is usually 100, which matches our limit
+					// GetStreamsByLogin handles batching automatically for large lists
 					resp, err := twitchClient.GetStreamsByLogin(ctx, logins)
 					if err == nil && len(resp.Data) > 0 {
 						onlineCount = len(resp.Data)
