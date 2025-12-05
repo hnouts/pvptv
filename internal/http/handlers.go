@@ -105,10 +105,11 @@ func homeHandler(db *sql.DB, twitchClient *twitch.HelixClient) gin.HandlerFunc {
 
 		canonical := canonicalURL(c)
 		jsonLD := map[string]interface{}{
-			"@context": "https://schema.org",
-			"@type":    "WebSite",
-			"name":     "PvPtv",
-			"url":      "https://pvptv.hnts.dev/",
+			"@context":      "https://schema.org",
+			"@type":         "WebSite",
+			"name":          "PvPtv",
+			"alternateName": []string{"PvP TV", "Pvptv"},
+			"url":           "https://pvptv.hnts.dev/",
 		}
 
 		c.HTML(http.StatusOK, "home", gin.H{
